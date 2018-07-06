@@ -1,19 +1,14 @@
-// pub mod parser::ast;
 extern crate nom;
-
-// pub mod ast;
 
 use super::ast::*;
 
 use nom::{digit1,types::CompleteStr};
 use std::str::FromStr;
 
-// Captures integer values
 named!(value<CompleteStr, Value>,
     ws!(map!(recognize!(many1!(digit1)), |recast| Value(usize::from_str(&recast.to_string()).unwrap() ) ))
 );
 
-// Captures the last half of the range
 named!(range<CompleteStr,Range>,
     ws!(do_parse!(
         o : value >>
@@ -26,7 +21,6 @@ named!(range<CompleteStr,Range>,
     ))
 );
 
-// Captures a numeric range (including singular values)
 named!(range_list_item<CompleteStr,RangeListItem>, 
     ws!(do_parse!(
         r: alt!(
@@ -63,7 +57,6 @@ named!(not_within_operator<CompleteStr,Operator>,
     ))
 );
 
-// Captures in operators
 named!(check_within_operator<CompleteStr,Operator>,
     ws!(alt!(within_operator | not_within_operator))
 );
@@ -86,12 +79,10 @@ named!(not_in_operator<CompleteStr,Operator>,
     ))
 );
 
-// Captures in operators
 named!(check_in_operator<CompleteStr,Operator>,
     ws!(alt!(in_operator | not_in_operator))
 );
 
-// Capture is operators
 named!(is_operator<CompleteStr,Operator>,
     ws!(do_parse!(
         tag!("is") >>
@@ -99,7 +90,6 @@ named!(is_operator<CompleteStr,Operator>,
     ))
 );
 
-// Capture is operators
 named!(not_is_operator<CompleteStr,Operator>,
     ws!(do_parse!(
         tag!("is") >>
@@ -108,7 +98,6 @@ named!(not_is_operator<CompleteStr,Operator>,
     ))
 );
 
-// Capture is operators
 named!(check_is_operator<CompleteStr,Operator>,
     ws!(alt!(not_is_operator | is_operator))
 );
@@ -127,12 +116,10 @@ named!(not_eq_operator<CompleteStr,Operator>,
     ))
 );
 
-// Captures in operators
 named!(check_eq_operator<CompleteStr,Operator>,
     ws!(alt!(eq_operator | not_eq_operator))
 );
 
-// Captures an operand
 named!(operand<CompleteStr,Operand>,
     ws!(map!(
         alt_complete!(
@@ -154,7 +141,6 @@ named!(mod_expression<CompleteStr,Modulo>,
     ))
 );
 
-// Captures an expression
 named!(expression<CompleteStr,Expression>,
     ws!(do_parse!(
         rand: operand >>
@@ -218,7 +204,6 @@ named!(eq_relation<CompleteStr, Relation >,
     ))
 );
 
-// Extracts plural rule lines for one language
 named!(relation<CompleteStr, Relation >,
     ws!(alt_complete!(within_relation | in_relation | is_relation |
          eq_relation

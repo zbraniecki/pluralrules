@@ -1,14 +1,3 @@
-// Structs for CLDR rules
-
-pub enum PluralCategory {
-    ZERO,
-    ONE,
-    TWO,
-    FEW,
-    MANY,
-    OTHER,
-}
-
 #[derive(Debug, Clone, PartialEq)]
 pub struct Condition(pub Vec<AndCondition>);
 

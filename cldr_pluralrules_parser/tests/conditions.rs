@@ -200,3 +200,167 @@ fn ars_many_rule() {
         parse_plural_rule(test)
     );
 }
+
+#[test]
+fn be_one_rule() {
+    let test = "n % 10 = 1 and n % 100 != 11 @integer 1, 21, 31, 41, 51, 61, 71, 81, 101, 1001, … @decimal 1.0, 21.0, 31.0, 41.0, 51.0, 61.0, 71.0, 81.0, 101.0, 1001.0, …";
+    assert_eq!(
+        Condition (vec![
+            AndCondition (vec![
+                Relation { 
+                    expression: Expression {
+                        operand: Operand('n'),
+                        modulus: 
+                            Some(Modulo (
+                                Value(10)
+                            )
+                        )
+                    },
+                    operator: Operator::EQ,
+                    range_list: RangeList(vec![
+                        RangeListItem::RLValue(
+                                Value(1)
+                        )
+                    ])
+                },
+                Relation { 
+                    expression: Expression {
+                        operand: Operand('n'),
+                        modulus: 
+                            Some(Modulo (
+                                Value(100)
+                            )
+                        )
+                    },
+                    operator: Operator::NotEQ,
+                    range_list: RangeList(vec![
+                        RangeListItem::RLValue(
+                                Value(11)
+                        )
+                    ])
+                }
+            ])
+        ]),
+        parse_plural_rule(test)
+    );
+}
+
+#[test]
+fn be_few_rule() {
+    let test = "n % 10 = 2..4 and n % 100 != 12..14 @integer 2~4, 22~24, 32~34, 42~44, 52~54, 62, 102, 1002, … @decimal 2.0, 3.0, 4.0, 22.0, 23.0, 24.0, 32.0, 33.0, 102.0, 1002.0, …";
+    assert_eq!(
+        Condition (vec![
+            AndCondition (vec![
+                Relation { 
+                    expression: Expression {
+                        operand: Operand('n'),
+                        modulus: 
+                            Some(Modulo (
+                                Value(10)
+                            )
+                        )
+                    },
+                    operator: Operator::EQ,
+                    range_list: RangeList(vec![
+                        RangeListItem::RLRange(
+                            Range {
+                                lower_val: Value(2),
+                                upper_val: Value(4)
+                            }
+                        )
+                    ])
+                },
+                Relation { 
+                    expression: Expression {
+                        operand: Operand('n'),
+                        modulus: 
+                            Some(Modulo (
+                                Value(100)
+                            )
+                        )
+                    },
+                    operator: Operator::NotEQ,
+                    range_list: RangeList(vec![
+                        RangeListItem::RLRange(
+                            Range {
+                                lower_val: Value(12),
+                                upper_val: Value(14)
+                            }
+                        )
+                    ])
+                }
+            ])
+        ]),
+        parse_plural_rule(test)
+    );
+}
+
+#[test]
+fn be_many_rule() {
+    let test = "n % 10 = 0 or n % 10 = 5..9 or n % 100 = 11..14 @integer 0, 5~19, 100, 1000, 10000, 100000, 1000000, … @decimal 0.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, …";
+    assert_eq!(
+        Condition (vec![
+            AndCondition (vec![
+                Relation { 
+                    expression: Expression {
+                        operand: Operand('n'),
+                        modulus: 
+                            Some(Modulo (
+                                Value(10)
+                            )
+                        )
+                    },
+                    operator: Operator::EQ,
+                    range_list: RangeList(vec![
+                        RangeListItem::RLValue(
+                                Value(0)
+                        )
+                    ])
+                }
+            ]),
+            AndCondition (vec![
+                Relation { 
+                    expression: Expression {
+                        operand: Operand('n'),
+                        modulus: 
+                            Some(Modulo (
+                                Value(10)
+                            )
+                        )
+                    },
+                    operator: Operator::EQ,
+                    range_list: RangeList(vec![
+                        RangeListItem::RLRange(
+                            Range {
+                                lower_val: Value(5),
+                                upper_val: Value(9)
+                            }
+                        )
+                    ])
+                }
+            ]),
+            AndCondition (vec![
+                Relation { 
+                    expression: Expression {
+                        operand: Operand('n'),
+                        modulus: 
+                            Some(Modulo (
+                                Value(100)
+                            )
+                        )
+                    },
+                    operator: Operator::EQ,
+                    range_list: RangeList(vec![
+                        RangeListItem::RLRange(
+                            Range {
+                                lower_val: Value(11),
+                                upper_val: Value(14)
+                            }
+                        )
+                    ])
+                }
+            ])
+        ]),
+        parse_plural_rule(test)
+    );
+}
