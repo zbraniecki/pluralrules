@@ -5,13 +5,10 @@ pub mod ast;
 pub mod parser;
 
 use ast::*;
-use nom::types::CompleteStr;
 use parser::*;
+use nom::types::CompleteStr;
 
+/// Calls on parser.rs parse_rule function to parse a CLDR plural rule and get back an AST built with ast.rs struct Condition
 pub fn parse_plural_rule(source: &str) -> Condition {
-    let stuff = parse_rule(CompleteStr(source));
-
-    let cond = stuff.unwrap();
-
-    cond.1
+    parse_rule(CompleteStr(source)).unwrap().1
 }

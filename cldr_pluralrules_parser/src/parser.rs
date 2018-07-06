@@ -1,9 +1,8 @@
 extern crate nom;
 
 use super::ast::*;
-
-use nom::{digit1, types::CompleteStr};
 use std::str::FromStr;
+use nom::{digit1, types::CompleteStr};
 
 named!(value<CompleteStr, Value>,
     ws!(map!(recognize!(many1!(digit1)), |recast| Value(usize::from_str(&recast.to_string()).unwrap() ) ))
