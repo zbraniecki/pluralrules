@@ -1,1 +1,0 @@
-/mnt/c/Users/Kekoa\ Riggin/Documents/wsl/pluralrules/cldr_pluralrules_parser/target/debug/libcldr_pluralrules_parser.rlib: /mnt/c/Users/Kekoa\ Riggin/Documents/wsl/pluralrules/cldr_pluralrules_parser/src/ast.rs /mnt/c/Users/Kekoa\ Riggin/Documents/wsl/pluralrules/cldr_pluralrules_parser/src/lib.rs
