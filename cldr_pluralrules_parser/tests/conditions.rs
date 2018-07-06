@@ -1,7 +1,7 @@
 extern crate cldr_pluralrules_parser;
 
 use cldr_pluralrules_parser::ast::*;
-use cldr_pluralrules_parser::*;
+use cldr_pluralrules_parser::parser::*;
 
 #[test]
 fn simple_expression() {
@@ -160,6 +160,38 @@ fn or_condition() {
                     range_list: RangeList(vec![
                             RangeListItem::RLValue(
                                 Value(2)
+                        )
+                    ])
+                }
+            ])
+        ]),
+        parse_plural_rule(test)
+    );
+}
+
+#[test]
+fn ars_many_rule() {
+    let test = "n % 100 = 11..99 @integer 11~26, 111, 1011, … @decimal 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 111.0, 1011.0, …";
+
+    assert_eq!(
+        Condition (vec![
+            AndCondition (vec![
+                Relation { 
+                    expression: Expression {
+                        operand: Operand('n'),
+                        modulus: 
+                            Some(Modulo (
+                                Value(100)
+                            )
+                        )
+                    },
+                    operator: Operator::EQ,
+                    range_list: RangeList(vec![
+                        RangeListItem::RLRange(
+                            Range {
+                                lower_val: Value(11),
+                                upper_val: Value(99)
+                            }
                         )
                     ])
                 }
