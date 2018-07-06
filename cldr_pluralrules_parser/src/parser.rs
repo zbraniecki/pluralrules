@@ -2,7 +2,7 @@ extern crate nom;
 
 use super::ast::*;
 
-use nom::{digit1,types::CompleteStr};
+use nom::{digit1, types::CompleteStr};
 use std::str::FromStr;
 
 named!(value<CompleteStr, Value>,
@@ -21,11 +21,11 @@ named!(range<CompleteStr,Range>,
     ))
 );
 
-named!(range_list_item<CompleteStr,RangeListItem>, 
+named!(range_list_item<CompleteStr,RangeListItem>,
     ws!(do_parse!(
         r: alt!(
-            range   => { |r| RangeListItem::RLRange(r) } |
-            value   => { |v| RangeListItem::RLValue(v) }
+            range   => { |r| RangeListItem::Range(r) } |
+            value   => { |v| RangeListItem::Value(v) }
         ) >>
         opt!(tag!(",")) >>
         (r)
@@ -38,7 +38,7 @@ named!(range_list<CompleteStr, RangeList >,
         fold_many1!( range_list_item, Vec::new(), |mut acc: Vec<_>, item| {
         acc.push(item);
         acc
-        }), |recast| RangeList(recast) 
+        }), |recast| RangeList(recast)
     ))
 );
 
@@ -129,7 +129,8 @@ named!(operand<CompleteStr,Operand>,
             tag!("w") | 
             tag!("f") | 
             tag!("t") ), 
-        |recast| Operand (char::from_str(&recast).unwrap() ) 
+        |recast| Operand (char::from_str(&recast).unwrap()
+        )
     ))
 );
 
@@ -186,7 +187,7 @@ named!(is_relation<CompleteStr,Relation >,
         ( Relation {
             expression: first_o,
             operator: math_o,
-            range_list: RangeList(vec![RangeListItem::RLValue(nums)] )
+            range_list: RangeList(vec![RangeListItem::Value(nums)])
         })
     ))
 );
@@ -205,9 +206,7 @@ named!(eq_relation<CompleteStr, Relation >,
 );
 
 named!(relation<CompleteStr, Relation >,
-    ws!(alt_complete!(within_relation | in_relation | is_relation |
-         eq_relation
-    ))
+    ws!(alt_complete!(within_relation | in_relation | is_relation | eq_relation))
 );
 
 named!(and_relation<CompleteStr,Relation >,
@@ -246,15 +245,6 @@ named!(condition<CompleteStr, Condition >,
     ))
 );
 
-named!(parse_rule<CompleteStr,Condition >,
+named!(pub parse_rule<CompleteStr,Condition >,
     ws!(call!(condition))
 );
-
-pub fn parse_plural_rule(source: &str) -> Condition {
-
-    let stuff = parse_rule(CompleteStr(source));
-
-    let cond = stuff.unwrap();
-
-    cond.1
-}

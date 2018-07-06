@@ -30,7 +30,7 @@ pub struct Expression {
 }
 
 #[derive(Debug, Clone, PartialEq)]
-pub struct Modulo ( pub Value );
+pub struct Modulo(pub Value);
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Operand(pub char);
@@ -40,8 +40,8 @@ pub struct RangeList(pub Vec<RangeListItem>);
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum RangeListItem {
-    RLRange(Range),
-    RLValue(Value),
+    Range(Range),
+    Value(Value),
 }
 
 #[derive(Debug, Clone, PartialEq)]
