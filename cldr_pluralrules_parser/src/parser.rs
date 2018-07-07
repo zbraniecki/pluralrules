@@ -244,6 +244,7 @@ named!(condition<CompleteStr, Condition >,
     ))
 );
 
+/// A nom macro that accepts a CompleteStr and returns a Condition AST for a plural rule.
 named!(pub parse_rule<CompleteStr,Condition >,
     ws!(call!(condition))
 );

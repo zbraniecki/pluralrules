@@ -1,9 +1,112 @@
+/// A complete (and the only complete) AST representation of a plural rule. Comprises a vector of AndConditions.
+///
+/// # Examples
+///
+/// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
+///
+/// ```
+/// "i = 5"
+/// ```
+/// 
+/// Can be represented by the AST:
+/// 
+/// ```
+/// Condition(vec![AndCondition(vec![Relation {
+///        expression: Expression {
+///            operand: Operand('i'),
+///            modulus: None,
+///        },
+///        operator: Operator::EQ,
+///        range_list: RangeList(vec![RangeListItem::Value(Value(5))]),
+///    }])])
+/// ```
+/// 
+/// Because they care complete representations, hand-written Conditions can be verified with the assert macro. No other AST nodes can be verified.
+///
+/// ```
+/// let condition = Condition(vec![
+///     AndCondition(vec![Relation {
+///         expression: Expression {
+///             operand: Operand('i'),
+///             modulus: None,
+///         },
+///         operator: Operator::Is,
+///         range_list: RangeList(vec![RangeListItem::Value(Value(5))]),
+///     }]),
+///     AndCondition(vec![Relation {
+///         expression: Expression {
+///             operand: Operand('v'),
+///             modulus: None,
+///         },
+///         operator: Operator::Within,
+///         range_list: RangeList(vec![RangeListItem::Value(Value(2))]),
+///     }]),
+/// ])
+///
+/// assert_eq!(condition, parse_plural_rule("i is 5 or v within 2"))
+/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct Condition(pub Vec<AndCondition>);
 
+/// An incomplete AST representation of a plural rule. Comprises a vector of Relations.
+///
+/// # Examples
+///
+/// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
+///
+/// ```
+/// "i = 3 and v = 0" 
+/// ```
+/// 
+/// Can be represented by the AST:
+/// 
+/// ```
+/// AndCondition(vec![
+///     Relation {
+///         expression: Expression {
+///             operand: Operand('i'),
+///             modulus: None,
+///         },
+///         operator: Operator::In,
+///         range_list: RangeList(vec![RangeListItem::Value(Value(5))]),
+///     },
+///     Relation {
+///         expression: Expression {
+///             operand: Operand('v'),
+///             modulus: None,
+///         },
+///         operator: Operator::NotIn,
+///         range_list: RangeList(vec![RangeListItem::Value(Value(2))]),
+///     },
+/// ])
+///
+/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct AndCondition(pub Vec<Relation>);
 
+/// An incomplete AST representation of a plural rule. Comprises an Expression, an Operator, and a RangeList.
+///
+/// # Examples
+///
+/// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
+///
+/// ```
+/// "i = 3" 
+/// ```
+/// 
+/// Can be represented by the AST:
+/// 
+/// ```
+/// Relation {
+///     expression: Expression {
+///         operand: Operand('i'),
+///         modulus: None,
+///     },
+///     operator: Operator::Is,
+///     range_list: RangeList(vec![RangeListItem::Value(Value(3))]),
+/// }
+///
+/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct Relation {
     pub expression: Expression,
@@ -11,6 +114,21 @@ pub struct Relation {
     pub range_list: RangeList,
 }
 
+/// An enum of Relation operators for plural rules.
+///
+/// Each Operator enumeration belongs to the corresponding symbolic operators:
+/// 
+/// | Enum Operator | Symbolic Operator |
+/// | - | - |
+/// | In | "in" |
+/// | NotIn | "not in" |
+/// | Within | "within" |
+/// | NotWithin | "not within" |
+/// | Is | "is" |
+/// | IsNot | "is not" |
+/// | EQ | "=" |
+/// | NotEq | "!=" |
+///
 #[derive(Debug, Clone, PartialEq)]
 pub enum Operator {
     In,
@@ -23,32 +141,138 @@ pub enum Operator {
     NotEQ,
 }
 
+/// An incomplete AST representation of a plural rule. Comprises an Operand and an optional Modulo.
+///
+/// # Examples
+///
+/// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
+///
+/// ```
+/// "i % 100" 
+/// ```
+/// 
+/// Can be represented by the AST:
+/// 
+/// ```
+/// expression: Expression {
+///     operand: Operand('i'),
+///     modulus: Some(Modulo(Value(100))),
+/// }
+///
+/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct Expression {
     pub operand: Operand,
     pub modulus: Option<Modulo>,
 }
 
+/// An incomplete AST representation of a plural rule. Comprises a Value but is later expressed as `% usize`.
+///
+/// # Examples
+///
+/// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
+///
+/// ```
+/// "% 100" 
+/// ```
+/// 
+/// Will be used to represent the AST:
+/// 
+/// ```
+/// Modulo(Value(100))
+/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct Modulo(pub Value);
 
+/// An incomplete AST representation of a plural rule. Comprises a char.
+///
+/// # Examples
+///
+/// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
+///
+/// ```
+/// "i" 
+/// ```
+/// 
+/// Can be represented by the AST:
+/// 
+/// ```
+/// Operand('i')
+/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct Operand(pub char);
 
+/// An incomplete AST representation of a plural rule. Comprises a vector of RangeListItems.
+///
+/// # Examples
+///
+/// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
+///
+/// ```
+/// "5, 7, 9" 
+/// ```
+/// 
+/// Can be represented by the AST:
+/// 
+/// ```
+/// RangeList(vec![
+///     RangeListItem::Value(Value(5)),
+///     RangeListItem::Value(Value(7)),
+///     RangeListItem::Value(Value(9)),
+/// ])
+/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct RangeList(pub Vec<RangeListItem>);
 
+/// An enum of items that appear in a RangeList: Range or a Value.
+///
+/// See Range and Value for additional details.
+///
 #[derive(Debug, Clone, PartialEq)]
 pub enum RangeListItem {
     Range(Range),
     Value(Value),
 }
 
+
+/// An incomplete AST representation of a plural rule. Comprises two Values: a lower and upper inclusive limit.
+///
+/// # Examples
+///
+/// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
+///
+/// ```
+/// "11..15" 
+/// ```
+/// 
+/// Can be represented by the AST:
+/// 
+/// ```
+/// RangeListItem::Range(Range {
+///     lower_val: Value(11),
+///     upper_val: Value(15),
+/// })
+/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct Range {
     pub lower_val: Value,
     pub upper_val: Value,
 }
 
+/// An incomplete AST representation of a plural rule, representing one integer.
+///
+/// # Examples
+///
+/// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
+///
+/// ```
+/// "99" 
+/// ```
+/// 
+/// Can be represented by the AST:
+/// 
+/// ```
+/// RangeListItem::Value(Value(99))
+/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct Value(pub usize);

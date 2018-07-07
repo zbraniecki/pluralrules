@@ -1,7 +1,9 @@
 #[macro_use]
 extern crate nom;
 
+/// A public AST module for plural rule representations.
 pub mod ast;
+/// A private parsing module for plural rules.
 pub mod parser;
 
 use ast::*;
