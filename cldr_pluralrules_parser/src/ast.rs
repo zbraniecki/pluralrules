@@ -4,13 +4,15 @@
 ///
 /// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
 ///
-/// ```
+/// ```text
 /// "i = 5"
 /// ```
-/// 
+///
 /// Can be represented by the AST:
-/// 
+///
 /// ```
+/// use cldr_pluralrules_parser::ast::*;
+///
 /// Condition(vec![AndCondition(vec![Relation {
 ///        expression: Expression {
 ///            operand: Operand('i'),
@@ -18,12 +20,15 @@
 ///        },
 ///        operator: Operator::EQ,
 ///        range_list: RangeList(vec![RangeListItem::Value(Value(5))]),
-///    }])])
+///    }])]);
 /// ```
-/// 
+///
 /// Because they care complete representations, hand-written Conditions can be verified with the assert macro. No other AST nodes can be verified.
 ///
 /// ```
+/// use cldr_pluralrules_parser::ast::*;
+/// use cldr_pluralrules_parser::parse_plural_rule;
+///
 /// let condition = Condition(vec![
 ///     AndCondition(vec![Relation {
 ///         expression: Expression {
@@ -41,7 +46,7 @@
 ///         operator: Operator::Within,
 ///         range_list: RangeList(vec![RangeListItem::Value(Value(2))]),
 ///     }]),
-/// ])
+/// ]);
 ///
 /// assert_eq!(condition, parse_plural_rule("i is 5 or v within 2"))
 /// ```
@@ -54,13 +59,15 @@ pub struct Condition(pub Vec<AndCondition>);
 ///
 /// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
 ///
+/// ```text
+/// "i = 3 and v = 0"
 /// ```
-/// "i = 3 and v = 0" 
-/// ```
-/// 
+///
 /// Can be represented by the AST:
-/// 
+///
 /// ```
+/// use cldr_pluralrules_parser::ast::*;
+///
 /// AndCondition(vec![
 ///     Relation {
 ///         expression: Expression {
@@ -78,7 +85,7 @@ pub struct Condition(pub Vec<AndCondition>);
 ///         operator: Operator::NotIn,
 ///         range_list: RangeList(vec![RangeListItem::Value(Value(2))]),
 ///     },
-/// ])
+/// ]);
 ///
 /// ```
 #[derive(Debug, Clone, PartialEq)]
@@ -90,13 +97,15 @@ pub struct AndCondition(pub Vec<Relation>);
 ///
 /// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
 ///
+/// ```text
+/// "i = 3"
 /// ```
-/// "i = 3" 
-/// ```
-/// 
+///
 /// Can be represented by the AST:
-/// 
+///
 /// ```
+/// use cldr_pluralrules_parser::ast::*;
+///
 /// Relation {
 ///     expression: Expression {
 ///         operand: Operand('i'),
@@ -104,7 +113,7 @@ pub struct AndCondition(pub Vec<Relation>);
 ///     },
 ///     operator: Operator::Is,
 ///     range_list: RangeList(vec![RangeListItem::Value(Value(3))]),
-/// }
+/// };
 ///
 /// ```
 #[derive(Debug, Clone, PartialEq)]
@@ -117,7 +126,7 @@ pub struct Relation {
 /// An enum of Relation operators for plural rules.
 ///
 /// Each Operator enumeration belongs to the corresponding symbolic operators:
-/// 
+///
 /// | Enum Operator | Symbolic Operator |
 /// | - | - |
 /// | In | "in" |
@@ -147,17 +156,19 @@ pub enum Operator {
 ///
 /// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
 ///
+/// ```text
+/// "i % 100"
 /// ```
-/// "i % 100" 
-/// ```
-/// 
+///
 /// Can be represented by the AST:
-/// 
+///
 /// ```
-/// expression: Expression {
+/// use cldr_pluralrules_parser::ast::*;
+///
+/// Expression {
 ///     operand: Operand('i'),
 ///     modulus: Some(Modulo(Value(100))),
-/// }
+/// };
 ///
 /// ```
 #[derive(Debug, Clone, PartialEq)]
@@ -172,14 +183,16 @@ pub struct Expression {
 ///
 /// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
 ///
+/// ```text
+/// "% 100"
 /// ```
-/// "% 100" 
-/// ```
-/// 
+///
 /// Will be used to represent the AST:
-/// 
+///
 /// ```
-/// Modulo(Value(100))
+/// use cldr_pluralrules_parser::ast::*;
+///
+/// Modulo(Value(100));
 /// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct Modulo(pub Value);
@@ -190,14 +203,16 @@ pub struct Modulo(pub Value);
 ///
 /// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
 ///
+/// ```text
+/// "i"
 /// ```
-/// "i" 
-/// ```
-/// 
+///
 /// Can be represented by the AST:
-/// 
+///
 /// ```
-/// Operand('i')
+/// use cldr_pluralrules_parser::ast::Operand;
+///
+/// Operand('i');
 /// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct Operand(pub char);
@@ -208,18 +223,20 @@ pub struct Operand(pub char);
 ///
 /// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
 ///
+/// ```text
+/// "5, 7, 9"
 /// ```
-/// "5, 7, 9" 
-/// ```
-/// 
+///
 /// Can be represented by the AST:
-/// 
+///
 /// ```
+/// use cldr_pluralrules_parser::ast::*;
+///
 /// RangeList(vec![
 ///     RangeListItem::Value(Value(5)),
 ///     RangeListItem::Value(Value(7)),
 ///     RangeListItem::Value(Value(9)),
-/// ])
+/// ]);
 /// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct RangeList(pub Vec<RangeListItem>);
@@ -234,24 +251,25 @@ pub enum RangeListItem {
     Value(Value),
 }
 
-
 /// An incomplete AST representation of a plural rule. Comprises two Values: an inclusive lower and upper limit.
 ///
 /// # Examples
 ///
 /// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
 ///
+/// ```text
+/// "11..15"
 /// ```
-/// "11..15" 
-/// ```
-/// 
+///
 /// Can be represented by the AST:
-/// 
+///
 /// ```
+/// use cldr_pluralrules_parser::ast::*;
+///
 /// RangeListItem::Range(Range {
 ///     lower_val: Value(11),
 ///     upper_val: Value(15),
-/// })
+/// });
 /// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct Range {
@@ -265,14 +283,16 @@ pub struct Range {
 ///
 /// All AST nodes can be built explicitly, as seen in the example. However, due to its complexity, it is preferred to build the AST using the parse_plural_rule function.
 ///
+/// ```text
+/// "99"
 /// ```
-/// "99" 
-/// ```
-/// 
+///
 /// Can be represented by the AST:
-/// 
+///
 /// ```
-/// RangeListItem::Value(Value(99))
+/// use cldr_pluralrules_parser::ast::*;
+///
+/// RangeListItem::Value(Value(99));
 /// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct Value(pub usize);
