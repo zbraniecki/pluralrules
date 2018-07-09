@@ -7,7 +7,7 @@ license = "Apache-2.0/MIT"
 repository = "https://github.com/unclenachoduh/pluralrules"
 readme = "README.md"
 keywords = ["localization", "l10n", "i18n", "intl", "internationalization"]
-catregories = ["localization", "internationalization"]
+categories = ["localization", "internationalization"]
 
 [dependencies]
 nom = "^4.0"
