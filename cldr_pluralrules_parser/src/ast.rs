@@ -235,7 +235,7 @@ pub enum RangeListItem {
 }
 
 
-/// An incomplete AST representation of a plural rule. Comprises two Values: a lower and upper inclusive limit.
+/// An incomplete AST representation of a plural rule. Comprises two Values: an inclusive lower and upper limit.
 ///
 /// # Examples
 ///

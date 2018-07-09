@@ -1,5 +1,9 @@
-//! Given a string reference of a plural rule, will return the AST representation of that rule.
-//!
+//! A crate for parsing CLDR plural rules.
+//! 
+//! This crate parses plural rules and returns an AST representation of the rule. Plural rules must be written according to the specifications outlined at [Unicode's website](http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules).
+//! 
+//! Plural rules, compatible with this crate, can be found at [this GitHub repository](https://github.com/unicode-cldr/cldr-core/blob/master/supplemental/plurals.json). 
+//! 
 //! # Examples
 //!
 //! ```
@@ -30,7 +34,7 @@ extern crate nom;
 /// A public AST module for plural rule representations.
 pub mod ast;
 /// A private parsing module for plural rules.
-pub mod parser;
+mod parser;
 
 use ast::*;
 use parser::*;
