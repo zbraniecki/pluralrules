@@ -2,6 +2,8 @@
 name = "cldr_pluralrules_parser"
 version = "0.1.0"
 authors = ["unclenachoduh <kekoariggin@gmail.com>"]
+description = "A parser for CLDR plural rules."
+license = "Apache-2.0/MIT"
 
 [dependencies]
 nom = "^4.0"
