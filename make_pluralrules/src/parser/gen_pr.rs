@@ -121,10 +121,6 @@ fn create_relation(rel : Relation) -> syn::Expr {
             Operator::EQ => if relations.len() > 1 { quote!{ ( #(#relations)||* ) } } else {quote!{ #(#relations)||* } },
             Operator::NotEQ => quote!{ #(#relations)&&* }
         };
-
-    // relations[0].clone()
-
-    // relationexpr
     syn::parse2(relationexpr).expect("Unable to parse tokens")
 
 }
@@ -150,11 +146,16 @@ fn create_condition(cond: Condition) -> syn::Expr {
 
     let condexpr = quote!{ #(#condvec)||* };
 
-    // println!("Check Here{:?}", condexpr);
-
     syn::parse2(condexpr).expect("Unable to parse tokens")
 }
 
 pub fn gen_pr(cond: Condition) -> syn::Expr {
 	create_condition(cond)
+} 
+
+pub fn other() -> syn::Expr {
+    let temp = convert_literal(1);
+    let condexpr = quote!{ #temp };
+
+    syn::parse2(condexpr).expect("GEN_PR::OTHER")
 } 
