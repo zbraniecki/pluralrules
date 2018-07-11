@@ -38,7 +38,9 @@ fn create_match_state(lang: &str, filling : TokenStream) -> TokenStream {
 }
 
 fn create_fun(filling : TokenStream) -> TokenStream {
-    quote! { fn get_pr(lang: &str) -> PluralRule {match lang { #filling }}}
+    let head = quote! { use super::operands::PluralOperands; use super::PluralCategory; type PluralRule = fn(PluralOperands) -> PluralCategory; };
+
+    quote! { #head pub fn get_pr(lang: &str) -> PluralRule {match lang { #filling }}}
 }
 
 fn create_return(cat: PluralCategory, exp: &syn::Expr ) -> TokenStream {
@@ -52,17 +54,17 @@ fn create_return(cat: PluralCategory, exp: &syn::Expr ) -> TokenStream {
 	}
 }
 
-fn add_block(f: &mut syn::File, b: syn::Expr) {
-    let func = &mut f.items[0];
-    match func {
-        syn::Item::Fn(ref mut f) => {
-            let block = &mut f.block;
-            let stmts = &mut block.stmts;
-            stmts.push(syn::Stmt::Expr(b));
-        },
-        _ => panic!("Unknown boilerplate")
-    };
-}
+// fn add_block(f: &mut syn::File, b: syn::Expr) {
+//     let func = &mut f.items[0];
+//     match func {
+//         syn::Item::Fn(ref mut f) => {
+//             let block = &mut f.block;
+//             let stmts = &mut block.stmts;
+//             stmts.push(syn::Stmt::Expr(b));
+//         },
+//         _ => panic!("Unknown boilerplate")
+//     };
+// }
 
 pub fn gen_mid(lang: &str, ex : Vec<(PluralCategory, syn::Expr)> ) -> TokenStream {
 
