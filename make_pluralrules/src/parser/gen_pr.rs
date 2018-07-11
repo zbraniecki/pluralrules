@@ -8,7 +8,8 @@ use self::syn::BinOp;
 use self::proc_macro2::{Span};
 
 use cldr_pluralrules_parser::ast::*;
-
+use self::proc_macro2::TokenStream;
+use quote::ToTokens;
 
 fn convert_literal(num: usize) -> syn::LitInt {
     syn::LitInt::new(num as u64, syn::IntSuffix::None, Span::call_site())
@@ -149,13 +150,17 @@ fn create_condition(cond: Condition) -> syn::Expr {
     syn::parse2(condexpr).expect("Unable to parse tokens")
 }
 
+// pub fn gen_pr(cond: Condition) -> TokenStream {
 pub fn gen_pr(cond: Condition) -> syn::Expr {
-	create_condition(cond)
+	// create_condition(cond).into_token_stream()
+    create_condition(cond)
 } 
 
+// pub fn other() -> TokenStream {
 pub fn other() -> syn::Expr {
     let temp = convert_literal(1);
     let condexpr = quote!{ #temp };
 
     syn::parse2(condexpr).expect("GEN_PR::OTHER")
+    // condexpr.into_token_stream()
 } 
