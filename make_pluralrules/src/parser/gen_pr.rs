@@ -101,10 +101,10 @@ fn create_relation(rel : Relation) -> syn::Expr {
 
             let rel_tokens =
                 if &left.modulus == &None {
-                    quote! {po.#l #o #rfront #rdot #rback}
+                    quote! {(po.#l #o #rfront #rdot #rback )}
                 } else {
                     let m = convert_literal((left.modulus.clone().unwrap().0).0);
-                    quote! {po.#l % #m #o #rfront #rdot #rback}
+                    quote! {(po.#l % #m #o #rfront #rdot #rback )}
                 };
 
             relations.push(syn::parse2(rel_tokens).expect("Unable to parse tokens"));
