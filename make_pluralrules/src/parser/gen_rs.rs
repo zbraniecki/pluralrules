@@ -37,6 +37,10 @@ fn create_match_state(lang: &str, filling : TokenStream) -> TokenStream {
     // syn::parse2(boilerplate_tokens).expect("Unable to parse boilerplate")
 }
 
+fn create_fun(filling : TokenStream) -> TokenStream {
+    quote! { fn get_pr(lang: &str) -> PluralRule {match lang { #filling }}}
+}
+
 fn create_return(cat: PluralCategory, exp: &syn::Expr ) -> TokenStream {
 	match cat {
 		PluralCategory::ZERO => quote! {if #exp { PluralCategory::ZERO } },
@@ -108,7 +112,11 @@ pub fn gen_fn(mut streams: Vec<TokenStream> ) -> TokenStream {
 
     let mbfgw = quote!{ #(#streams),* };
 
-    println!("{:#?}", mbfgw.to_string());
+    // println!("{}", mbfgw.to_string());
+
+    let junk = create_fun(mbfgw);
+
+    println!("{}", junk.to_string());
 
     // let size = ex.len();
 
