@@ -74,11 +74,11 @@ fn create_relation(rel : Relation) -> syn::Expr {
         let rel_tokens =
             if &left.operand.0.to_string() == "n" {
                 if &left.modulus == &None {
-                    quote! {#rfront #o po.#l && po.#l #o #rback}
+                    quote! {#rfront.0 #o po.#l && po.#l #o #rback.0}
                 } else {
                     let m = convert_literal((left.modulus.clone().unwrap().0).0);
                     let mod_snip = quote! { fmod(po, #m) };
-                    quote! {#rfront #o po.i % #m && po.#l % #m #o #rback}
+                    quote! {#rfront #o po.i % #m && po.i % #m #o #rback}
                 }
             } else {
                 if &left.modulus == &None {
@@ -97,7 +97,7 @@ fn create_relation(rel : Relation) -> syn::Expr {
             let rel_tokens =
                 if &left.operand.0.to_string() == "n" {
                     if &left.modulus == &None {
-                        quote! {po.#l #o #r}
+                        quote! {po.#l #o #r.0}
                     } else {
                         let m = convert_literal((left.modulus.clone().unwrap().0).0);
                         quote! {po.i % #m #o #r}
