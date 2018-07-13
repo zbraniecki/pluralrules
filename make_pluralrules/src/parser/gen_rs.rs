@@ -38,9 +38,10 @@ fn create_match_state(lang: &str, filling : TokenStream) -> TokenStream {
 }
 
 fn create_fun(filling : TokenStream) -> TokenStream {
-    let head = quote! { use super::operands::PluralOperands; use super::PluralCategory; type PluralRule = fn(PluralOperands) -> PluralCategory; };
+    let head = quote! { extern crate matches; use super::operands::PluralOperands; use super::PluralCategory; type PluralRule = fn(PluralOperands) -> PluralCategory; };
 
-    quote! { #head pub fn get_pr(lang: &str) -> PluralRule {match lang { #filling }}}
+    let mod_fun = quote! { fn fmod(op: PluralOperands, m: isize, v: isize) -> bool { op.i % m == v && op.f == 0 } };
+    quote! { #head  #mod_fun pub fn get_pr(lang: &str) -> PluralRule {match lang { #filling }}}
 }
 
 fn create_return(cat: PluralCategory, exp: &syn::Expr ) -> TokenStream {

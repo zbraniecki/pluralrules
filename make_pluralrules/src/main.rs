@@ -31,7 +31,7 @@ fn main() {
     // }
 
     let path_string = &args[1];
-    println!("{:?}", path_string);
+    // println!("{:?}", path_string);
 
     let file_path = Path::new(&path_string);
     let resources = parse_plurals_resource(file_path);

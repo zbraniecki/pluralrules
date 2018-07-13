@@ -72,11 +72,22 @@ fn create_relation(rel : Relation) -> syn::Expr {
         let rback = (r1.1)[0].2.clone();
 
         let rel_tokens =
-            if &left.modulus == &None {
-                quote! {#rfront #o po.#l && po.#l #o #rback}
+            if &left.operand.0.to_string() == "n" {
+                if &left.modulus == &None {
+                    quote! {#rfront #o po.#l && po.#l #o #rback}
+                } else {
+                    let m = convert_literal((left.modulus.clone().unwrap().0).0);
+                    let mod_snip = quote! { fmod(po, #m) };
+                    quote! {#rfront #o po.i % #m && po.#l % #m #o #rback}
+                }
             } else {
-                let m = convert_literal((left.modulus.clone().unwrap().0).0);
-                quote! {#rfront #o po.#l % #m && po.#l % #m #o #rback}
+                if &left.modulus == &None {
+                    quote! {#rfront #o po.#l && po.#l #o #rback}
+                } else {
+                    let m = convert_literal((left.modulus.clone().unwrap().0).0);
+                    let mod_snip = quote! { fmod(po, #m) };
+                    quote! {#rfront #o po.#l % #m && po.#l % #m #o #rback}
+                }
             };
 
         relations.push(syn::parse2(rel_tokens).expect("Unable to parse tokens"));
@@ -84,11 +95,20 @@ fn create_relation(rel : Relation) -> syn::Expr {
         for r in r1.0 {
 
             let rel_tokens =
-                if &left.modulus == &None {
-                    quote! {po.#l #o #r}
+                if &left.operand.0.to_string() == "n" {
+                    if &left.modulus == &None {
+                        quote! {po.#l #o #r}
+                    } else {
+                        let m = convert_literal((left.modulus.clone().unwrap().0).0);
+                        quote! {po.i % #m #o #r}
+                    }
                 } else {
-                    let m = convert_literal((left.modulus.clone().unwrap().0).0);
-                    quote! {po.#l % #m #o #r}
+                    if &left.modulus == &None {
+                        quote! {po.#l #o #r}
+                    } else {
+                        let m = convert_literal((left.modulus.clone().unwrap().0).0);
+                        quote! {po.#l % #m #o #r}
+                    }
                 };
 
             relations.push(syn::parse2(rel_tokens).expect("Unable to parse tokens"));
@@ -99,12 +119,40 @@ fn create_relation(rel : Relation) -> syn::Expr {
             let rdot = r.1;
             let rback = r.2;
 
+            let pos = 
+            match operator {
+                Operator::In => true,
+                Operator::NotIn => false,
+                Operator::Within => true,
+                Operator::NotWithin => false,
+                Operator::Is => true,
+                Operator::IsNot => false,
+                Operator::EQ => true,
+                Operator::NotEQ => false
+            };
+
             let rel_tokens =
-                if &left.modulus == &None {
-                    quote! {(po.#l #o #rfront #rdot #rback )}
+                if &left.operand.0.to_string() == "n" {
+                    if &left.modulus == &None {
+                        quote! {matches!(po.i, #rfront #rdot #rback) && po.f == 0 }
+                    } else {
+                        let m = convert_literal((left.modulus.clone().unwrap().0).0);
+                        quote! {matches!(po.i % #m, #rfront #rdot #rback) && po.f == 0}
+                    }
                 } else {
-                    let m = convert_literal((left.modulus.clone().unwrap().0).0);
-                    quote! {(po.#l % #m #o #rfront #rdot #rback )}
+                    if &left.modulus == &None {
+                        quote! {matches!(po.#l, #rfront #rdot #rback) && po.f == 0}
+                    } else {
+                        let m = convert_literal((left.modulus.clone().unwrap().0).0);
+                        quote! {matches!(po.#l % #m, #rfront #rdot #rback) && po.f == 0}
+                    }
+                };
+
+            let rel_tokens_finish = 
+                if pos == true {
+                    quote!{ (#rel_tokens == true) }
+                } else {
+                    quote!{ (#rel_tokens == false) }
                 };
 
             relations.push(syn::parse2(rel_tokens).expect("Unable to parse tokens"));
