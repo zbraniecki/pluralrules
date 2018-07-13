@@ -72,8 +72,8 @@ fn create_relation(rel : Relation) -> syn::Expr {
         let rback = (r1.1)[0].2.clone();
 
         let rel_tokens =
-            if &left.operand.0.to_string() == "n" {
-                if &left.modulus == &None {
+            if left.operand.0.to_string() == "n" {
+                if left.modulus == None {
                     quote! {#rfront.0 #o po.#l && po.#l #o #rback.0}
                 } else {
                     let m = convert_literal((left.modulus.clone().unwrap().0).0);
@@ -81,7 +81,7 @@ fn create_relation(rel : Relation) -> syn::Expr {
                     quote! {#rfront #o po.i % #m && po.i % #m #o #rback}
                 }
             } else {
-                if &left.modulus == &None {
+                if left.modulus == None {
                     quote! {#rfront #o po.#l && po.#l #o #rback}
                 } else {
                     let m = convert_literal((left.modulus.clone().unwrap().0).0);
@@ -141,10 +141,10 @@ fn create_relation(rel : Relation) -> syn::Expr {
                     }
                 } else {
                     if &left.modulus == &None {
-                        quote! {matches!(po.#l, #rfront #rdot #rback) && po.f == 0}
+                        quote! {matches!(po.#l, #rfront #rdot #rback)}
                     } else {
                         let m = convert_literal((left.modulus.clone().unwrap().0).0);
-                        quote! {matches!(po.#l % #m, #rfront #rdot #rback) && po.f == 0}
+                        quote! {matches!(po.#l % #m, #rfront #rdot #rback)}
                     }
                 };
 

@@ -5,4 +5,3 @@ authors = ["unclenacho"]
 
 [dependencies]
 matches = "0.1.6"
-num = "0.2.0"
