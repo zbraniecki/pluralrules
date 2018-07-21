@@ -10,6 +10,7 @@ serde = "1.0"
 serde_derive = "1.0"
 quote = "0.6"
 proc-macro2 = "0.4"
+reqwest = "0.8.6"
 
 [dependencies.syn]
 version = "0.14"

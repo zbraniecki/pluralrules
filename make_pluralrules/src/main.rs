@@ -5,6 +5,7 @@ extern crate quote;
 extern crate proc_macro2;
 extern crate syn;
 extern crate cldr_pluralrules_parser;
+extern crate reqwest;
 
 mod parser;
 
@@ -18,37 +19,30 @@ use cldr_pluralrules_parser::*;
 use cldr_pluralrules_parser::ast::*;
 use proc_macro2::TokenStream;
 
+use std::fs::File;
+use std::io::prelude::*;
+
 use quote::ToTokens;
 
-fn main() {
+
+/// Use Command: `cargo run <output_file>`
+fn main() -> std::io::Result<()> {
     let args: Vec<String> = env::args().collect();
 
-    if args.len() < 2 {
-        panic!("Specify a file path");
-    } 
-    // } else if args.len() < 3 {
-    //     panic!("Specify a source and output file path");
-    // }
+    let body = reqwest::get("https://raw.githubusercontent.com/unicode-cldr/cldr-core/master/supplemental/plurals.json").unwrap().text().unwrap().to_string();
 
-    let path_string = &args[1];
-    // println!("{:?}", path_string);
-
-    let file_path = Path::new(&path_string);
-    let resources = parse_plurals_resource(file_path);
+    let resources = if args.len() == 2 {
+        parse_plurals_resource_from_string(&body)
+    } else {
+        panic!("Specify an output file path")
+    };
 
     let r = resources.unwrap().supplemental.plurals_type_cardinal;
-
-    // let function = || { println!("test") };
-
-    // function();
 
     let mut five = Vec::<TokenStream>::new();
 
     if let Some(rules) = r {
     	for (lang1, r) in rules {
-            // println!("\n\nRules for lang {:#?}\n", &lang1);
-
-            //? ANY LANGUAE WITH A `-` IN THE NAME HAS THIS SYMBOL REMOVED
             let lang = str::replace(&lang1, "-", "");
 
             let mut these_rules = Vec::<(PluralCategory, syn::Expr)>::new();
@@ -80,15 +74,13 @@ fn main() {
             }
             let oth = (PluralCategory::OTHER, other());
             these_rules.push(oth);
-            five.push(gen_mid(&lang, these_rules));
-
-
-            // println!("{:?}", five.into_token_stream().to_string());
-            // println!("{:?}", five.to_string())
- 
+            five.push(gen_mid(&lang, these_rules)); 
     	}
     } 
 
     let six = gen_fn(five);
 
+    let mut file = File::create(&args[1])?;
+    file.write(six.to_string().as_bytes())?;
+    Ok(())
 }

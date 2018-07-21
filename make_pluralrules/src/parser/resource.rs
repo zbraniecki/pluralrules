@@ -34,7 +34,14 @@ pub struct Supplemental {
     pub plurals_type_ordinal: Option<HashMap<String, HashMap<String, String>>>,
 }
 
-pub fn parse_plurals_resource<P: AsRef<Path>>(path: P) -> Result<Resource, Box<Error>> {
+/// Will parse a CLDR compliant source from a &str.
+pub fn parse_plurals_resource_from_string(body: &str) -> Result<Resource, Box<Error>> {
+    let u = serde_json::from_str(body)?;
+    Ok(u)
+}
+
+// Will parser a CLDR compliant source from a local file.
+pub fn parse_plurals_resource_from_file<P: AsRef<Path>>(path: P) -> Result<Resource, Box<Error>> {
     let file = File::open(path)?;
     let u = serde_json::from_reader(file)?;
     Ok(u)
