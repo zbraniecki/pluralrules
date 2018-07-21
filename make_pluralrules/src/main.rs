@@ -24,7 +24,7 @@ use std::io::prelude::*;
 // use quote::ToTokens; // For geting tokens from syn::structs or String
 
 
-/// Use Command: `cargo run <output_file>`
+// Use Command: `cargo run <output_file>`
 fn main() -> std::io::Result<()> {
     let args: Vec<String> = env::args().collect();
 
@@ -36,28 +36,28 @@ fn main() -> std::io::Result<()> {
         panic!("Specify an output file path")
     };
 
-    /// resource_items is a struct representation of the raw CLDR rules.
+    // resource_items is a struct representation of the raw CLDR rules.
     let resource_items = resources.unwrap().supplemental.plurals_type_cardinal;
 
-    /// rule_tokens is a vector of TokenStreams that represent the CLDR plural rules as Rust expressions.
+    // rule_tokens is a vector of TokenStreams that represent the CLDR plural rules as Rust expressions.
     let mut rule_tokens = Vec::<TokenStream>::new();
 
     if let Some(rules) = resource_items {
     	for (lang_code, r) in rules {
 
-            /// `-` cannot appear in a function name. This removes a Rust-breaking character.
+            // `-` cannot appear in a function name. This removes a Rust-breaking character.
             let lang = str::replace(&lang_code, "-", "");
 
             // I want the syn::Expr to be a tokenStream and only have to convert to syn once             // ***** //
-            /// this_lang_rules is a vector of plural rules saved as a PluralCategory and a syn::Expr
+            // this_lang_rules is a vector of plural rules saved as a PluralCategory and a syn::Expr
             let mut this_lang_rules = Vec::<(PluralCategory, syn::Expr)>::new();
 
             for (rule_name, rule_line) in r {
 
-                /// cat_name is the simplified category name from the CLDR source file
+                // cat_name is the simplified category name from the CLDR source file
                 let cat_name = rule_name.split("-").collect::<Vec<_>>()[2];
 
-                /// representation is the 
+                // representation is the 
                 let representation = cldr_pluralrules_parser::parse_plural_rule(&rule_line);
 
                 let cat = 
@@ -82,12 +82,12 @@ fn main() -> std::io::Result<()> {
                 }
             }
             
-            /// Add `OTHER` rule outside of loop so that it appears at the end of match in generated code.
+            // Add `OTHER` rule outside of loop so that it appears at the end of match in generated code.
             let oth = (PluralCategory::OTHER, other());
             this_lang_rules.push(oth);
 
             // I want the syn::Expr to be a tokenStream and only have to convert to syn once             // ***** //
-            /// convert language rules to syn::Expr and add them to all the rules
+            // convert language rules to syn::Expr and add them to all the rules
             rule_tokens.push(parser::gen_rs::gen_mid(&lang, this_lang_rules)); 
     	}
     } 

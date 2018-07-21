@@ -8,8 +8,8 @@ use self::syn::BinOp;
 use self::proc_macro2::{Span};
 
 use cldr_pluralrules_parser::ast::*;
-use self::proc_macro2::TokenStream;
-use quote::ToTokens;
+// use self::proc_macro2::TokenStream;
+// use quote::ToTokens;
 
 fn convert_literal(num: usize) -> syn::LitInt {
     syn::LitInt::new(num as u64, syn::IntSuffix::None, Span::call_site())
@@ -77,7 +77,6 @@ fn create_relation(rel : Relation) -> syn::Expr {
                     quote! {#rfront.0 #o po.#l && po.#l #o #rback.0}
                 } else {
                     let m = convert_literal((left.modulus.clone().unwrap().0).0);
-                    let mod_snip = quote! { fmod(po, #m) };
                     quote! {#rfront #o po.i % #m && po.i % #m #o #rback}
                 }
             } else {
@@ -85,7 +84,6 @@ fn create_relation(rel : Relation) -> syn::Expr {
                     quote! {#rfront #o po.#l && po.#l #o #rback}
                 } else {
                     let m = convert_literal((left.modulus.clone().unwrap().0).0);
-                    let mod_snip = quote! { fmod(po, #m) };
                     quote! {#rfront #o po.#l % #m && po.#l % #m #o #rback}
                 }
             };
@@ -119,17 +117,17 @@ fn create_relation(rel : Relation) -> syn::Expr {
             let rdot = r.1;
             let rback = r.2;
 
-            let pos = 
-            match operator {
-                Operator::In => true,
-                Operator::NotIn => false,
-                Operator::Within => true,
-                Operator::NotWithin => false,
-                Operator::Is => true,
-                Operator::IsNot => false,
-                Operator::EQ => true,
-                Operator::NotEQ => false
-            };
+            // let pos = 
+            // match operator {
+            //     Operator::In => true,
+            //     Operator::NotIn => false,
+            //     Operator::Within => true,
+            //     Operator::NotWithin => false,
+            //     Operator::Is => true,
+            //     Operator::IsNot => false,
+            //     Operator::EQ => true,
+            //     Operator::NotEQ => false
+            // };
 
             let rel_tokens =
                 if &left.operand.0.to_string() == "n" {
@@ -148,12 +146,12 @@ fn create_relation(rel : Relation) -> syn::Expr {
                     }
                 };
 
-            let rel_tokens_finish = 
-                if pos == true {
-                    quote!{ (#rel_tokens == true) }
-                } else {
-                    quote!{ (#rel_tokens == false) }
-                };
+            // let rel_tokens_finish = 
+            //     if pos == true {
+            //         quote!{ (#rel_tokens == true) }
+            //     } else {
+            //         quote!{ (#rel_tokens == false) }
+            //     };
 
             relations.push(syn::parse2(rel_tokens).expect("Unable to parse tokens"));
         }

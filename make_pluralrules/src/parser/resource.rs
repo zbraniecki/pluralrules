@@ -7,8 +7,8 @@ extern crate serde_json;
 
 use std::collections::HashMap;
 use std::error::Error;
-use std::fs::File;
-use std::path::Path;
+// use std::fs::File;
+// use std::path::Path;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Resource {
@@ -41,8 +41,8 @@ pub fn parse_plurals_resource_from_string(body: &str) -> Result<Resource, Box<Er
 }
 
 // Will parser a CLDR compliant source from a local file.
-pub fn parse_plurals_resource_from_file<P: AsRef<Path>>(path: P) -> Result<Resource, Box<Error>> {
-    let file = File::open(path)?;
-    let u = serde_json::from_reader(file)?;
-    Ok(u)
-}
+// pub fn parse_plurals_resource_from_file<P: AsRef<Path>>(path: P) -> Result<Resource, Box<Error>> {
+//     let file = File::open(path)?;
+//     let u = serde_json::from_reader(file)?;
+//     Ok(u)
+// }
