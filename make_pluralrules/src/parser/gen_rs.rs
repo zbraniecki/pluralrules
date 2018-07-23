@@ -4,13 +4,7 @@ extern crate quote;
 
 use super::plural_category::PluralCategory;
 
-use self::proc_macro2::{Span};
-
-// use self::syn::token;
-
-// use quote::ToTokens;
-use self::proc_macro2::TokenStream;
-// use proc_macro2::{Ident, Span};
+use self::proc_macro2::{Span, TokenStream};
 
 fn convert_litstr(s: &str) -> syn::LitStr {
     syn::LitStr::new(s, Span::call_site())
@@ -31,7 +25,7 @@ fn create_gen_pr_fn(filling : TokenStream) -> TokenStream {
     quote! { #head #get_pr_function }
 }
 
-fn create_return(cat: PluralCategory, exp: &syn::Expr ) -> TokenStream {
+fn create_return(cat: PluralCategory, exp: &TokenStream ) -> TokenStream {
 	match cat {
 		PluralCategory::ZERO => quote! {if #exp { PluralCategory::ZERO } },
 	    PluralCategory::ONE => quote! {if #exp { PluralCategory::ONE } },
@@ -42,7 +36,7 @@ fn create_return(cat: PluralCategory, exp: &syn::Expr ) -> TokenStream {
 	}
 }
 
-pub fn gen_mid(lang: &str, pluralrule_set : Vec<(PluralCategory, syn::Expr)> ) -> TokenStream {
+pub fn gen_mid(lang: &str, pluralrule_set : Vec<(PluralCategory, TokenStream)> ) -> TokenStream {
     // let size = ex.len();
 
     // make pluralrule_set iterable

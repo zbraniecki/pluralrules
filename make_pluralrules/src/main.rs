@@ -3,25 +3,19 @@ extern crate serde_derive;
 #[macro_use]
 extern crate quote;
 extern crate proc_macro2;
-extern crate syn;
 extern crate cldr_pluralrules_parser;
 extern crate reqwest;
 
 mod parser;
 
-use std::env;
 // use std::path::Path; // for reading local file
 use parser::resource::*;
-// use parser::gen_rs::*;
 use parser::plural_category::PluralCategory;
-// use cldr_pluralrules_parser::*;
 use proc_macro2::TokenStream;
 
 use std::fs::File;
 use std::io::prelude::*;
-
-// use quote::ToTokens; // For geting tokens from syn::structs or String
-
+use std::env;
 
 // Use Command: `cargo run <output_file>`
 fn main() -> std::io::Result<()> {
@@ -47,9 +41,8 @@ fn main() -> std::io::Result<()> {
             // `-` cannot appear in a function name. This removes a Rust-breaking character.
             let lang = str::replace(&lang_code, "-", "");
 
-            // I want the syn::Expr to be a tokenStream and only have to convert to syn once             // ***** //
-            // this_lang_rules is a vector of plural rules saved as a PluralCategory and a syn::Expr
-            let mut this_lang_rules = Vec::<(PluralCategory, syn::Expr)>::new();
+            // this_lang_rules is a vector of plural rules saved as a PluralCategory and a TokenStream
+            let mut this_lang_rules = Vec::<(PluralCategory, TokenStream)>::new();
 
             for (rule_name, rule_line) in r {
 
@@ -76,8 +69,8 @@ fn main() -> std::io::Result<()> {
 
                 // Only allow rules that are not `OTHER` to be added. `OTHER` can have no rules and is added outside of the loop.
                 if cat != PluralCategory::OTHER {
-                    let synxpr = parser::gen_pr::gen_pr(representation);
-                    this_lang_rules.push((cat, synxpr));
+                    let other_tokens = parser::gen_pr::gen_pr(representation);
+                    this_lang_rules.push((cat, other_tokens));
                 }
             }
             
@@ -85,8 +78,7 @@ fn main() -> std::io::Result<()> {
             let oth = (PluralCategory::OTHER, parser::gen_pr::other());
             this_lang_rules.push(oth);
 
-            // I want the syn::Expr to be a tokenStream and only have to convert to syn once             // ***** //
-            // convert language rules to syn::Expr and add them to all the rules
+            // convert language rules to TokenStream and add them to all the rules
             rule_tokens.push(parser::gen_rs::gen_mid(&lang, this_lang_rules)); 
     	}
     } 

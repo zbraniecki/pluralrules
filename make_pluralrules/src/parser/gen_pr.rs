@@ -8,17 +8,20 @@ use self::syn::BinOp;
 use self::proc_macro2::{Span};
 
 use cldr_pluralrules_parser::ast::*;
-// use self::proc_macro2::TokenStream;
+use self::proc_macro2::TokenStream;
 // use quote::ToTokens;
 
+// use syn to convert a usize to a literal int in the generated rust code
 fn convert_literal(num: usize) -> syn::LitInt {
     syn::LitInt::new(num as u64, syn::IntSuffix::None, Span::call_site())
 }
 
-fn convert_ident(ch: &str) -> syn::Ident {
-    syn::Ident::new(ch, Span::call_site())
+// use syn to convert a string to a literal variable in the generated rust code
+fn convert_ident(id: &str) -> syn::Ident {
+    syn::Ident::new(id, Span::call_site())
 }
 
+// use syn to convert two usize into a tuple with literal ints and a dotdot for range
 fn convert_range(low: usize, up: usize) -> (syn::LitInt, syn::token::DotDotEq, syn::LitInt) {
     let u = convert_literal(up);
     let d = convert_literal(low);
@@ -27,6 +30,7 @@ fn convert_range(low: usize, up: usize) -> (syn::LitInt, syn::token::DotDotEq, s
     (d, p, u)
 }
 
+// convert a range list into a tuple of lists: one for lists of values and one for lists of ranges
 fn convert_rangl (rangl: RangeList) -> (Vec<syn::LitInt>, Vec<(syn::LitInt, syn::token::DotDotEq, syn::LitInt)>) {
     let mut litints = Vec::<syn::LitInt>::new();
     let mut litrange = Vec::<(syn::LitInt, syn::token::DotDotEq, syn::LitInt)>::new();
@@ -41,6 +45,7 @@ fn convert_rangl (rangl: RangeList) -> (Vec<syn::LitInt>, Vec<(syn::LitInt, syn:
     (litints, litrange)
 }
 
+// match the needed operator symbol
 fn get_operator_symbol(op: Operator) -> BinOp {
 	match op {
 		Operator::In => BinOp::Eq(syn::token::EqEq::new(Span::call_site())),
@@ -54,17 +59,15 @@ fn get_operator_symbol(op: Operator) -> BinOp {
 	}
 }
 
-fn create_relation(rel : Relation) -> syn::Expr {
+fn create_relation(rel : Relation) -> TokenStream {
     let left = rel.expression;
     let operator = rel.operator;
     let right = rel.range_list;
 
-    let mut relations = Vec::<syn::Expr>::new();
+    let mut relations = Vec::<TokenStream>::new();
 
     let l = convert_ident(&left.operand.0.to_string());
-
     let o = get_operator_symbol(operator.clone());
-
     let r1 = convert_rangl(right);
 
     if operator == Operator::Within || operator == Operator::NotWithin{
@@ -88,7 +91,7 @@ fn create_relation(rel : Relation) -> syn::Expr {
                 }
             };
 
-        relations.push(syn::parse2(rel_tokens).expect("Unable to parse tokens"));
+        relations.push(rel_tokens);
     } else {
         for r in r1.0 {
 
@@ -109,25 +112,13 @@ fn create_relation(rel : Relation) -> syn::Expr {
                     }
                 };
 
-            relations.push(syn::parse2(rel_tokens).expect("Unable to parse tokens"));
+            relations.push(rel_tokens);
         }
         for r in r1.1 {
 
             let rfront = r.0;
             let rdot = r.1;
             let rback = r.2;
-
-            // let pos = 
-            // match operator {
-            //     Operator::In => true,
-            //     Operator::NotIn => false,
-            //     Operator::Within => true,
-            //     Operator::NotWithin => false,
-            //     Operator::Is => true,
-            //     Operator::IsNot => false,
-            //     Operator::EQ => true,
-            //     Operator::NotEQ => false
-            // };
 
             let rel_tokens =
                 if &left.operand.0.to_string() == "n" {
@@ -146,14 +137,7 @@ fn create_relation(rel : Relation) -> syn::Expr {
                     }
                 };
 
-            // let rel_tokens_finish = 
-            //     if pos == true {
-            //         quote!{ (#rel_tokens == true) }
-            //     } else {
-            //         quote!{ (#rel_tokens == false) }
-            //     };
-
-            relations.push(syn::parse2(rel_tokens).expect("Unable to parse tokens"));
+            relations.push(rel_tokens);
         }
     }
 
@@ -168,45 +152,47 @@ fn create_relation(rel : Relation) -> syn::Expr {
             Operator::EQ => if relations.len() > 1 { quote!{ ( #(#relations)||* ) } } else {quote!{ #(#relations)||* } },
             Operator::NotEQ => quote!{ #(#relations)&&* }
         };
-    syn::parse2(relationexpr).expect("Unable to parse tokens")
+    relationexpr
 
 }
 
-fn create_and_condition(acond: AndCondition) -> syn::Expr {
-    let mut andcondvec = Vec::<syn::Expr>::new();
+// Unfold AndConditions and tokenize together with &&
+fn create_and_condition(acond: AndCondition) -> TokenStream {
+    let mut andcondvec = Vec::<TokenStream>::new();
  
+    // unpack the AndCondition and get all relations from within it
     for a in acond.0 {
         andcondvec.push(create_relation(a.clone()));
     };
-
-    let andcondexpr = quote!{ ( #(#andcondvec)&&* ) };
-
-    syn::parse2(andcondexpr).expect("Unable to parse tokens")
+    
+    // Unfold AndConditions and tokenize together with &&
+    quote!{ ( #(#andcondvec)&&* ) }
 }
 
-fn create_condition(cond: Condition) -> syn::Expr {
-    let mut condvec = Vec::<syn::Expr>::new();
+// unfold OrConditions and tokenize together with ||
+fn create_condition(cond: Condition) -> TokenStream {
+    let mut condvec = Vec::<TokenStream>::new();
  
+    // unpack the OrCondition and get all AndConditions from within it
     for c in cond.0 {
         condvec.push(create_and_condition(c.clone()));
     };
 
-    let condexpr = quote!{ #(#condvec)||* };
-
-    syn::parse2(condexpr).expect("Unable to parse tokens")
+    // unfold OrConditions and tokenize together with ||
+    quote!{ #(#condvec)||* }
 }
 
-// pub fn gen_pr(cond: Condition) -> TokenStream {
-pub fn gen_pr(cond: Condition) -> syn::Expr {
+// Function takes a full condition as input
+// Returns a TokenStream of the expression of the plural rule in Rust
+pub fn gen_pr(cond: Condition) -> TokenStream {
 	// create_condition(cond).into_token_stream()
     create_condition(cond)
 } 
 
-// pub fn other() -> TokenStream {
-pub fn other() -> syn::Expr {
+// Place holder for the other rule. Fills the required right side of the match expression but it is not used in gen_rs
+pub fn other() -> TokenStream {
     let temp = convert_literal(1);
     let condexpr = quote!{ #temp };
 
-    syn::parse2(condexpr).expect("GEN_PR::OTHER")
-    // condexpr.into_token_stream()
+    condexpr
 } 
