@@ -12,7 +12,6 @@ mod parser;
 use std::env;
 // use std::path::Path; // for reading local file
 use parser::resource::*;
-use parser::gen_pr::*;
 // use parser::gen_rs::*;
 use parser::plural_category::PluralCategory;
 // use cldr_pluralrules_parser::*;
@@ -77,13 +76,13 @@ fn main() -> std::io::Result<()> {
 
                 // Only allow rules that are not `OTHER` to be added. `OTHER` can have no rules and is added outside of the loop.
                 if cat != PluralCategory::OTHER {
-                    let synxpr = gen_pr(representation);
+                    let synxpr = parser::gen_pr::gen_pr(representation);
                     this_lang_rules.push((cat, synxpr));
                 }
             }
             
             // Add `OTHER` rule outside of loop so that it appears at the end of match in generated code.
-            let oth = (PluralCategory::OTHER, other());
+            let oth = (PluralCategory::OTHER, parser::gen_pr::other());
             this_lang_rules.push(oth);
 
             // I want the syn::Expr to be a tokenStream and only have to convert to syn once             // ***** //

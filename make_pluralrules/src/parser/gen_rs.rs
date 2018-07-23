@@ -12,31 +12,23 @@ use self::proc_macro2::{Span};
 use self::proc_macro2::TokenStream;
 // use proc_macro2::{Ident, Span};
 
-// fn convert_ident(ch: &str) -> syn::Ident {
-//     syn::Ident::new(ch, Span::call_site())
-// }
-
-// fn create_boilerplate_from_quote() -> syn::File {
-//     let boilerplate_tokens = quote! {
-//         fn get_pr(lang: &str) -> PluralRule { match lang {} }
-//     };
-//     syn::parse2(boilerplate_tokens).expect("Unable to parse boilerplate")
-// }
-
 fn convert_litstr(s: &str) -> syn::LitStr {
     syn::LitStr::new(s, Span::call_site())
 }
 
 fn create_match_state(lang: &str, filling : TokenStream) -> TokenStream {
-    // let fnname = "pr_".to_owned() + lang;
-    let match_name = convert_litstr(&lang);
+    let match_name = convert_litstr(lang);
     quote! { #match_name => |po| { #filling }}
 }
 
-fn create_fun(filling : TokenStream) -> TokenStream {
-    let head = quote! { #![allow(unused_variables, unused_parens)] extern crate matches; use super::operands::PluralOperands; use super::PluralCategory; type PluralRule = fn(PluralOperands) -> PluralCategory; };
-
-    quote! { #head pub fn get_pr(lang: &str) -> PluralRule {match lang { #filling }}}
+fn create_gen_pr_fn(filling : TokenStream) -> TokenStream {
+    let ignore_noncritical_errors = quote! { #![allow(unused_variables, unused_parens)] };
+    let extern_crates = quote! { extern crate matches; };
+    let use_statements = quote! { use super::operands::PluralOperands; use super::PluralCategory; };
+    let plural_function = quote! { type PluralRule = fn(PluralOperands) -> PluralCategory; };
+    let head = quote! { #ignore_noncritical_errors #extern_crates #use_statements #plural_function};
+    let get_pr_function = quote! { pub fn get_pr(lang: &str) -> PluralRule {match lang { #filling }} };
+    quote! { #head #get_pr_function }
 }
 
 fn create_return(cat: PluralCategory, exp: &syn::Expr ) -> TokenStream {
@@ -50,39 +42,33 @@ fn create_return(cat: PluralCategory, exp: &syn::Expr ) -> TokenStream {
 	}
 }
 
-pub fn gen_mid(lang: &str, ex : Vec<(PluralCategory, syn::Expr)> ) -> TokenStream {
+pub fn gen_mid(lang: &str, pluralrule_set : Vec<(PluralCategory, syn::Expr)> ) -> TokenStream {
+    // let size = ex.len();
 
-    let size = ex.len();
-
-    // let mut result = create_boilerplate_from_quote();
-
-    let mut iter = ex.iter();
+    // make pluralrule_set iterable
+    let mut iter = pluralrule_set.iter();
+    // get the first pluralrule from pluralrule_set and make accessible
     let pair = iter.next().unwrap();
-    let mut tokens = create_return(pair.0, &pair.1);
+    // instantiate tokenstream for folded match rules
+    let mut rule_tokens = create_return(pair.0, &pair.1);
     
-    if size > 1 {
+    // add all tokens to token stream, separated by commas
+    if pluralrule_set.len() > 1 {
         for pair in iter {
             let condition = create_return(pair.0, &pair.1);
-            tokens = quote! { #tokens else #condition };
+            rule_tokens = quote! { #rule_tokens else #condition };
         }
     }
     
-    let mid = create_match_state(&lang,tokens);
-
-    let what_i_want = mid.clone();
-
-    what_i_want
+   // return the world's best tokenstreamn
+    create_match_state(lang,rule_tokens)
 }
 
 pub fn gen_fn(mut streams: Vec<TokenStream> ) -> TokenStream {
-
+    // Add an unknown local result to locale match
     streams.push(quote! { _ => panic!("Unknown locale!") });
-
-    // let record_label = streams[0].clone();
-
-    let mbfgw = quote!{ #(#streams),* };
-
-    let junk = create_fun(mbfgw);
-
-    junk
+    // Unpack the vector of tokenstreams. Each tokenstream is a pluralrule match result
+    let unpacked_tokens = quote!{ #(#streams),* };
+    // wrap the match options in the outermost gen code
+    create_gen_pr_fn(unpacked_tokens)
 }

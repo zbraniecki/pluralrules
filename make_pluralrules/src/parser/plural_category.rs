@@ -1,7 +1,7 @@
 //! Plural rule categories in compliance with [Unicode](http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules)
 
 /// An enum for all plural rule categories.
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum PluralCategory {
     ZERO,
     ONE,
