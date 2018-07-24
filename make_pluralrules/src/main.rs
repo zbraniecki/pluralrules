@@ -2,26 +2,31 @@
 extern crate serde_derive;
 #[macro_use]
 extern crate quote;
-extern crate proc_macro2;
 extern crate cldr_pluralrules_parser;
+extern crate proc_macro2;
 extern crate reqwest;
 
 mod parser;
 
 // use std::path::Path; // for reading local file
-use parser::resource::*;
 use parser::plural_category::PluralCategory;
+use parser::resource::*;
 use proc_macro2::TokenStream;
 
+use std::env;
 use std::fs::File;
 use std::io::prelude::*;
-use std::env;
 
 // Use Command: `cargo run <output_file>`
 fn main() -> std::io::Result<()> {
     let args: Vec<String> = env::args().collect();
 
-    let body = reqwest::get("https://raw.githubusercontent.com/unicode-cldr/cldr-core/master/supplemental/plurals.json").unwrap().text().unwrap().to_string();
+    let body = reqwest::get(
+        "https://raw.githubusercontent.com/unicode-cldr/cldr-core/master/supplemental/plurals.json",
+    ).unwrap()
+        .text()
+        .unwrap()
+        .to_string();
 
     let resources = if args.len() == 2 {
         parse_plurals_resource_from_string(&body)
@@ -36,8 +41,7 @@ fn main() -> std::io::Result<()> {
     let mut rule_tokens = Vec::<TokenStream>::new();
 
     if let Some(rules) = resource_items {
-    	for (lang_code, r) in rules {
-
+        for (lang_code, r) in rules {
             // `-` cannot appear in a function name. This removes a Rust-breaking character.
             let lang = str::replace(&lang_code, "-", "");
 
@@ -45,27 +49,25 @@ fn main() -> std::io::Result<()> {
             let mut this_lang_rules = Vec::<(PluralCategory, TokenStream)>::new();
 
             for (rule_name, rule_line) in r {
-
                 // cat_name is the simplified category name from the CLDR source file
                 let cat_name = rule_name.split("-").collect::<Vec<_>>()[2];
 
-                // representation is the 
+                // representation is the
                 let representation = cldr_pluralrules_parser::parse_plural_rule(&rule_line);
 
-                let cat = 
-                    if cat_name == "zero" {
-                        PluralCategory::ZERO
-                    } else if cat_name == "one" {
-                        PluralCategory::ONE
-                    } else if cat_name == "two" {
-                        PluralCategory::TWO
-                    } else if cat_name == "few" {
-                        PluralCategory::FEW
-                    } else if cat_name == "many" {
-                        PluralCategory::MANY
-                    } else {
-                        PluralCategory::OTHER
-                    };
+                let cat = if cat_name == "zero" {
+                    PluralCategory::ZERO
+                } else if cat_name == "one" {
+                    PluralCategory::ONE
+                } else if cat_name == "two" {
+                    PluralCategory::TWO
+                } else if cat_name == "few" {
+                    PluralCategory::FEW
+                } else if cat_name == "many" {
+                    PluralCategory::MANY
+                } else {
+                    PluralCategory::OTHER
+                };
 
                 // Only allow rules that are not `OTHER` to be added. `OTHER` can have no rules and is added outside of the loop.
                 if cat != PluralCategory::OTHER {
@@ -73,15 +75,10 @@ fn main() -> std::io::Result<()> {
                     this_lang_rules.push((cat, other_tokens));
                 }
             }
-            
-            // Add `OTHER` rule outside of loop so that it appears at the end of match in generated code.
-            let oth = (PluralCategory::OTHER, parser::gen_pr::other());
-            this_lang_rules.push(oth);
-
             // convert language rules to TokenStream and add them to all the rules
-            rule_tokens.push(parser::gen_rs::gen_mid(&lang, this_lang_rules)); 
-    	}
-    } 
+            rule_tokens.push(parser::gen_rs::gen_mid(&lang, this_lang_rules));
+        }
+    }
 
     // I want this as a String rather than some weird struct
     let complete_rs_code = parser::gen_rs::gen_fn(rule_tokens);

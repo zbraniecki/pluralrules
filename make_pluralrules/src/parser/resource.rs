@@ -1,5 +1,5 @@
-// one public function that 
-// takes a string from the file 
+// one public function that
+// takes a string from the file
 // and returns a structure with rules per locale
 
 extern crate serde;
