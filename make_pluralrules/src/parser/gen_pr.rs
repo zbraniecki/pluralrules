@@ -1,9 +1,6 @@
-extern crate proc_macro2;
-extern crate cldr_pluralrules_parser;
+use proc_macro2::Span;
 
-use self::proc_macro2::Span;
-
-use self::proc_macro2::{Ident, Literal, TokenStream};
+use proc_macro2::{Ident, Literal, TokenStream};
 use cldr_pluralrules_parser::ast::*;
 
 fn convert_literal(num: usize) -> Literal {

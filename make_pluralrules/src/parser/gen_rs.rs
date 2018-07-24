@@ -1,8 +1,7 @@
-extern crate proc_macro2;
 
 use super::plural_category::PluralCategory;
 
-use self::proc_macro2::{TokenStream, Literal};
+use proc_macro2::{TokenStream, Literal};
 
 fn convert_litstr(s: &str) -> Literal {
     Literal::string(s)
