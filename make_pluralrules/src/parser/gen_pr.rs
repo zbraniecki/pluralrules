@@ -46,7 +46,7 @@ fn convert_rangl (rangl: RangeList) -> (Vec<syn::LitInt>, Vec<(syn::LitInt, syn:
 }
 
 // match the needed operator symbol
-fn get_operator_symbol(op: Operator) -> BinOp {
+fn get_operator_symbol(op: &Operator) -> BinOp {
 	match op {
 		Operator::In => BinOp::Eq(syn::token::EqEq::new(Span::call_site())),
 	    Operator::NotIn => BinOp::Ne(syn::token::Ne::new(Span::call_site())),
@@ -67,15 +67,17 @@ fn create_relation(rel : Relation) -> TokenStream {
     let mut relations = Vec::<TokenStream>::new();
 
     let l = convert_ident(&left.operand.0.to_string());
-    let o = get_operator_symbol(operator.clone());
+    // println!("{}", left.operand.0);
+    // let l = left.operand.0;
+    let o = get_operator_symbol(&operator);
     let r1 = convert_rangl(right);
 
     if operator == Operator::Within || operator == Operator::NotWithin{
-        let rfront = (r1.1)[0].0.clone();
-        let rback = (r1.1)[0].2.clone();
+        let rfront = &(r1.1)[0].0;
+        let rback = &(r1.1)[0].2;
 
         let rel_tokens =
-            if left.operand.0.to_string() == "n" {
+            if left.operand.0 == 'n' {
                 if left.modulus == None {
                     quote! {#rfront.0 #o po.#l && po.#l #o #rback.0}
                 } else {
@@ -96,7 +98,7 @@ fn create_relation(rel : Relation) -> TokenStream {
         for r in r1.0 {
 
             let rel_tokens =
-                if &left.operand.0.to_string() == "n" {
+                if left.operand.0 == 'n' {
                     if &left.modulus == &None {
                         quote! {po.#l #o #r.0}
                     } else {
@@ -121,7 +123,7 @@ fn create_relation(rel : Relation) -> TokenStream {
             let rback = r.2;
 
             let rel_tokens =
-                if &left.operand.0.to_string() == "n" {
+                if left.operand.0 == 'n' {
                     if &left.modulus == &None {
                         quote! {matches!(po.i, #rfront #rdot #rback) && po.f == 0 }
                     } else {
@@ -162,7 +164,7 @@ fn create_and_condition(acond: AndCondition) -> TokenStream {
  
     // unpack the AndCondition and get all relations from within it
     for a in acond.0 {
-        andcondvec.push(create_relation(a.clone()));
+        andcondvec.push(create_relation(a));
     };
     
     // Unfold AndConditions and tokenize together with &&
@@ -175,7 +177,7 @@ fn create_condition(cond: Condition) -> TokenStream {
  
     // unpack the OrCondition and get all AndConditions from within it
     for c in cond.0 {
-        condvec.push(create_and_condition(c.clone()));
+        condvec.push(create_and_condition(c));
     };
 
     // unfold OrConditions and tokenize together with ||
