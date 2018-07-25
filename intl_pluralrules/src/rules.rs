@@ -133,8 +133,10 @@ pub fn get_pr(lang: &str) -> PluralRule {
         },
         "bo" => |po| PluralCategory::OTHER,
         "br" => |po| {
-            if ((po.i % 10 == 9 || matches!(po.i, 3..=4)) && matches!(po.i, 10..=19)
-                && matches!(po.i, 70..=79) && matches!(po.i, 90..=99))
+            if ((po.i % 10 == 9 || matches!(po.i, 3..=4))
+                && matches!(po.i, 10..=19)
+                && matches!(po.i, 70..=79)
+                && matches!(po.i, 90..=99))
             {
                 PluralCategory::FEW
             } else if (po.n != 0.0 && po.i % 1000000 == 0) {
@@ -423,7 +425,10 @@ pub fn get_pr(lang: &str) -> PluralRule {
         },
         "gv" => |po| {
             if (po.v == 0
-                && (po.i % 100 == 0 || po.i % 100 == 20 || po.i % 100 == 40 || po.i % 100 == 60
+                && (po.i % 100 == 0
+                    || po.i % 100 == 20
+                    || po.i % 100 == 40
+                    || po.i % 100 == 60
                     || po.i % 100 == 80))
             {
                 PluralCategory::FEW
@@ -732,7 +737,8 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 || (po.v != 2 && po.f % 10 == 1)
             {
                 PluralCategory::ONE
-            } else if (po.i % 10 == 0) || (matches!(po.i, 11..=19))
+            } else if (po.i % 10 == 0)
+                || (matches!(po.i, 11..=19))
                 || (po.v == 2 && matches!(po.f % 100, 11..=19))
             {
                 PluralCategory::ZERO
@@ -962,7 +968,8 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 || (po.v != 2 && po.f % 10 == 1)
             {
                 PluralCategory::ONE
-            } else if (po.i % 10 == 0) || (matches!(po.i, 11..=19))
+            } else if (po.i % 10 == 0)
+                || (matches!(po.i, 11..=19))
                 || (po.v == 2 && matches!(po.f % 100, 11..=19))
             {
                 PluralCategory::ZERO
@@ -1018,7 +1025,8 @@ pub fn get_pr(lang: &str) -> PluralRule {
         "ru" => |po| {
             if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14)) {
                 PluralCategory::FEW
-            } else if (po.v == 0 && po.i % 10 == 0) || (po.v == 0 && matches!(po.i % 10, 5..=9))
+            } else if (po.v == 0 && po.i % 10 == 0)
+                || (po.v == 0 && matches!(po.i % 10, 5..=9))
                 || (po.v == 0 && matches!(po.i % 100, 11..=14))
             {
                 PluralCategory::MANY
@@ -1346,7 +1354,8 @@ pub fn get_pr(lang: &str) -> PluralRule {
         "uk" => |po| {
             if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14)) {
                 PluralCategory::FEW
-            } else if (po.v == 0 && po.i % 10 == 0) || (po.v == 0 && matches!(po.i % 10, 5..=9))
+            } else if (po.v == 0 && po.i % 10 == 0)
+                || (po.v == 0 && matches!(po.i % 10, 5..=9))
                 || (po.v == 0 && matches!(po.i % 100, 11..=14))
             {
                 PluralCategory::MANY

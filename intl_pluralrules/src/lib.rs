@@ -61,7 +61,7 @@ pub enum PluralCategory {
     TWO,
     FEW,
     MANY,
-    OTHER
+    OTHER,
 }
 
 pub fn select_plural_category<S: ToString>(lang: &str, number: S) -> PluralCategory {
