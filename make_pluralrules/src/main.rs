@@ -1,3 +1,13 @@
+//! make_pluralrules generates a Rust code representation of CLDR plural rules in compliance with [Unicode](http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules).
+//! 
+//! Representations of plural rules are generated from [Unicode's plural rules](https://github.com/unicode-cldr/cldr-core/blob/master/supplemental/plurals.json) and uses the intl_pluralrules_parser AST to build the representation.
+//!
+//! The ouput is a Rust file, specified by the user in the comand
+//! ```text
+//! cargo run <output_file>
+//! ```
+//! where `<output_file> is the location of the desired Rust file. 
+
 #[macro_use]
 extern crate serde_derive;
 extern crate serde;
@@ -10,7 +20,7 @@ extern crate reqwest;
 
 mod parser;
 
-// use std::path::Path; // for reading local file
+// use std::path::Path;
 use parser::plural_category::PluralCategory;
 use parser::resource::*;
 use proc_macro2::TokenStream;
@@ -19,19 +29,17 @@ use std::env;
 use std::fs::File;
 use std::io::prelude::*;
 
-// Use Command: `cargo run <output_file>`
 fn main() -> std::io::Result<()> {
     let args: Vec<String> = env::args().collect();
 
-    let body = reqwest::get(
-        "https://raw.githubusercontent.com/unicode-cldr/cldr-core/master/supplemental/plurals.json",
-    ).unwrap()
-        .text()
-        .unwrap()
-        .to_string();
+    let mut f = File::open("resources/plurals.json").expect("file not found");
+
+    let mut contents = String::new();
+    f.read_to_string(&mut contents)
+        .expect("something went wrong reading the file");
 
     let resources = if args.len() == 2 {
-        parse_plurals_resource_from_string(&body)
+        parse_plurals_resource_from_string(&contents)
     } else {
         panic!("Specify an output file path")
     };

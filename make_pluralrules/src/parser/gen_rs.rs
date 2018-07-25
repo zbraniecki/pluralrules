@@ -1,4 +1,4 @@
-
+//! gen_rs is a Rust code generator for expression representations of CLDR plural rules.
 use super::plural_category::PluralCategory;
 
 use proc_macro2::{TokenStream, Literal};
@@ -34,6 +34,9 @@ fn create_return(cat: PluralCategory, exp: &TokenStream) -> TokenStream {
     }
 }
 
+/// Generates the match statements that comprise the majority of the generated rust code. 
+///
+/// These statements are the expression representations of the CLDR plural rules.
 pub fn gen_mid(lang: &str, pluralrule_set: Vec<(PluralCategory, TokenStream)>) -> TokenStream {
     // make pluralrule_set iterable
     let mut iter = pluralrule_set.iter();
@@ -59,6 +62,7 @@ pub fn gen_mid(lang: &str, pluralrule_set: Vec<(PluralCategory, TokenStream)>) -
     create_match_state(lang, rule_tokens)
 }
 
+/// Generates the complete TokenStream for the generated Rust code. This wraps the head and tail of the .rs file around the generated CLDR expressions.
 pub fn gen_fn(mut streams: Vec<TokenStream>) -> TokenStream {
     // Add an unknown local result to locale match
     streams.push(quote! { _ => panic!("Unknown locale!") });

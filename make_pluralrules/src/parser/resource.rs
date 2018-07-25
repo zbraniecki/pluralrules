@@ -1,13 +1,9 @@
-// one public function that
-// takes a string from the file
-// and returns a structure with rules per locale
+//! This reference parser uses serde_json to produce the plural rules from a CLDR data JSON file.
 
 use serde_json;
 
 use std::collections::HashMap;
 use std::error::Error;
-// use std::fs::File;
-// use std::path::Path;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Resource {
@@ -39,9 +35,3 @@ pub fn parse_plurals_resource_from_string(body: &str) -> Result<Resource, Box<Er
     Ok(u)
 }
 
-// Will parser a CLDR compliant source from a local file.
-// pub fn parse_plurals_resource_from_file<P: AsRef<Path>>(path: P) -> Result<Resource, Box<Error>> {
-//     let file = File::open(path)?;
-//     let u = serde_json::from_reader(file)?;
-//     Ok(u)
-// }
