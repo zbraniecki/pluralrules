@@ -18,7 +18,7 @@ extern crate cldr_pluralrules_parser;
 extern crate proc_macro2;
 extern crate reqwest;
 
-mod parser;
+pub mod parser;
 
 // use std::path::Path;
 use parser::plural_category::PluralCategory;
