@@ -4,7 +4,7 @@
 //!
 //! The ouput is a Rust file, specified by the user in the comand
 //! ```text
-//! cargo run <output_file>
+//! cargo run <./path/to/cldr.json> <./path/to/output.rs>
 //! ```
 //! where `<output_file>` is the location of the desired Rust file.
 
@@ -14,34 +14,41 @@ extern crate serde;
 extern crate serde_json;
 #[macro_use]
 extern crate quote;
+extern crate clap;
 extern crate cldr_pluralrules_parser;
 extern crate proc_macro2;
 
-pub mod parser;
+mod parser;
 
+use clap::App;
 use parser::plural_category::PluralCategory;
 use parser::resource::*;
 use proc_macro2::TokenStream;
 
-use std::env;
 use std::fs::File;
 use std::io::prelude::*;
 use std::iter::Iterator;
 
 fn main() -> std::io::Result<()> {
-    let args: Vec<String> = env::args().collect();
+    let matches = App::new("CLDR Plura Rules Rust Generator")
+        .version("0.1.0")
+        .about("Generates Rust code for CLDR plural rules.")
+        .args_from_usage(
+            "<CLDR_JSON> 'Sets the input file to use'
+            <OUTPUT_RS> 'Sets the output file to use'",
+        )
+        .get_matches();
 
-    let mut f = File::open("resources/plurals.json").expect("file not found");
+    let cldr_path = matches.value_of("CLDR_JSON").unwrap();
+    let output_path = matches.value_of("OUTPUT_RS").unwrap();
+
+    let mut f = File::open(cldr_path).expect("file not found");
 
     let mut contents = String::new();
     f.read_to_string(&mut contents)
         .expect("something went wrong reading the file");
 
-    let resources = if args.len() == 2 {
-        parse_plurals_resource_from_string(&contents)
-    } else {
-        panic!("Specify an output file path")
-    };
+    let resources = parse_plurals_resource_from_string(&contents);
 
     // resource_items is a struct representation of the raw CLDR rules.
     let resource_items = resources.unwrap().supplemental.plurals_type_cardinal;
@@ -92,7 +99,7 @@ fn main() -> std::io::Result<()> {
     // Call gen_rs to get Rust code. Convert TokenStream to string for file out.
     let complete_rs_code = parser::gen_rs::gen_fn(rule_tokens).to_string();
 
-    let mut file = File::create(&args[1])?;
+    let mut file = File::create(output_path)?;
     file.write(complete_rs_code.as_bytes())?;
     Ok(())
 }
