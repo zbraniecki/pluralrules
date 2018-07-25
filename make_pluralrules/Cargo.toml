@@ -1,13 +1,24 @@
 [package]
 name = "make_pluralrules"
 version = "0.1.0"
-authors = ["unclenachoduh <kekoariggin@gmail.com>"]
+authors = ["Kekoa Riggin <kekoariggin@gmail.com>", "Zibi Braniecki <zbraniecki@mozilla.com>"]
+description = "A Rustcode generator for CLDR plural rules."
+license = "Apache-2.0/MIT"
+repository = "https://github.com/unclenachoduh/pluralrules"
+readme = "README.md"
+keywords = ["localization", "l10n", "i18n", "intl", "internationalization"]
+categories = ["localization", "internationalization"]
+
+[badges]
+travis-ci = { repository = "unclenachoduh/pluralrules", branch = "master" }
+coveralls = { repository = "unclenachoduh/pluralrules", branch = "master", service = "github" }
+
+maintenance = { status = "actively-developed" }
 
 [dependencies]
-cldr_pluralrules_parser = "0.1.0"
+cldr_pluralrules_parser = "1.0.0"
 serde_json = "1.0"
 serde = "1.0"
 serde_derive = "1.0"
 quote = "0.6"
 proc-macro2 = "0.4"
-reqwest = "0.8.6"

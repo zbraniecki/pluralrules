@@ -16,7 +16,6 @@ extern crate serde_json;
 extern crate quote;
 extern crate cldr_pluralrules_parser;
 extern crate proc_macro2;
-extern crate reqwest;
 
 pub mod parser;
 
