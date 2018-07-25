@@ -1,7 +1,7 @@
 //! gen_rs is a Rust code generator for expression representations of CLDR plural rules.
 use super::plural_category::PluralCategory;
 
-use proc_macro2::{TokenStream, Literal};
+use proc_macro2::{Literal, TokenStream};
 
 fn convert_litstr(s: &str) -> Literal {
     Literal::string(s)
@@ -34,7 +34,7 @@ fn create_return(cat: PluralCategory, exp: &TokenStream) -> TokenStream {
     }
 }
 
-/// Generates the match statements that comprise the majority of the generated rust code. 
+/// Generates the match statements that comprise the majority of the generated rust code.
 ///
 /// These statements are the expression representations of the CLDR plural rules.
 pub fn gen_mid(lang: &str, pluralrule_set: Vec<(PluralCategory, TokenStream)>) -> TokenStream {

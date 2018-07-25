@@ -2,8 +2,8 @@
 
 use serde_json;
 
-use std::collections::HashMap;
 use std::collections::BTreeMap;
+use std::collections::HashMap;
 use std::error::Error;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -44,4 +44,3 @@ pub fn parse_plurals_resource_from_string(body: &str) -> Result<Resource, Box<Er
     let u = serde_json::from_str(body)?;
     Ok(u)
 }
-

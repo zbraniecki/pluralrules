@@ -2,10 +2,10 @@
 //!
 //! The resulting token stream is used to generate a Rust code representation of CLDR plural rules. That Rust code is then used to determine the corresponding plural rule for a number.
 
-/// prov_macro2 provides the TokenStream type
-use proc_macro2::{Ident, Literal, Span, TokenStream};
 /// This code utilizes the cldr_pluralrules_parser AST
 use cldr_pluralrules_parser::ast::*;
+/// proc_macro2 provides the TokenStream type
+use proc_macro2::{Ident, Literal, Span, TokenStream};
 
 /// Convert a usize to a Literal
 fn convert_literal(num: usize) -> Literal {
@@ -26,10 +26,7 @@ fn convert_range(low: usize, up: usize) -> (Literal, Literal) {
 }
 
 /// Convert a range list into a tuple of lists: one for lists of values and one for lists of ranges
-fn convert_rangl(rangl: RangeList) -> (
-    Vec<Literal>,
-    Vec<(Literal, Literal)>) {
-    
+fn convert_rangl(rangl: RangeList) -> (Vec<Literal>, Vec<(Literal, Literal)>) {
     let mut litints = Vec::new();
     let mut litrange = Vec::new();
 
@@ -67,22 +64,19 @@ fn create_relation(rel: Relation) -> TokenStream {
     let r1 = convert_rangl(right);
 
     // If there is a modulus, convert to literal. If not, placehold literal
-    let (mod_check, m) = 
-        if left.modulus != None {
-            (true,
-            convert_literal((left.modulus.unwrap().0).0))
-        } else {
-            (false,
-            convert_literal(0))
-        };
+    let (mod_check, m) = if left.modulus != None {
+        (true, convert_literal((left.modulus.unwrap().0).0))
+    } else {
+        (false, convert_literal(0))
+    };
 
     // Here, we have to manage 4 varying types of expression that we may write.
 
     // First, we check for a within operator because it changes the number of expressions we need.
-    // Then, within that check, we look for the operand 'n'. Because 'n' can be a float, we may need to 
+    // Then, within that check, we look for the operand 'n'. Because 'n' can be a float, we may need to
     // change the compared value to a float type, or use the operand 'i' in 'n's place and also check for f == 0
-    // We also check for a modulus on the operand. 
-    // Lastly, we want to make sure we allow values and ranges to be indeterminately folded together. 
+    // We also check for a modulus on the operand.
+    // Lastly, we want to make sure we allow values and ranges to be indeterminately folded together.
 
     // If within type operator, use format x < po && po < y
     if operator == Operator::Within || operator == Operator::NotWithin {
@@ -114,7 +108,6 @@ fn create_relation(rel: Relation) -> TokenStream {
     } else {
         // Recurisvely fold all values
         for r in r1.0 {
-
             // Variants handled here
             let (symbol, rval) = if left.operand.0 == 'n' {
                 if !mod_check {
