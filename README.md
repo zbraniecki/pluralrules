@@ -1,1 +1,40 @@
-# pluralrules
+# CLDR Plural Rules
+
+`cldr_pluralrules` is a collection of Rust crates for identifying the plural rule, according to [CLDR](https://github.com/unicode-cldr/cldr-core/blob/master/supplemental/plurals.json), for a given number.
+
+[![crates.io](http://meritbadge.herokuapp.com/cldr_pluralrules_parser)](https://crates.io/crates/cldr_pluralrules_parser)
+[![Build Status](https://travis-ci.org/unclenachoduh/pluralrules.svg?branch=master)](https://travis-ci.org/unclenachoduh/pluralrules)
+[![Coverage Status](https://coveralls.io/repos/github/unclenachoduh/pluralrules/badge.svg?branch=master)](https://coveralls.io/github/unclenachoduh/pluralrules?branch=master)
+
+The crates perform the following functions:
+
+## intl_pluralrules
+
+This library returns the plural rule given numeric input.
+
+## cldr_pluralrules_parser
+
+This library creates an AST from plural rules, according to [CLDR plural rule syntax](http://unicode.org/reports/tr35/tr35-numbers.html#Plural_rules_syntax).
+
+## make_pluralrules
+
+This executable generates a Rust file with a public function representation of CLDR plural rules from a specified source.
+
+## Status
+
+### cldr_pluralrules_parser
+
+The parser is fully compliant with UTS #35 version 33.
+
+### make_pluralrules
+
+Generates all cardinal plural rules for Rust 1.27 and above, baed on CLDR 33.
+
+### intl_pluralrules
+
+Currentl supports cardinal plural rules for all languages from CLDR 33.
+
+Get Involved
+------------
+
+`cldr_pluralrules` is open-source, licensed under the Apache License, Version 2.0.  We encourage everyone to take a look at our code and we'll listen to your feedback.
