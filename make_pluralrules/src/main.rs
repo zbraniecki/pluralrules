@@ -7,27 +7,14 @@
 //! cargo run <./path/to/cldr.json> <./path/to/output.rs>
 //! ```
 //! where `<output_file>` is the location of the desired Rust file.
-
-#[macro_use]
-extern crate serde_derive;
-extern crate serde;
-extern crate serde_json;
-#[macro_use]
-extern crate quote;
 extern crate clap;
-extern crate cldr_pluralrules_parser;
-extern crate proc_macro2;
-
-mod parser;
+extern crate make_pluralrules;
 
 use clap::App;
-use parser::plural_category::PluralCategory;
-use parser::resource::*;
-use proc_macro2::TokenStream;
+use make_pluralrules::generate_rs;
 
 use std::fs::File;
 use std::io::prelude::*;
-use std::iter::Iterator;
 
 fn main() -> std::io::Result<()> {
     let matches = App::new("CLDR Plura Rules Rust Generator")
@@ -48,56 +35,7 @@ fn main() -> std::io::Result<()> {
     f.read_to_string(&mut contents)
         .expect("something went wrong reading the file");
 
-    let resources = parse_plurals_resource_from_string(&contents);
-
-    // resource_items is a struct representation of the raw CLDR rules.
-    let resource_items = resources.unwrap().supplemental.plurals_type_cardinal;
-
-    // rule_tokens is a vector of TokenStreams that represent the CLDR plural rules as Rust expressions.
-    let mut rule_tokens = Vec::<TokenStream>::new();
-
-    if let Some(rules) = resource_items {
-        for (lang_code, r) in rules {
-            // `-` cannot appear in a function name. This removes a Rust-breaking character.
-            let lang = str::replace(&lang_code, "-", "");
-
-            // this_lang_rules is a vector of plural rules saved as a PluralCategory and a TokenStream
-            let mut this_lang_rules = Vec::<(PluralCategory, TokenStream)>::new();
-
-            for (rule_name, rule_line) in r {
-                // cat_name is the simplified category name from the CLDR source file
-                let cat_name = rule_name.split("-").collect::<Vec<_>>()[2];
-
-                // representation is the
-                let representation = cldr_pluralrules_parser::parse_plural_rule(&rule_line);
-
-                let cat = if cat_name == "zero" {
-                    PluralCategory::ZERO
-                } else if cat_name == "one" {
-                    PluralCategory::ONE
-                } else if cat_name == "two" {
-                    PluralCategory::TWO
-                } else if cat_name == "few" {
-                    PluralCategory::FEW
-                } else if cat_name == "many" {
-                    PluralCategory::MANY
-                } else {
-                    PluralCategory::OTHER
-                };
-
-                // Only allow rules that are not `OTHER` to be added. `OTHER` can have no rules and is added outside of the loop.
-                if cat != PluralCategory::OTHER {
-                    let tokens = parser::gen_pr::gen_pr(representation);
-                    this_lang_rules.push((cat, tokens));
-                }
-            }
-            // convert language rules to TokenStream and add them to all the rules
-            rule_tokens.push(parser::gen_rs::gen_mid(&lang, this_lang_rules));
-        }
-    }
-
-    // Call gen_rs to get Rust code. Convert TokenStream to string for file out.
-    let complete_rs_code = parser::gen_rs::gen_fn(rule_tokens).to_string();
+    let complete_rs_code = generate_rs(&contents);
 
     let mut file = File::create(output_path)?;
     file.write(complete_rs_code.as_bytes())?;
