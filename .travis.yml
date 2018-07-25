@@ -11,10 +11,7 @@ rust:
   - beta
   - stable
 
-- env: PROJECT=cldr_pluralrules_parser
-
 script:
-- cd $PROJECT
 - cargo clean
 - cargo build
 - cargo test

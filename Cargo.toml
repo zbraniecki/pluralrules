@@ -1,0 +1,4 @@
+[workspace]
+members = [
+    "cldr_pluralrules_parser",
+]
