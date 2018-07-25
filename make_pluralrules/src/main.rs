@@ -20,7 +20,6 @@ extern crate reqwest;
 
 pub mod parser;
 
-// use std::path::Path;
 use parser::plural_category::PluralCategory;
 use parser::resource::*;
 use proc_macro2::TokenStream;
@@ -28,6 +27,7 @@ use proc_macro2::TokenStream;
 use std::env;
 use std::fs::File;
 use std::io::prelude::*;
+use std::iter::Iterator;
 
 fn main() -> std::io::Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -90,10 +90,10 @@ fn main() -> std::io::Result<()> {
         }
     }
 
-    // I want this as a String rather than some weird struct
-    let complete_rs_code = parser::gen_rs::gen_fn(rule_tokens);
+    // Call gen_rs to get Rust code. Convert TokenStream to string for file out.
+    let complete_rs_code = parser::gen_rs::gen_fn(rule_tokens).to_string();
 
     let mut file = File::create(&args[1])?;
-    file.write(complete_rs_code.to_string().as_bytes())?;
+    file.write(complete_rs_code.as_bytes())?;
     Ok(())
 }
