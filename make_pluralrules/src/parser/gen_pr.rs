@@ -83,40 +83,80 @@ fn create_relation(rel: Relation) -> TokenStream {
         false
     };
 
-    if operator == Operator::Within || operator == Operator::NotWithin {
-        let rfront = &(r1.1)[0].0;
-        let rback = &(r1.1)[0].2;
 
-        let rel_tokens = if left.operand.0 == 'n' {
-            if mod_check == false {
-                quote! {#rfront.0 #o po.#l && po.#l #o #rback.0}
+
+    if operator == Operator::Within || operator == Operator::NotWithin {
+        let rfront_lit = &(r1.1)[0].0;
+        let rback_lit = &(r1.1)[0].2;
+
+        let (rfront, rback, whole_symbol) =
+            if left.operand.0 == 'n' {
+                if !mod_check {
+                    (quote!(#rfront_lit.0),
+                    quote!(#rback_lit.0),
+                    quote!(po.#l))
+                } else {
+                    (quote!(#rfront_lit),
+                    quote!(#rback_lit),
+                    quote!(po.i % #m))
+                }
             } else {
-                quote! {#rfront #o po.i % #m && po.i % #m #o #rback}
-            }
-        } else {
-            if mod_check == false {
-                quote! {#rfront #o po.#l && po.#l #o #rback}
-            } else {
-                quote! {#rfront #o po.#l % #m && po.#l % #m #o #rback}
-            }
-        };
+                (quote!(#rfront_lit),
+                quote!(#rback_lit),
+                if !mod_check {
+                    quote!(po.#l)
+                } else {
+                    quote!(po.i % #m)
+                })
+            };
+
+        let rel_tokens = quote! { #rfront #o #whole_symbol && #whole_symbol #o #rback};
 
         relations.push(rel_tokens);
     } else {
         for r in r1.0 {
-            let rel_tokens = if left.operand.0 == 'n' {
-                if mod_check == false {
-                    quote! {po.#l #o #r.0}
+
+            let (symbol, rval) = 
+                if left.operand.0 == 'n' {
+                    if !mod_check {
+                        (quote!(po.#l), 
+                        quote!(#r.0))
+                    } else {
+                        (quote!(po.i % #m), 
+                        quote!(#r))
+                    }
                 } else {
-                    quote! {po.i % #m #o #r}
-                }
-            } else {
-                if mod_check == false {
-                    quote! {po.#l #o #r}
-                } else {
-                    quote! {po.#l % #m #o #r}
-                }
-            };
+                    (
+                    if !mod_check {
+                        quote!(po.#l)
+                    } else {
+                        quote!(po.#l % #m)
+                    },
+                    quote!(#r))
+                };
+
+
+            // let rel_tokens = if left.operand.0 == 'n' {
+            //     if mod_check == false {
+            //         quote! {po.#l #o #r.0}
+            //     } else {
+            //         quote! {po.i % #m #o #r}
+            //     }
+            // } else {
+            //     if mod_check == false {
+            //         quote! {po.#l #o #r}
+            //     } else {
+            //         quote! {po.#l % #m #o #r}
+            //     }
+            // };
+
+            // symbol = #l || i 
+            // mod_symbol = #symbol || #symbol % m
+            // rval = #r || r.0
+
+            // let whole_symbol = quote!{ po.#symbol };
+
+            let rel_tokens = quote!{ #symbol #o #rval };
 
             relations.push(rel_tokens);
         }
