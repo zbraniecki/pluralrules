@@ -5,60 +5,70 @@ use super::PluralCategory;
 type PluralRule = fn(PluralOperands) -> PluralCategory;
 pub fn get_pr(lang: &str) -> PluralRule {
     match lang {
-        "sma" => |po| {
+        "shi" => |po| {
+            if (po.i == 0) || (po.n == 1.0) {
+                PluralCategory::ONE
+            } else if (matches!(po.i, 2..=10) && po.f == 0) {
+                PluralCategory::FEW
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ku" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
-            } else if (po.n == 2.0) {
-                PluralCategory::TWO
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "my" => |po| PluralCategory::OTHER,
+        "ce" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "or" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
         "ar" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else if (matches!(po.i % 100, 3..=10) && po.f == 0) {
-                PluralCategory::FEW
-            } else if (matches!(po.i % 100, 11..=99) && po.f == 0) {
-                PluralCategory::MANY
-            } else if (po.n == 2.0) {
+            if (po.n == 2.0) {
                 PluralCategory::TWO
+            } else if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else if (matches!(po.i, 11..=99)) {
+                PluralCategory::MANY
+            } else if (matches!(po.i, 3..=10)) {
+                PluralCategory::FEW
             } else if (po.n == 0.0) {
                 PluralCategory::ZERO
             } else {
                 PluralCategory::OTHER
             }
         },
-        "uk" => |po| {
-            if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14)) {
-                PluralCategory::FEW
-            } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11) {
+        "tzm" => |po| {
+            if (matches!(po.i, 0..=1) && po.f == 0) || (matches!(po.i, 11..=99) && po.f == 0) {
                 PluralCategory::ONE
-            } else if (po.v == 0 && po.i % 10 == 0) || (po.v == 0 && matches!(po.i % 10, 5..=9))
-                || (po.v == 0 && matches!(po.i % 100, 11..=14))
-            {
-                PluralCategory::MANY
             } else {
                 PluralCategory::OTHER
             }
         },
-        "naq" => |po| {
-            if (po.n == 1.0) {
+        "ro" => |po| {
+            if (po.v != 0) || (po.n == 0.0) || (po.n != 1.0 && matches!(po.i, 1..=19)) {
+                PluralCategory::FEW
+            } else if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
-            } else if (po.n == 2.0) {
-                PluralCategory::TWO
             } else {
                 PluralCategory::OTHER
             }
         },
-        "lt" => |po| {
-            if (matches!(po.i % 10, 2..=9) && po.f == 0 && matches!(po.i % 100, 11..=19)
-                && po.f == 0)
-            {
-                PluralCategory::FEW
-            } else if (po.f != 0) {
-                PluralCategory::MANY
-            } else if (po.i % 10 == 1 && matches!(po.i % 100, 11..=19) && po.f == 0) {
+        "ln" => |po| {
+            if (matches!(po.i, 0..=1) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
@@ -71,69 +81,30 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "fil" => |po| {
-            if (po.v == 0 && (po.i == 1 || po.i == 2 || po.i == 3))
-                || (po.v == 0 && po.i % 10 != 4 && po.i % 10 != 6 && po.i % 10 != 9)
-                || (po.v != 0 && po.f % 10 != 4 && po.f % 10 != 6 && po.f % 10 != 9)
-            {
+        "ig" => |po| PluralCategory::OTHER,
+        "he" => |po| {
+            if (po.i == 2 && po.v == 0) {
+                PluralCategory::TWO
+            } else if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
+            } else if (po.v == 0 && matches!(po.i, 0..=10) && po.f == 0 && po.i % 10 == 0) {
+                PluralCategory::MANY
             } else {
                 PluralCategory::OTHER
             }
         },
-        "nqo" => |po| PluralCategory::OTHER,
-        "rwk" => |po| {
+        "asa" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "ky" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "az" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "pap" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "nyn" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "el" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "zh" => |po| PluralCategory::OTHER,
-        "nah" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "no" => |po| {
-            if (po.n == 1.0) {
+        "to" => |po| PluralCategory::OTHER,
+        "kw" => |po| {
+            if (po.n == 2.0) {
+                PluralCategory::TWO
+            } else if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
@@ -146,313 +117,59 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "eo" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "xh" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "fr" => |po| {
-            if (po.i == 0 || po.i == 1) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "as" => |po| {
-            if (po.i == 0) || (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "saq" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "wo" => |po| PluralCategory::OTHER,
-        "lv" => |po| {
-            if (po.i % 10 == 0) || (matches!(po.i % 100, 11..=19) && po.f == 0)
-                || (po.v == 2 && matches!(po.f % 100, 11..=19))
-            {
-                PluralCategory::ZERO
-            } else if (po.i % 10 == 1 && po.i % 100 != 11)
-                || (po.v == 2 && po.f % 10 == 1 && po.f % 100 != 11)
-                || (po.v != 2 && po.f % 10 == 1)
-            {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "mo" => |po| {
-            if (po.v != 0) || (po.n == 0.0)
-                || (po.n != 1.0 && matches!(po.i % 100, 1..=19) && po.f == 0)
-            {
-                PluralCategory::FEW
-            } else if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "en" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "nd" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "os" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "kl" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "mr" => |po| {
-            if (po.i == 0) || (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ne" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "chr" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "sah" => |po| PluralCategory::OTHER,
-        "vun" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ta" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "haw" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "gsw" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "scn" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "dv" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "teo" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "sh" => |po| {
-            if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14))
-                || (matches!(po.f % 10, 2..=4) && matches!(po.f % 100, 12..=14))
-            {
-                PluralCategory::FEW
-            } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
-                || (po.f % 10 == 1 && po.f % 100 != 11)
-            {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ig" => |po| PluralCategory::OTHER,
-        "my" => |po| PluralCategory::OTHER,
-        "kab" => |po| {
-            if (po.i == 0 || po.i == 1) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ny" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "to" => |po| PluralCategory::OTHER,
-        "root" => |po| PluralCategory::OTHER,
-        "wa" => |po| {
-            if (matches!(po.i, 0..=1) && po.f == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "kcg" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "prg" => |po| {
-            if (po.i % 10 == 0) || (matches!(po.i % 100, 11..=19) && po.f == 0)
-                || (po.v == 2 && matches!(po.f % 100, 11..=19))
-            {
-                PluralCategory::ZERO
-            } else if (po.i % 10 == 1 && po.i % 100 != 11)
-                || (po.v == 2 && po.f % 10 == 1 && po.f % 100 != 11)
-                || (po.v != 2 && po.f % 10 == 1)
-            {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "fur" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "bm" => |po| PluralCategory::OTHER,
-        "in" => |po| PluralCategory::OTHER,
-        "et" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "hsb" => |po| {
-            if (po.v == 0 && po.i % 100 == 1) || (po.f % 100 == 1) {
-                PluralCategory::ONE
-            } else if (po.v == 0 && po.i % 100 == 2) || (po.f % 100 == 2) {
+        "smj" => |po| {
+            if (po.n == 2.0) {
                 PluralCategory::TWO
-            } else if (po.v == 0 && matches!(po.i % 100, 3..=4)) || (matches!(po.f % 100, 3..=4)) {
-                PluralCategory::FEW
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "pa" => |po| {
-            if (matches!(po.i, 0..=1) && po.f == 0) {
+            } else if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "sk" => |po| {
-            if (po.v != 0) {
-                PluralCategory::MANY
-            } else if (matches!(po.i, 2..=4) && po.v == 0) {
-                PluralCategory::FEW
-            } else if (po.i == 1 && po.v == 0) {
+        "lag" => |po| {
+            if ((po.i == 0 || po.i == 1) && po.n != 0.0) {
                 PluralCategory::ONE
+            } else if (po.n == 0.0) {
+                PluralCategory::ZERO
             } else {
                 PluralCategory::OTHER
             }
         },
-        "ckb" => |po| {
+        "sms" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
+            } else if (po.n == 2.0) {
+                PluralCategory::TWO
             } else {
                 PluralCategory::OTHER
             }
         },
-        "mg" => |po| {
-            if (matches!(po.i, 0..=1) && po.f == 0) {
+        "pt" => |po| {
+            if (matches!(po.i, 0..=1)) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "tr" => |po| {
-            if (po.n == 1.0) {
+        "tl" => |po| {
+            if (po.v == 0 && (po.i == 1 || po.i == 2 || po.i == 3))
+                || (po.v == 0 && po.i % 10 != 4 && po.i % 10 != 6 && po.i % 10 != 9)
+                || (po.v != 0 && po.f % 10 != 4 && po.f % 10 != 6 && po.f % 10 != 9)
+            {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "si" => |po| {
-            if (po.n == 0.0 || po.n == 1.0) || (po.i == 0 && po.f == 1) {
+        "km" => |po| PluralCategory::OTHER,
+        "bm" => |po| PluralCategory::OTHER,
+        "fy" => |po| {
+            if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "asa" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "kkj" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "lkt" => |po| PluralCategory::OTHER,
         "tn" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
@@ -460,13 +177,24 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "mt" => |po| {
-            if (matches!(po.i % 100, 11..=19) && po.f == 0) {
-                PluralCategory::MANY
-            } else if (po.n == 1.0) {
+        "ps" => |po| {
+            if (po.n == 1.0) {
                 PluralCategory::ONE
-            } else if (po.n == 0.0) || (matches!(po.i % 100, 2..=10) && po.f == 0) {
-                PluralCategory::FEW
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ks" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "wo" => |po| PluralCategory::OTHER,
+        "is" => |po| {
+            if (po.t == 0 && po.i % 10 == 1 && po.i % 100 != 11) || (po.t != 0) {
+                PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
@@ -485,43 +213,366 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "ru" => |po| {
-            if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11) {
-                PluralCategory::ONE
-            } else if (po.v == 0 && po.i % 10 == 0) || (po.v == 0 && matches!(po.i % 10, 5..=9))
-                || (po.v == 0 && matches!(po.i % 100, 11..=14))
-            {
-                PluralCategory::MANY
-            } else if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14)) {
-                PluralCategory::FEW
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "gv" => |po| {
-            if (po.v == 0 && po.i % 10 == 1) {
-                PluralCategory::ONE
-            } else if (po.v == 0 && po.i % 10 == 2) {
-                PluralCategory::TWO
-            } else if (po.v != 0) {
-                PluralCategory::MANY
-            } else if (po.v == 0
-                && (po.i % 100 == 0 || po.i % 100 == 20 || po.i % 100 == 40 || po.i % 100 == 60
-                    || po.i % 100 == 80))
-            {
-                PluralCategory::FEW
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "es" => |po| {
+        "xh" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
+        "yue" => |po| PluralCategory::OTHER,
+        "lo" => |po| PluralCategory::OTHER,
+        "ne" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "zu" => |po| {
+            if (po.i == 0) || (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "zh" => |po| PluralCategory::OTHER,
+        "gl" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "se" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else if (po.n == 2.0) {
+                PluralCategory::TWO
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "nnh" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "wae" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "fr" => |po| {
+            if (po.i == 0 || po.i == 1) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "nn" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "si" => |po| {
+            if (po.n == 0.0 || po.n == 1.0) || (po.i == 0 && po.f == 1) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "iw" => |po| {
+            if (po.v == 0 && matches!(po.i, 0..=10) && po.f == 0 && po.i % 10 == 0) {
+                PluralCategory::MANY
+            } else if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else if (po.i == 2 && po.v == 0) {
+                PluralCategory::TWO
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "tr" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "sv" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "jmc" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "bh" => |po| {
+            if (matches!(po.i, 0..=1) && po.f == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "be" => |po| {
+            if (po.i % 10 == 0) || (matches!(po.i, 5..=9)) || (matches!(po.i, 11..=14)) {
+                PluralCategory::MANY
+            } else if (matches!(po.i, 2..=4) && matches!(po.i, 12..=14)) {
+                PluralCategory::FEW
+            } else if (po.i % 10 == 1 && po.i % 100 != 11) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "vo" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "sr" => |po| {
+            if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14))
+                || (matches!(po.f % 10, 2..=4) && matches!(po.f % 100, 12..=14))
+            {
+                PluralCategory::FEW
+            } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
+                || (po.f % 10 == 1 && po.f % 100 != 11)
+            {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "kk" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ms" => |po| PluralCategory::OTHER,
+        "dv" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ff" => |po| {
+            if (po.i == 0 || po.i == 1) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "jv" => |po| PluralCategory::OTHER,
         "lb" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "wa" => |po| {
+            if (matches!(po.i, 0..=1) && po.f == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "kcg" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "nr" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "fur" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "bem" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "haw" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "cy" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else if (po.n == 0.0) {
+                PluralCategory::ZERO
+            } else if (po.n == 2.0) {
+                PluralCategory::TWO
+            } else if (po.n == 6.0) {
+                PluralCategory::MANY
+            } else if (po.n == 3.0) {
+                PluralCategory::FEW
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "nqo" => |po| PluralCategory::OTHER,
+        "mt" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else if (matches!(po.i, 11..=19)) {
+                PluralCategory::MANY
+            } else if (po.n == 0.0) || (matches!(po.i, 2..=10)) {
+                PluralCategory::FEW
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ja" => |po| PluralCategory::OTHER,
+        "sah" => |po| PluralCategory::OTHER,
+        "kaj" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "hr" => |po| {
+            if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
+                || (po.f % 10 == 1 && po.f % 100 != 11)
+            {
+                PluralCategory::ONE
+            } else if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14))
+                || (matches!(po.f % 10, 2..=4) && matches!(po.f % 100, 12..=14))
+            {
+                PluralCategory::FEW
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "vi" => |po| PluralCategory::OTHER,
+        "mo" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else if (po.v != 0) || (po.n == 0.0) || (po.n != 1.0 && matches!(po.i, 1..=19)) {
+                PluralCategory::FEW
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "rof" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "mk" => |po| {
+            if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
+                || (po.f % 10 == 1 && po.f % 100 != 11)
+            {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ru" => |po| {
+            if (po.v == 0 && po.i % 10 == 0) || (po.v == 0 && matches!(po.i % 10, 5..=9))
+                || (po.v == 0 && matches!(po.i % 100, 11..=14))
+            {
+                PluralCategory::MANY
+            } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11) {
+                PluralCategory::ONE
+            } else if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14)) {
+                PluralCategory::FEW
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "sw" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "th" => |po| PluralCategory::OTHER,
+        "ckb" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "brx" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "seh" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "iu" => |po| {
+            if (po.n == 2.0) {
+                PluralCategory::TWO
+            } else if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "sma" => |po| {
+            if (po.n == 2.0) {
+                PluralCategory::TWO
+            } else if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "so" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "el" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
@@ -535,124 +586,57 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "lg" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "km" => |po| PluralCategory::OTHER,
-        "mk" => |po| {
-            if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
-                || (po.f % 10 == 1 && po.f % 100 != 11)
-            {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "bez" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "kw" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else if (po.n == 2.0) {
-                PluralCategory::TWO
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "smn" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else if (po.n == 2.0) {
-                PluralCategory::TWO
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ro" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else if (po.v != 0) || (po.n == 0.0)
-                || (po.n != 1.0 && matches!(po.i % 100, 1..=19) && po.f == 0)
-            {
-                PluralCategory::FEW
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "so" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "tk" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "kk" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "id" => |po| PluralCategory::OTHER,
-        "pt" => |po| {
-            if (matches!(po.i, 0..=1)) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ps" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ti" => |po| {
+        "mg" => |po| {
             if (matches!(po.i, 0..=1) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "guw" => |po| {
-            if (matches!(po.i, 0..=1) && po.f == 0) {
+        "in" => |po| PluralCategory::OTHER,
+        "no" => |po| {
+            if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "ff" => |po| {
-            if (po.i == 0 || po.i == 1) {
+        "ug" => |po| {
+            if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "ur" => |po| {
-            if (po.i == 1 && po.v == 0) {
+        "sd" => |po| {
+            if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "nn" => |po| {
+        "ky" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "nyn" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "tig" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "vun" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
@@ -666,29 +650,172 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "sdh" => |po| {
+        "os" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "yue" => |po| PluralCategory::OTHER,
-        "brx" => |po| {
+        "ptPT" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ii" => |po| PluralCategory::OTHER,
+        "smi" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else if (po.n == 2.0) {
+                PluralCategory::TWO
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "nso" => |po| {
+            if (matches!(po.i, 0..=1) && po.f == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "bo" => |po| PluralCategory::OTHER,
+        "jbo" => |po| PluralCategory::OTHER,
+        "jgo" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "kn" => |po| {
+        "es" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "et" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "br" => |po| {
+            if (po.n != 0.0 && po.i % 1000000 == 0) {
+                PluralCategory::MANY
+            } else if (po.i % 10 == 1 && po.i % 100 != 11 && po.i % 100 != 71 && po.i % 100 != 91) {
+                PluralCategory::ONE
+            } else if ((po.i % 10 == 9 || matches!(po.i, 3..=4)) && matches!(po.i, 10..=19)
+                && matches!(po.i, 70..=79) && matches!(po.i, 90..=99))
+            {
+                PluralCategory::FEW
+            } else if (po.i % 10 == 2 && po.i % 100 != 12 && po.i % 100 != 72 && po.i % 100 != 92) {
+                PluralCategory::TWO
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ee" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "gu" => |po| {
             if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "tig" => |po| {
+        "teo" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "om" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ga" => |po| {
+            if (po.n == 2.0) {
+                PluralCategory::TWO
+            } else if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else if (matches!(po.i, 3..=6) && po.f == 0) {
+                PluralCategory::FEW
+            } else if (matches!(po.i, 7..=10) && po.f == 0) {
+                PluralCategory::MANY
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ars" => |po| {
+            if (po.n == 0.0) {
+                PluralCategory::ZERO
+            } else if (matches!(po.i, 3..=10)) {
+                PluralCategory::FEW
+            } else if (po.n == 2.0) {
+                PluralCategory::TWO
+            } else if (matches!(po.i, 11..=99)) {
+                PluralCategory::MANY
+            } else if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ksh" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else if (po.n == 0.0) {
+                PluralCategory::ZERO
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "az" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "id" => |po| PluralCategory::OTHER,
+        "gv" => |po| {
+            if (po.v == 0
+                && (po.i % 100 == 0 || po.i % 100 == 20 || po.i % 100 == 40 || po.i % 100 == 60
+                    || po.i % 100 == 80))
+            {
+                PluralCategory::FEW
+            } else if (po.v == 0 && po.i % 10 == 2) {
+                PluralCategory::TWO
+            } else if (po.v != 0) {
+                PluralCategory::MANY
+            } else if (po.v == 0 && po.i % 10 == 1) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "lg" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ny" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
@@ -708,65 +835,60 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "kaj" => |po| {
+        "nd" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "bg" => |po| {
+        "fil" => |po| {
+            if (po.v == 0 && (po.i == 1 || po.i == 2 || po.i == 3))
+                || (po.v == 0 && po.i % 10 != 4 && po.i % 10 != 6 && po.i % 10 != 9)
+                || (po.v != 0 && po.f % 10 != 4 && po.f % 10 != 6 && po.f % 10 != 9)
+            {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ss" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "smi" => |po| {
-            if (po.n == 2.0) {
-                PluralCategory::TWO
-            } else if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "sms" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else if (po.n == 2.0) {
-                PluralCategory::TWO
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ssy" => |po| {
+        "ml" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "iu" => |po| {
-            if (po.n == 2.0) {
-                PluralCategory::TWO
-            } else if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "shi" => |po| {
-            if (po.i == 0) || (po.n == 1.0) {
-                PluralCategory::ONE
-            } else if (matches!(po.i, 2..=10) && po.f == 0) {
-                PluralCategory::FEW
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "vo" => |po| {
+        "te" => |po| {
             if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ksb" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "io" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ti" => |po| {
+            if (matches!(po.i, 0..=1) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
@@ -779,162 +901,15 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "ee" => |po| {
+        "kl" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "ce" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "vi" => |po| PluralCategory::OTHER,
-        "ks" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "yo" => |po| PluralCategory::OTHER,
-        "se" => |po| {
-            if (po.n == 2.0) {
-                PluralCategory::TWO
-            } else if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "mas" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "sw" => |po| {
+        "de" => |po| {
             if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "he" => |po| {
-            if (po.i == 2 && po.v == 0) {
-                PluralCategory::TWO
-            } else if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else if (po.v == 0 && matches!(po.i, 0..=10) && po.f == 0 && po.i % 10 == 0) {
-                PluralCategory::MANY
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "sr" => |po| {
-            if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14))
-                || (matches!(po.f % 10, 2..=4) && matches!(po.f % 100, 12..=14))
-            {
-                PluralCategory::FEW
-            } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
-                || (po.f % 10 == 1 && po.f % 100 != 11)
-            {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "eu" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "bo" => |po| PluralCategory::OTHER,
-        "ksb" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "nso" => |po| {
-            if (matches!(po.i, 0..=1) && po.f == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "jgo" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "jv" => |po| PluralCategory::OTHER,
-        "is" => |po| {
-            if (po.t == 0 && po.i % 10 == 1 && po.i % 100 != 11) || (po.t != 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "sv" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "uz" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "dsb" => |po| {
-            if (po.v == 0 && po.i % 100 == 2) || (po.f % 100 == 2) {
-                PluralCategory::TWO
-            } else if (po.v == 0 && po.i % 100 == 1) || (po.f % 100 == 1) {
-                PluralCategory::ONE
-            } else if (po.v == 0 && matches!(po.i % 100, 3..=4)) || (matches!(po.f % 100, 3..=4)) {
-                PluralCategory::FEW
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "kea" => |po| PluralCategory::OTHER,
-        "sq" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ptPT" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "fi" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "rm" => |po| {
-            if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
@@ -948,48 +923,139 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "jmc" => |po| {
+        "bg" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "sn" => |po| {
+        "guw" => |po| {
+            if (matches!(po.i, 0..=1) && po.f == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ses" => |po| PluralCategory::OTHER,
+        "root" => |po| PluralCategory::OTHER,
+        "st" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "br" => |po| {
-            if (po.n != 0.0 && po.i % 1000000 == 0) {
-                PluralCategory::MANY
-            } else if ((po.i % 10 == 9 || matches!(po.i % 10, 3..=4) && po.f == 0)
-                && matches!(po.i % 100, 10..=19) && po.f == 0
-                && matches!(po.i % 100, 70..=79) && po.f == 0
-                && matches!(po.i % 100, 90..=99) && po.f == 0)
-            {
+        "it" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "rwk" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "naq" => |po| {
+            if (po.n == 2.0) {
+                PluralCategory::TWO
+            } else if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ast" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "gsw" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "cgg" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "mn" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "saq" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ts" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "tk" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "rm" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "pap" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "lt" => |po| {
+            if (matches!(po.i, 2..=9) && matches!(po.i, 11..=19)) {
                 PluralCategory::FEW
-            } else if (po.i % 10 == 1 && po.i % 100 != 11 && po.i % 100 != 71 && po.i % 100 != 91) {
+            } else if (po.f != 0) {
+                PluralCategory::MANY
+            } else if (po.i % 10 == 1 && matches!(po.i, 11..=19)) {
                 PluralCategory::ONE
-            } else if (po.i % 10 == 2 && po.i % 100 != 12 && po.i % 100 != 72 && po.i % 100 != 92) {
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "dsb" => |po| {
+            if (po.v == 0 && po.i % 100 == 1) || (po.f % 100 == 1) {
+                PluralCategory::ONE
+            } else if (po.v == 0 && matches!(po.i % 100, 3..=4)) || (matches!(po.f % 100, 3..=4)) {
+                PluralCategory::FEW
+            } else if (po.v == 0 && po.i % 100 == 2) || (po.f % 100 == 2) {
                 PluralCategory::TWO
             } else {
                 PluralCategory::OTHER
             }
         },
-        "sd" => |po| {
+        "eu" => |po| {
             if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "lag" => |po| {
-            if (po.n == 0.0) {
-                PluralCategory::ZERO
-            } else if ((po.i == 0 || po.i == 1) && po.n != 0.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
@@ -1006,43 +1072,6 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "nnh" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "st" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "wae" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "th" => |po| PluralCategory::OTHER,
-        "xog" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "kde" => |po| PluralCategory::OTHER,
-        "ca" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
         "nb" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
@@ -1050,267 +1079,42 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "ja" => |po| PluralCategory::OTHER,
-        "fy" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "io" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ga" => |po| {
-            if (matches!(po.i, 7..=10) && po.f == 0) {
-                PluralCategory::MANY
-            } else if (matches!(po.i, 3..=6) && po.f == 0) {
-                PluralCategory::FEW
-            } else if (po.n == 2.0) {
-                PluralCategory::TWO
-            } else if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "gl" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ars" => |po| {
-            if (matches!(po.i % 100, 11..=99) && po.f == 0) {
-                PluralCategory::MANY
-            } else if (po.n == 0.0) {
-                PluralCategory::ZERO
-            } else if (po.n == 2.0) {
-                PluralCategory::TWO
-            } else if (matches!(po.i % 100, 3..=10) && po.f == 0) {
-                PluralCategory::FEW
-            } else if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "be" => |po| {
-            if (po.i % 10 == 0) || (matches!(po.i % 10, 5..=9) && po.f == 0)
-                || (matches!(po.i % 100, 11..=14) && po.f == 0)
-            {
-                PluralCategory::MANY
-            } else if (po.i % 10 == 1 && po.i % 100 != 11) {
-                PluralCategory::ONE
-            } else if (matches!(po.i % 10, 2..=4) && po.f == 0 && matches!(po.i % 100, 12..=14)
-                && po.f == 0)
-            {
-                PluralCategory::FEW
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "hi" => |po| {
+        "as" => |po| {
             if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "ak" => |po| {
-            if (matches!(po.i, 0..=1) && po.f == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "jbo" => |po| PluralCategory::OTHER,
-        "tl" => |po| {
-            if (po.v == 0 && (po.i == 1 || po.i == 2 || po.i == 3))
-                || (po.v == 0 && po.i % 10 != 4 && po.i % 10 != 6 && po.i % 10 != 9)
-                || (po.v != 0 && po.f % 10 != 4 && po.f % 10 != 6 && po.f % 10 != 9)
-            {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "am" => |po| {
-            if (po.i == 0) || (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "jw" => |po| PluralCategory::OTHER,
-        "ts" => |po| {
+        "sdh" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "zu" => |po| {
-            if (po.i == 0) || (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "rof" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "mgo" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "cgg" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ast" => |po| {
+        "dz" => |po| PluralCategory::OTHER,
+        "ca" => |po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "tzm" => |po| {
-            if (matches!(po.i, 0..=1) && po.f == 0) || (matches!(po.i, 11..=99) && po.f == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "iw" => |po| {
-            if (po.v == 0 && matches!(po.i, 0..=10) && po.f == 0 && po.i % 10 == 0) {
-                PluralCategory::MANY
-            } else if (po.i == 2 && po.v == 0) {
-                PluralCategory::TWO
-            } else if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "bh" => |po| {
-            if (matches!(po.i, 0..=1) && po.f == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "it" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ku" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "smj" => |po| {
-            if (po.n == 2.0) {
-                PluralCategory::TWO
-            } else if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "pl" => |po| {
+        "uk" => |po| {
             if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14)) {
                 PluralCategory::FEW
-            } else if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else if (po.v == 0 && po.i != 1 && matches!(po.i % 10, 0..=1))
-                || (po.v == 0 && matches!(po.i % 10, 5..=9))
-                || (po.v == 0 && matches!(po.i % 100, 12..=14))
+            } else if (po.v == 0 && po.i % 10 == 0) || (po.v == 0 && matches!(po.i % 10, 5..=9))
+                || (po.v == 0 && matches!(po.i % 100, 11..=14))
             {
                 PluralCategory::MANY
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "seh" => |po| {
-            if (po.n == 1.0) {
+            } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "te" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "nr" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "de" => |po| {
-            if (po.i == 1 && po.v == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ses" => |po| PluralCategory::OTHER,
-        "ss" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ug" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ms" => |po| PluralCategory::OTHER,
-        "ml" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "ii" => |po| PluralCategory::OTHER,
-        "ha" => |po| {
-            if (po.n == 1.0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
+        "lkt" => |po| PluralCategory::OTHER,
         "nl" => |po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
@@ -1318,37 +1122,46 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "lo" => |po| PluralCategory::OTHER,
-        "ln" => |po| {
-            if (matches!(po.i, 0..=1) && po.f == 0) {
-                PluralCategory::ONE
-            } else {
-                PluralCategory::OTHER
-            }
-        },
-        "bem" => |po| {
+        "uz" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "sg" => |po| PluralCategory::OTHER,
-        "yi" => |po| {
+        "mas" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "hsb" => |po| {
+            if (po.v == 0 && po.i % 100 == 2) || (po.f % 100 == 2) {
+                PluralCategory::TWO
+            } else if (po.v == 0 && matches!(po.i % 100, 3..=4)) || (matches!(po.f % 100, 3..=4)) {
+                PluralCategory::FEW
+            } else if (po.v == 0 && po.i % 100 == 1) || (po.f % 100 == 1) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "en" => |po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "mn" => |po| {
-            if (po.n == 1.0) {
+        "scn" => |po| {
+            if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "om" => |po| {
+        "eo" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
@@ -1362,27 +1175,46 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "ji" => |po| {
-            if (po.i == 1 && po.v == 0) {
+        "kn" => |po| {
+            if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "hr" => |po| {
-            if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
-                || (po.f % 10 == 1 && po.f % 100 != 11)
-            {
+        "nah" => |po| {
+            if (po.n == 1.0) {
                 PluralCategory::ONE
-            } else if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14))
-                || (matches!(po.f % 10, 2..=4) && matches!(po.f % 100, 12..=14))
-            {
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "hi" => |po| {
+            if (po.i == 0) || (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "sk" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else if (po.v != 0) {
+                PluralCategory::MANY
+            } else if (matches!(po.i, 2..=4) && po.v == 0) {
                 PluralCategory::FEW
             } else {
                 PluralCategory::OTHER
             }
         },
-        "or" => |po| {
+        "ssy" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "sq" => |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
@@ -1400,9 +1232,24 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "da" => |po| {
-            if (po.n == 1.0) || (po.t != 0 && (po.i == 0 || po.i == 1)) {
+        "jw" => |po| PluralCategory::OTHER,
+        "sn" => |po| {
+            if (po.n == 1.0) {
                 PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "lv" => |po| {
+            if (po.i % 10 == 1 && po.i % 100 != 11)
+                || (po.v == 2 && po.f % 10 == 1 && po.f % 100 != 11)
+                || (po.v != 2 && po.f % 10 == 1)
+            {
+                PluralCategory::ONE
+            } else if (po.i % 10 == 0) || (matches!(po.i, 11..=19))
+                || (po.v == 2 && matches!(po.f % 100, 11..=19))
+            {
+                PluralCategory::ZERO
             } else {
                 PluralCategory::OTHER
             }
@@ -1419,34 +1266,175 @@ pub fn get_pr(lang: &str) -> PluralRule {
                 PluralCategory::OTHER
             }
         },
-        "dz" => |po| PluralCategory::OTHER,
-        "gu" => |po| {
+        "da" => |po| {
+            if (po.n == 1.0) || (po.t != 0 && (po.i == 0 || po.i == 1)) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "pl" => |po| {
+            if (po.v == 0 && po.i != 1 && matches!(po.i % 10, 0..=1))
+                || (po.v == 0 && matches!(po.i % 10, 5..=9))
+                || (po.v == 0 && matches!(po.i % 100, 12..=14))
+            {
+                PluralCategory::MANY
+            } else if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14)) {
+                PluralCategory::FEW
+            } else if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "kab" => |po| {
+            if (po.i == 0 || po.i == 1) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ur" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ak" => |po| {
+            if (matches!(po.i, 0..=1) && po.f == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "kkj" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "kea" => |po| PluralCategory::OTHER,
+        "ji" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "chr" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "mr" => |po| {
             if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
         },
-        "cy" => |po| {
-            if (po.n == 3.0) {
-                PluralCategory::FEW
-            } else if (po.n == 2.0) {
-                PluralCategory::TWO
-            } else if (po.n == 6.0) {
-                PluralCategory::MANY
-            } else if (po.n == 1.0) {
+        "mgo" => |po| {
+            if (po.n == 1.0) {
                 PluralCategory::ONE
-            } else if (po.n == 0.0) {
-                PluralCategory::ZERO
             } else {
                 PluralCategory::OTHER
             }
         },
-        "ksh" => |po| {
-            if (po.n == 0.0) {
+        "kde" => |po| PluralCategory::OTHER,
+        "prg" => |po| {
+            if (po.i % 10 == 0) || (matches!(po.i, 11..=19))
+                || (po.v == 2 && matches!(po.f % 100, 11..=19))
+            {
                 PluralCategory::ZERO
+            } else if (po.i % 10 == 1 && po.i % 100 != 11)
+                || (po.v == 2 && po.f % 10 == 1 && po.f % 100 != 11)
+                || (po.v != 2 && po.f % 10 == 1)
+            {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "ha" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "yi" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "sg" => |po| PluralCategory::OTHER,
+        "ta" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "pa" => |po| {
+            if (matches!(po.i, 0..=1) && po.f == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "fi" => |po| {
+            if (po.i == 1 && po.v == 0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "am" => |po| {
+            if (po.i == 0) || (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "smn" => |po| {
+            if (po.n == 2.0) {
+                PluralCategory::TWO
             } else if (po.n == 1.0) {
                 PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "xog" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "bez" => |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+        "yo" => |po| PluralCategory::OTHER,
+        "sh" => |po| {
+            if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
+                || (po.f % 10 == 1 && po.f % 100 != 11)
+            {
+                PluralCategory::ONE
+            } else if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14))
+                || (matches!(po.f % 10, 2..=4) && matches!(po.f % 100, 12..=14))
+            {
+                PluralCategory::FEW
             } else {
                 PluralCategory::OTHER
             }

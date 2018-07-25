@@ -73,8 +73,8 @@ fn main() -> std::io::Result<()> {
 
                 // Only allow rules that are not `OTHER` to be added. `OTHER` can have no rules and is added outside of the loop.
                 if cat != PluralCategory::OTHER {
-                    let other_tokens = parser::gen_pr::gen_pr(representation);
-                    this_lang_rules.push((cat, other_tokens));
+                    let tokens = parser::gen_pr::gen_pr(representation);
+                    this_lang_rules.push((cat, tokens));
                 }
             }
             // convert language rules to TokenStream and add them to all the rules

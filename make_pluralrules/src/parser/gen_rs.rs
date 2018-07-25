@@ -49,7 +49,7 @@ pub fn gen_mid(lang: &str, pluralrule_set: Vec<(PluralCategory, TokenStream)>) -
                 let condition = create_return(pair.0, &pair.1);
                 tokens = quote! { #tokens else #condition };
             }
-            tokens = quote! { #tokens else { PluralCategory::OTHER }  };
+            tokens = quote! { #tokens else { PluralCategory::OTHER } };
             tokens
         }
         None => quote! { { PluralCategory::OTHER }  },

@@ -19,12 +19,13 @@ fn convert_range(low: usize, up: usize) -> (Literal, Literal) {
 }
 
 // convert a range list into a tuple of lists: one for lists of values and one for lists of ranges
-fn convert_rangl(
-    rangl: RangeList,
+
+fn convert_rangl(rangl: RangeList) 
 ) -> (
     Vec<Literal>,
     Vec<(Literal, Literal)>,
 ) {
+    
     let mut litints = Vec::new();
     let mut litrange = Vec::new();
 
@@ -71,82 +72,84 @@ fn create_relation(rel: Relation) -> TokenStream {
         let rfront = &(r1.1)[0].0;
         let rback = &(r1.1)[0].1;
 
-        let rel_tokens = if left.operand.0 == 'n' {
-            if mod_check == false {
-                quote! {#rfront.0 #o po.#l && po.#l #o #rback.0}
+        let (rfront, rback, whole_symbol) = if left.operand.0 == 'n' {
+            if !mod_check {
+                (quote!(#rfront_lit.0), quote!(#rback_lit.0), quote!(po.#l))
             } else {
-                quote! {#rfront #o po.i % #m && po.i % #m #o #rback}
+                (quote!(#rfront_lit), quote!(#rback_lit), quote!(po.i % #m))
             }
         } else {
-            if mod_check == false {
-                quote! {#rfront #o po.#l && po.#l #o #rback}
-            } else {
-                quote! {#rfront #o po.#l % #m && po.#l % #m #o #rback}
-            }
+            (
+                quote!(#rfront_lit),
+                quote!(#rback_lit),
+                if !mod_check {
+                    quote!(po.#l)
+                } else {
+                    quote!(po.i % #m)
+                },
+            )
         };
 
+        let rel_tokens = quote! { #rfront #o #whole_symbol && #whole_symbol #o #rback};
         relations.push(rel_tokens);
     } else {
         for r in r1.0 {
-            let rel_tokens = if left.operand.0 == 'n' {
-                if mod_check == false {
-                    quote! {po.#l #o #r.0}
+            let (symbol, rval) = if left.operand.0 == 'n' {
+                if !mod_check {
+                    (quote!(po.#l), quote!(#r.0))
                 } else {
-                    quote! {po.i % #m #o #r}
+                    (quote!(po.i % #m), quote!(#r))
                 }
             } else {
-                if mod_check == false {
-                    quote! {po.#l #o #r}
-                } else {
-                    quote! {po.#l % #m #o #r}
-                }
+                (
+                    if !mod_check {
+                        quote!(po.#l)
+                    } else {
+                        quote!(po.#l % #m)
+                    },
+                    quote!(#r),
+                )
             };
 
+            let rel_tokens = quote!{ #symbol #o #rval };
             relations.push(rel_tokens);
         }
         for r in r1.1 {
             let rfront = r.0;
             let rback = r.1;
 
-            let rel_tokens = if left.operand.0 == 'n' {
-                if mod_check == false {
-                    quote! {matches!(po.i, #rfront ..= #rback) && po.f == 0 }
+
+            let (symbol, perim) = if left.operand.0 == 'n' {
+                if !mod_check {
+                    (quote!(po.i), quote!{ && po.f == 0})
                 } else {
-                    quote! {matches!(po.i % #m, #rfront ..= #rback) && po.f == 0}
+                    (quote!(po.i), quote!{})
                 }
             } else {
-                if mod_check == false {
-                    quote! {matches!(po.#l, #rfront ..= #rback)}
-                } else {
-                    quote! {matches!(po.#l % #m, #rfront ..= #rback)}
-                }
+                (
+                    if !mod_check {
+                        quote!(po.#l)
+                    } else {
+                        quote!(po.#l % #m)
+                    },
+                    quote!{},
+                )
             };
 
+            let filling = quote! { #symbol, #rfront ..= #rback };
+            let rel_tokens = quote! { matches!( #filling ) #perim };
             relations.push(rel_tokens);
         }
     }
 
     let relationexpr = match operator {
-        Operator::In => if relations.len() > 1 {
+        Operator::In | Operator::Is | Operator::EQ => if relations.len() > 1 {
             quote!{ ( #(#relations)||* ) }
         } else {
             quote!{ #(#relations)||* }
         },
-        Operator::NotIn => quote!{ #(#relations)&&* },
-        Operator::Within => quote!{ #(#relations)||* },
-        Operator::NotWithin => quote!{ #(#relations)||* },
-        Operator::Is => if relations.len() > 1 {
-            quote!{ ( #(#relations)||* ) }
-        } else {
-            quote!{ #(#relations)||* }
-        },
-        Operator::IsNot => quote!{ #(#relations)&&* },
-        Operator::EQ => if relations.len() > 1 {
-            quote!{ ( #(#relations)||* ) }
-        } else {
-            quote!{ #(#relations)||* }
-        },
-        Operator::NotEQ => quote!{ #(#relations)&&* },
+        Operator::NotIn | Operator::NotEQ | Operator::IsNot => quote!{ #(#relations)&&* },
+        Operator::Within | Operator::NotWithin => quote!{ #(#relations)||* },
     };
     relationexpr
 }
