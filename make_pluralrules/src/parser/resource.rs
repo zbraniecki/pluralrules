@@ -2,8 +2,7 @@
 // takes a string from the file
 // and returns a structure with rules per locale
 
-extern crate serde;
-extern crate serde_json;
+use serde_json;
 
 use std::collections::HashMap;
 use std::error::Error;

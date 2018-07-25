@@ -1,42 +1,33 @@
-extern crate proc_macro2;
-extern crate quote;
-extern crate syn;
+use proc_macro2::Span;
 
-extern crate cldr_pluralrules_parser;
-
-use self::proc_macro2::Span;
-use self::syn::BinOp;
-
-use self::proc_macro2::TokenStream;
+use proc_macro2::{Ident, Literal, TokenStream};
 use cldr_pluralrules_parser::ast::*;
-// use quote::ToTokens;
 
-// use syn to convert a usize to a literal int in the generated rust code
-fn convert_literal(num: usize) -> syn::LitInt {
-    syn::LitInt::new(num as u64, syn::IntSuffix::None, Span::call_site())
+fn convert_literal(num: usize) -> Literal {
+    Literal::u64_unsuffixed(num as u64)
 }
 
-// use syn to convert a string to a literal variable in the generated rust code
-fn convert_ident(id: &str) -> syn::Ident {
-    syn::Ident::new(id, Span::call_site())
+fn convert_ident(id: &str) -> Ident {
+    Ident::new(id, Span::call_site())
 }
 
-// use syn to convert two usize into a tuple with literal ints and a dotdot for range
-fn convert_range(low: usize, up: usize) -> (syn::LitInt, syn::token::DotDotEq, syn::LitInt) {
+fn convert_range(low: usize, up: usize) -> (Literal, Literal) {
     let u = convert_literal(up);
     let d = convert_literal(low);
-    let p = syn::token::DotDotEq::new(Span::call_site());
 
-    (d, p, u)
+    (d, u)
 }
 
 // convert a range list into a tuple of lists: one for lists of values and one for lists of ranges
-fn convert_rangl(rangl: RangeList) -> (
-    Vec<syn::LitInt>,
-    Vec<(syn::LitInt, syn::token::DotDotEq, syn::LitInt)>) {
+
+fn convert_rangl(rangl: RangeList) 
+) -> (
+    Vec<Literal>,
+    Vec<(Literal, Literal)>,
+) {
     
-    let mut litints = Vec::<syn::LitInt>::new();
-    let mut litrange = Vec::<(syn::LitInt, syn::token::DotDotEq, syn::LitInt)>::new();
+    let mut litints = Vec::new();
+    let mut litrange = Vec::new();
 
     for x in rangl.0 {
         match &x {
@@ -49,16 +40,12 @@ fn convert_rangl(rangl: RangeList) -> (
 }
 
 // match the needed operator symbol
-fn get_operator_symbol(op: &Operator) -> BinOp {
+fn get_operator_symbol(op: &Operator) -> TokenStream {
     match op {
-        Operator::In => BinOp::Eq(syn::token::EqEq::new(Span::call_site())),
-        Operator::NotIn => BinOp::Ne(syn::token::Ne::new(Span::call_site())),
-        Operator::Within => BinOp::Le(syn::token::Le::new(Span::call_site())),
-        Operator::NotWithin => BinOp::Gt(syn::token::Gt::new(Span::call_site())),
-        Operator::Is => BinOp::Eq(syn::token::EqEq::new(Span::call_site())),
-        Operator::IsNot => BinOp::Ne(syn::token::Ne::new(Span::call_site())),
-        Operator::EQ => BinOp::Eq(syn::token::EqEq::new(Span::call_site())),
-        Operator::NotEQ => BinOp::Ne(syn::token::Ne::new(Span::call_site())),
+        Operator::In | Operator::Is | Operator::EQ => quote!(==),
+        Operator::NotIn | Operator::IsNot | Operator::NotEQ => quote!(!=),
+        Operator::Within => quote!(<=),
+        Operator::NotWithin => quote!(>),
     }
 }
 
@@ -82,8 +69,8 @@ fn create_relation(rel: Relation) -> TokenStream {
     };
 
     if operator == Operator::Within || operator == Operator::NotWithin {
-        let rfront_lit = &(r1.1)[0].0;
-        let rback_lit = &(r1.1)[0].2;
+        let rfront = &(r1.1)[0].0;
+        let rback = &(r1.1)[0].1;
 
         let (rfront, rback, whole_symbol) = if left.operand.0 == 'n' {
             if !mod_check {
@@ -129,8 +116,8 @@ fn create_relation(rel: Relation) -> TokenStream {
         }
         for r in r1.1 {
             let rfront = r.0;
-            let rdot = r.1;
-            let rback = r.2;
+            let rback = r.1;
+
 
             let (symbol, perim) = if left.operand.0 == 'n' {
                 if !mod_check {
@@ -149,7 +136,7 @@ fn create_relation(rel: Relation) -> TokenStream {
                 )
             };
 
-            let filling = quote! { #symbol, #rfront #rdot #rback };
+            let filling = quote! { #symbol, #rfront ..= #rback };
             let rel_tokens = quote! { matches!( #filling ) #perim };
             relations.push(rel_tokens);
         }

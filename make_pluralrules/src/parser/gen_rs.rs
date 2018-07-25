@@ -1,13 +1,10 @@
-extern crate proc_macro2;
-extern crate quote;
-extern crate syn;
 
 use super::plural_category::PluralCategory;
 
-use self::proc_macro2::{Span, TokenStream};
+use proc_macro2::{TokenStream, Literal};
 
-fn convert_litstr(s: &str) -> syn::LitStr {
-    syn::LitStr::new(s, Span::call_site())
+fn convert_litstr(s: &str) -> Literal {
+    Literal::string(s)
 }
 
 fn create_match_state(lang: &str, filling: TokenStream) -> TokenStream {

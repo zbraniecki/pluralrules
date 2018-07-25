@@ -1,5 +1,7 @@
 #[macro_use]
 extern crate serde_derive;
+extern crate serde;
+extern crate serde_json;
 #[macro_use]
 extern crate quote;
 extern crate cldr_pluralrules_parser;
