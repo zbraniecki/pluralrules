@@ -1,5 +1,3 @@
-
-cldr_pluralrules_parser/target
-intl_pluralrules/target
-make_pluralrules/target
+**/target
+**/Cargo.lock
 **/*.rs.bk
