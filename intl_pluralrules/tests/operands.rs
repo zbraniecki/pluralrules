@@ -25,15 +25,15 @@ fn test_operands_from_str() {
 
     for test in tests {
         assert_eq!(
-            PluralOperands {
+            Ok(PluralOperands {
                 n: (test.0).0,
                 i: (test.0).1,
                 v: (test.0).2,
                 w: (test.0).3,
                 f: (test.0).4,
                 t: (test.0).5,
-            },
-            PluralOperands::new(test.1)
+            }),
+            PluralOperands::from(test.1)
         );
     }
 }
@@ -52,15 +52,15 @@ fn test_operands_from_int() {
 
     for test in tests {
         assert_eq!(
-            PluralOperands {
+            Ok(PluralOperands {
                 n: (test.0).0,
                 i: (test.0).1,
                 v: (test.0).2,
                 w: (test.0).3,
                 f: (test.0).4,
                 t: (test.0).5,
-            },
-            PluralOperands::new(test.1)
+            }),
+            PluralOperands::from(test.1)
         );
     }
 }
@@ -77,15 +77,20 @@ fn test_operands_from_float() {
 
     for test in tests {
         assert_eq!(
-            PluralOperands {
+            Ok(PluralOperands {
                 n: (test.0).0,
                 i: (test.0).1,
                 v: (test.0).2,
                 w: (test.0).3,
                 f: (test.0).4,
                 t: (test.0).5,
-            },
-            PluralOperands::new(test.1)
+            }),
+            PluralOperands::from(test.1)
         );
     }
+}
+
+#[test]
+fn test_incorrect_operand() {
+    assert_eq!(PluralOperands::from("foo").is_err(), true);
 }

@@ -20,31 +20,31 @@ pub static LOCALES: &[&'static str] = &[
     "th", "ti", "tig", "tk", "tl", "tn", "to", "tr", "ts", "tzm", "ug", "uk", "ur", "uz", "ve",
     "vi", "vo", "vun", "wa", "wae", "wo", "xh", "xog", "yi", "yo", "yue", "zh", "zu",
 ];
-pub fn get_pr(lang_code: &str) -> PluralRule {
+pub fn get_pr(lang_code: &str) -> Result<PluralRule, ()> {
     let lang: &str = &str::replace(&lang_code, "-", "");
     match lang {
-        "af" => |po| {
+        "af" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ak" => |po| {
+        }),
+        "ak" => Ok(|po| {
             if (matches!(po.i, 0..=1) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "am" => |po| {
+        }),
+        "am" => Ok(|po| {
             if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ar" => |po| {
+        }),
+        "ar" => Ok(|po| {
             if (matches!(po.i, 3..=10)) {
                 PluralCategory::FEW
             } else if (matches!(po.i, 11..=99)) {
@@ -58,8 +58,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ars" => |po| {
+        }),
+        "ars" => Ok(|po| {
             if (matches!(po.i, 3..=10)) {
                 PluralCategory::FEW
             } else if (matches!(po.i, 11..=99)) {
@@ -73,36 +73,36 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "as" => |po| {
+        }),
+        "as" => Ok(|po| {
             if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "asa" => |po| {
+        }),
+        "asa" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ast" => |po| {
+        }),
+        "ast" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "az" => |po| {
+        }),
+        "az" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "be" => |po| {
+        }),
+        "be" => Ok(|po| {
             if (matches!(po.i, 2..=4) && matches!(po.i, 12..=14)) {
                 PluralCategory::FEW
             } else if (po.i % 10 == 0) || (matches!(po.i, 5..=9)) || (matches!(po.i, 11..=14)) {
@@ -112,45 +112,45 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "bem" => |po| {
+        }),
+        "bem" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "bez" => |po| {
+        }),
+        "bez" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "bg" => |po| {
+        }),
+        "bg" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "bh" => |po| {
+        }),
+        "bh" => Ok(|po| {
             if (matches!(po.i, 0..=1) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "bm" => |po| PluralCategory::OTHER,
-        "bn" => |po| {
+        }),
+        "bm" => Ok(|po| PluralCategory::OTHER),
+        "bn" => Ok(|po| {
             if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "bo" => |po| PluralCategory::OTHER,
-        "br" => |po| {
+        }),
+        "bo" => Ok(|po| PluralCategory::OTHER),
+        "br" => Ok(|po| {
             if ((po.i % 10 == 9 || matches!(po.i, 3..=4))
                 && matches!(po.i, 10..=19)
                 && matches!(po.i, 70..=79)
@@ -166,15 +166,15 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "brx" => |po| {
+        }),
+        "brx" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "bs" => |po| {
+        }),
+        "bs" => Ok(|po| {
             if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14))
                 || (matches!(po.f % 10, 2..=4) && matches!(po.f % 100, 12..=14))
             {
@@ -186,43 +186,43 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ca" => |po| {
+        }),
+        "ca" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ce" => |po| {
+        }),
+        "ce" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "cgg" => |po| {
+        }),
+        "cgg" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "chr" => |po| {
+        }),
+        "chr" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ckb" => |po| {
+        }),
+        "ckb" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "cs" => |po| {
+        }),
+        "cs" => Ok(|po| {
             if (matches!(po.i, 2..=4) && po.v == 0) {
                 PluralCategory::FEW
             } else if (po.v != 0) {
@@ -232,8 +232,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "cy" => |po| {
+        }),
+        "cy" => Ok(|po| {
             if (po.n == 3.0) {
                 PluralCategory::FEW
             } else if (po.n == 6.0) {
@@ -247,22 +247,22 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "da" => |po| {
+        }),
+        "da" => Ok(|po| {
             if (po.n == 1.0) || (po.t != 0 && (po.i == 0 || po.i == 1)) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "de" => |po| {
+        }),
+        "de" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "dsb" => |po| {
+        }),
+        "dsb" => Ok(|po| {
             if (po.v == 0 && matches!(po.i % 100, 3..=4)) || (matches!(po.f % 100, 3..=4)) {
                 PluralCategory::FEW
             } else if (po.v == 0 && po.i % 100 == 1) || (po.f % 100 == 1) {
@@ -272,86 +272,86 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "dv" => |po| {
+        }),
+        "dv" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "dz" => |po| PluralCategory::OTHER,
-        "ee" => |po| {
+        }),
+        "dz" => Ok(|po| PluralCategory::OTHER),
+        "ee" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "el" => |po| {
+        }),
+        "el" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "en" => |po| {
+        }),
+        "en" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "eo" => |po| {
+        }),
+        "eo" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "es" => |po| {
+        }),
+        "es" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "et" => |po| {
+        }),
+        "et" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "eu" => |po| {
+        }),
+        "eu" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "fa" => |po| {
+        }),
+        "fa" => Ok(|po| {
             if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ff" => |po| {
+        }),
+        "ff" => Ok(|po| {
             if (po.i == 0 || po.i == 1) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "fi" => |po| {
+        }),
+        "fi" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "fil" => |po| {
+        }),
+        "fil" => Ok(|po| {
             if (po.v == 0 && (po.i == 1 || po.i == 2 || po.i == 3))
                 || (po.v == 0 && po.i % 10 != 4 && po.i % 10 != 6 && po.i % 10 != 9)
                 || (po.v != 0 && po.f % 10 != 4 && po.f % 10 != 6 && po.f % 10 != 9)
@@ -360,36 +360,36 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "fo" => |po| {
+        }),
+        "fo" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "fr" => |po| {
+        }),
+        "fr" => Ok(|po| {
             if (po.i == 0 || po.i == 1) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "fur" => |po| {
+        }),
+        "fur" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "fy" => |po| {
+        }),
+        "fy" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ga" => |po| {
+        }),
+        "ga" => Ok(|po| {
             if (matches!(po.i, 3..=6) && po.f == 0) {
                 PluralCategory::FEW
             } else if (matches!(po.i, 7..=10) && po.f == 0) {
@@ -401,8 +401,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "gd" => |po| {
+        }),
+        "gd" => Ok(|po| {
             if (matches!(po.i, 3..=10) && po.f == 0 || matches!(po.i, 13..=19) && po.f == 0) {
                 PluralCategory::FEW
             } else if (po.n == 1.0 || po.n == 11.0) {
@@ -412,36 +412,36 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "gl" => |po| {
+        }),
+        "gl" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "gsw" => |po| {
+        }),
+        "gsw" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "gu" => |po| {
+        }),
+        "gu" => Ok(|po| {
             if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "guw" => |po| {
+        }),
+        "guw" => Ok(|po| {
             if (matches!(po.i, 0..=1) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "gv" => |po| {
+        }),
+        "gv" => Ok(|po| {
             if (po.v == 0
                 && (po.i % 100 == 0
                     || po.i % 100 == 20
@@ -459,22 +459,22 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ha" => |po| {
+        }),
+        "ha" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "haw" => |po| {
+        }),
+        "haw" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "he" => |po| {
+        }),
+        "he" => Ok(|po| {
             if (po.v == 0 && matches!(po.i, 0..=10) && po.f == 0 && po.i % 10 == 0) {
                 PluralCategory::MANY
             } else if (po.i == 1 && po.v == 0) {
@@ -484,15 +484,15 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "hi" => |po| {
+        }),
+        "hi" => Ok(|po| {
             if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "hr" => |po| {
+        }),
+        "hr" => Ok(|po| {
             if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14))
                 || (matches!(po.f % 10, 2..=4) && matches!(po.f % 100, 12..=14))
             {
@@ -504,8 +504,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "hsb" => |po| {
+        }),
+        "hsb" => Ok(|po| {
             if (po.v == 0 && matches!(po.i % 100, 3..=4)) || (matches!(po.f % 100, 3..=4)) {
                 PluralCategory::FEW
             } else if (po.v == 0 && po.i % 100 == 1) || (po.f % 100 == 1) {
@@ -515,47 +515,47 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "hu" => |po| {
+        }),
+        "hu" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "hy" => |po| {
+        }),
+        "hy" => Ok(|po| {
             if (po.i == 0 || po.i == 1) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "id" => |po| PluralCategory::OTHER,
-        "ig" => |po| PluralCategory::OTHER,
-        "ii" => |po| PluralCategory::OTHER,
-        "in" => |po| PluralCategory::OTHER,
-        "io" => |po| {
+        }),
+        "id" => Ok(|po| PluralCategory::OTHER),
+        "ig" => Ok(|po| PluralCategory::OTHER),
+        "ii" => Ok(|po| PluralCategory::OTHER),
+        "in" => Ok(|po| PluralCategory::OTHER),
+        "io" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "is" => |po| {
+        }),
+        "is" => Ok(|po| {
             if (po.t == 0 && po.i % 10 == 1 && po.i % 100 != 11) || (po.t != 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "it" => |po| {
+        }),
+        "it" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "iu" => |po| {
+        }),
+        "iu" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else if (po.n == 2.0) {
@@ -563,8 +563,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "iw" => |po| {
+        }),
+        "iw" => Ok(|po| {
             if (po.v == 0 && matches!(po.i, 0..=10) && po.f == 0 && po.i % 10 == 0) {
                 PluralCategory::MANY
             } else if (po.i == 1 && po.v == 0) {
@@ -574,107 +574,107 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ja" => |po| PluralCategory::OTHER,
-        "jbo" => |po| PluralCategory::OTHER,
-        "jgo" => |po| {
+        }),
+        "ja" => Ok(|po| PluralCategory::OTHER),
+        "jbo" => Ok(|po| PluralCategory::OTHER),
+        "jgo" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ji" => |po| {
+        }),
+        "ji" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "jmc" => |po| {
+        }),
+        "jmc" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "jv" => |po| PluralCategory::OTHER,
-        "jw" => |po| PluralCategory::OTHER,
-        "ka" => |po| {
+        }),
+        "jv" => Ok(|po| PluralCategory::OTHER),
+        "jw" => Ok(|po| PluralCategory::OTHER),
+        "ka" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "kab" => |po| {
+        }),
+        "kab" => Ok(|po| {
             if (po.i == 0 || po.i == 1) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "kaj" => |po| {
+        }),
+        "kaj" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "kcg" => |po| {
+        }),
+        "kcg" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "kde" => |po| PluralCategory::OTHER,
-        "kea" => |po| PluralCategory::OTHER,
-        "kk" => |po| {
+        }),
+        "kde" => Ok(|po| PluralCategory::OTHER),
+        "kea" => Ok(|po| PluralCategory::OTHER),
+        "kk" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "kkj" => |po| {
+        }),
+        "kkj" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "kl" => |po| {
+        }),
+        "kl" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "km" => |po| PluralCategory::OTHER,
-        "kn" => |po| {
+        }),
+        "km" => Ok(|po| PluralCategory::OTHER),
+        "kn" => Ok(|po| {
             if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ko" => |po| PluralCategory::OTHER,
-        "ks" => |po| {
+        }),
+        "ko" => Ok(|po| PluralCategory::OTHER),
+        "ks" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ksb" => |po| {
+        }),
+        "ksb" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ksh" => |po| {
+        }),
+        "ksh" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else if (po.n == 0.0) {
@@ -682,15 +682,15 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ku" => |po| {
+        }),
+        "ku" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "kw" => |po| {
+        }),
+        "kw" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else if (po.n == 2.0) {
@@ -698,15 +698,15 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ky" => |po| {
+        }),
+        "ky" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "lag" => |po| {
+        }),
+        "lag" => Ok(|po| {
             if ((po.i == 0 || po.i == 1) && po.n != 0.0) {
                 PluralCategory::ONE
             } else if (po.n == 0.0) {
@@ -714,31 +714,31 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "lb" => |po| {
+        }),
+        "lb" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "lg" => |po| {
+        }),
+        "lg" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "lkt" => |po| PluralCategory::OTHER,
-        "ln" => |po| {
+        }),
+        "lkt" => Ok(|po| PluralCategory::OTHER),
+        "ln" => Ok(|po| {
             if (matches!(po.i, 0..=1) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "lo" => |po| PluralCategory::OTHER,
-        "lt" => |po| {
+        }),
+        "lo" => Ok(|po| PluralCategory::OTHER),
+        "lt" => Ok(|po| {
             if (matches!(po.i, 2..=9) && matches!(po.i, 11..=19)) {
                 PluralCategory::FEW
             } else if (po.f != 0) {
@@ -748,8 +748,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "lv" => |po| {
+        }),
+        "lv" => Ok(|po| {
             if (po.i % 10 == 1 && po.i % 100 != 11)
                 || (po.v == 2 && po.f % 10 == 1 && po.f % 100 != 11)
                 || (po.v != 2 && po.f % 10 == 1)
@@ -763,29 +763,29 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "mas" => |po| {
+        }),
+        "mas" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "mg" => |po| {
+        }),
+        "mg" => Ok(|po| {
             if (matches!(po.i, 0..=1) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "mgo" => |po| {
+        }),
+        "mgo" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "mk" => |po| {
+        }),
+        "mk" => Ok(|po| {
             if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
                 || (po.f % 10 == 1 && po.f % 100 != 11)
             {
@@ -793,22 +793,22 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ml" => |po| {
+        }),
+        "ml" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "mn" => |po| {
+        }),
+        "mn" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "mo" => |po| {
+        }),
+        "mo" => Ok(|po| {
             if (po.v != 0) || (po.n == 0.0) || (po.n != 1.0 && matches!(po.i, 1..=19)) {
                 PluralCategory::FEW
             } else if (po.i == 1 && po.v == 0) {
@@ -816,16 +816,16 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "mr" => |po| {
+        }),
+        "mr" => Ok(|po| {
             if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ms" => |po| PluralCategory::OTHER,
-        "mt" => |po| {
+        }),
+        "ms" => Ok(|po| PluralCategory::OTHER),
+        "mt" => Ok(|po| {
             if (po.n == 0.0) || (matches!(po.i, 2..=10)) {
                 PluralCategory::FEW
             } else if (matches!(po.i, 11..=19)) {
@@ -835,16 +835,16 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "my" => |po| PluralCategory::OTHER,
-        "nah" => |po| {
+        }),
+        "my" => Ok(|po| PluralCategory::OTHER),
+        "nah" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "naq" => |po| {
+        }),
+        "naq" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else if (po.n == 2.0) {
@@ -852,121 +852,121 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "nb" => |po| {
+        }),
+        "nb" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "nd" => |po| {
+        }),
+        "nd" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ne" => |po| {
+        }),
+        "ne" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "nl" => |po| {
+        }),
+        "nl" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "nn" => |po| {
+        }),
+        "nn" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "nnh" => |po| {
+        }),
+        "nnh" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "no" => |po| {
+        }),
+        "no" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "nqo" => |po| PluralCategory::OTHER,
-        "nr" => |po| {
+        }),
+        "nqo" => Ok(|po| PluralCategory::OTHER),
+        "nr" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "nso" => |po| {
+        }),
+        "nso" => Ok(|po| {
             if (matches!(po.i, 0..=1) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ny" => |po| {
+        }),
+        "ny" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "nyn" => |po| {
+        }),
+        "nyn" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "om" => |po| {
+        }),
+        "om" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "or" => |po| {
+        }),
+        "or" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "os" => |po| {
+        }),
+        "os" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "pa" => |po| {
+        }),
+        "pa" => Ok(|po| {
             if (matches!(po.i, 0..=1) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "pap" => |po| {
+        }),
+        "pap" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "pl" => |po| {
+        }),
+        "pl" => Ok(|po| {
             if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14)) {
                 PluralCategory::FEW
             } else if (po.v == 0 && po.i != 1 && matches!(po.i % 10, 0..=1))
@@ -979,8 +979,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "prg" => |po| {
+        }),
+        "prg" => Ok(|po| {
             if (po.i % 10 == 1 && po.i % 100 != 11)
                 || (po.v == 2 && po.f % 10 == 1 && po.f % 100 != 11)
                 || (po.v != 2 && po.f % 10 == 1)
@@ -994,36 +994,36 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ps" => |po| {
+        }),
+        "ps" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "pt" => |po| {
+        }),
+        "pt" => Ok(|po| {
             if (matches!(po.i, 0..=1)) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ptPT" => |po| {
+        }),
+        "ptPT" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "rm" => |po| {
+        }),
+        "rm" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ro" => |po| {
+        }),
+        "ro" => Ok(|po| {
             if (po.v != 0) || (po.n == 0.0) || (po.n != 1.0 && matches!(po.i, 1..=19)) {
                 PluralCategory::FEW
             } else if (po.i == 1 && po.v == 0) {
@@ -1031,16 +1031,16 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "rof" => |po| {
+        }),
+        "rof" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "root" => |po| PluralCategory::OTHER,
-        "ru" => |po| {
+        }),
+        "root" => Ok(|po| PluralCategory::OTHER),
+        "ru" => Ok(|po| {
             if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14)) {
                 PluralCategory::FEW
             } else if (po.v == 0 && po.i % 10 == 0)
@@ -1053,44 +1053,44 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "rwk" => |po| {
+        }),
+        "rwk" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "sah" => |po| PluralCategory::OTHER,
-        "saq" => |po| {
+        }),
+        "sah" => Ok(|po| PluralCategory::OTHER),
+        "saq" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "scn" => |po| {
+        }),
+        "scn" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "sd" => |po| {
+        }),
+        "sd" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "sdh" => |po| {
+        }),
+        "sdh" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "se" => |po| {
+        }),
+        "se" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else if (po.n == 2.0) {
@@ -1098,17 +1098,17 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "seh" => |po| {
+        }),
+        "seh" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ses" => |po| PluralCategory::OTHER,
-        "sg" => |po| PluralCategory::OTHER,
-        "sh" => |po| {
+        }),
+        "ses" => Ok(|po| PluralCategory::OTHER),
+        "sg" => Ok(|po| PluralCategory::OTHER),
+        "sh" => Ok(|po| {
             if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14))
                 || (matches!(po.f % 10, 2..=4) && matches!(po.f % 100, 12..=14))
             {
@@ -1120,8 +1120,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "shi" => |po| {
+        }),
+        "shi" => Ok(|po| {
             if (matches!(po.i, 2..=10) && po.f == 0) {
                 PluralCategory::FEW
             } else if (po.i == 0) || (po.n == 1.0) {
@@ -1129,15 +1129,15 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "si" => |po| {
+        }),
+        "si" => Ok(|po| {
             if (po.n == 0.0 || po.n == 1.0) || (po.i == 0 && po.f == 1) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "sk" => |po| {
+        }),
+        "sk" => Ok(|po| {
             if (matches!(po.i, 2..=4) && po.v == 0) {
                 PluralCategory::FEW
             } else if (po.v != 0) {
@@ -1147,8 +1147,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "sl" => |po| {
+        }),
+        "sl" => Ok(|po| {
             if (po.v == 0 && matches!(po.i % 100, 3..=4)) || (po.v != 0) {
                 PluralCategory::FEW
             } else if (po.v == 0 && po.i % 100 == 1) {
@@ -1158,8 +1158,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "sma" => |po| {
+        }),
+        "sma" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else if (po.n == 2.0) {
@@ -1167,8 +1167,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "smi" => |po| {
+        }),
+        "smi" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else if (po.n == 2.0) {
@@ -1176,8 +1176,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "smj" => |po| {
+        }),
+        "smj" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else if (po.n == 2.0) {
@@ -1185,8 +1185,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "smn" => |po| {
+        }),
+        "smn" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else if (po.n == 2.0) {
@@ -1194,8 +1194,8 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "sms" => |po| {
+        }),
+        "sms" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else if (po.n == 2.0) {
@@ -1203,29 +1203,29 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "sn" => |po| {
+        }),
+        "sn" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "so" => |po| {
+        }),
+        "so" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "sq" => |po| {
+        }),
+        "sq" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "sr" => |po| {
+        }),
+        "sr" => Ok(|po| {
             if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14))
                 || (matches!(po.f % 10, 2..=4) && matches!(po.f % 100, 12..=14))
             {
@@ -1237,93 +1237,93 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ss" => |po| {
+        }),
+        "ss" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ssy" => |po| {
+        }),
+        "ssy" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "st" => |po| {
+        }),
+        "st" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "sv" => |po| {
+        }),
+        "sv" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "sw" => |po| {
+        }),
+        "sw" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "syr" => |po| {
+        }),
+        "syr" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ta" => |po| {
+        }),
+        "ta" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "te" => |po| {
+        }),
+        "te" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "teo" => |po| {
+        }),
+        "teo" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "th" => |po| PluralCategory::OTHER,
-        "ti" => |po| {
+        }),
+        "th" => Ok(|po| PluralCategory::OTHER),
+        "ti" => Ok(|po| {
             if (matches!(po.i, 0..=1) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "tig" => |po| {
+        }),
+        "tig" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "tk" => |po| {
+        }),
+        "tk" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "tl" => |po| {
+        }),
+        "tl" => Ok(|po| {
             if (po.v == 0 && (po.i == 1 || po.i == 2 || po.i == 3))
                 || (po.v == 0 && po.i % 10 != 4 && po.i % 10 != 6 && po.i % 10 != 9)
                 || (po.v != 0 && po.f % 10 != 4 && po.f % 10 != 6 && po.f % 10 != 9)
@@ -1332,44 +1332,44 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "tn" => |po| {
+        }),
+        "tn" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "to" => |po| PluralCategory::OTHER,
-        "tr" => |po| {
+        }),
+        "to" => Ok(|po| PluralCategory::OTHER),
+        "tr" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ts" => |po| {
+        }),
+        "ts" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "tzm" => |po| {
+        }),
+        "tzm" => Ok(|po| {
             if (matches!(po.i, 0..=1) && po.f == 0) || (matches!(po.i, 11..=99) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ug" => |po| {
+        }),
+        "ug" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "uk" => |po| {
+        }),
+        "uk" => Ok(|po| {
             if (po.v == 0 && matches!(po.i % 10, 2..=4) && matches!(po.i % 100, 12..=14)) {
                 PluralCategory::FEW
             } else if (po.v == 0 && po.i % 10 == 0)
@@ -1382,89 +1382,89 @@ pub fn get_pr(lang_code: &str) -> PluralRule {
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ur" => |po| {
+        }),
+        "ur" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "uz" => |po| {
+        }),
+        "uz" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "ve" => |po| {
+        }),
+        "ve" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "vi" => |po| PluralCategory::OTHER,
-        "vo" => |po| {
+        }),
+        "vi" => Ok(|po| PluralCategory::OTHER),
+        "vo" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "vun" => |po| {
+        }),
+        "vun" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "wa" => |po| {
+        }),
+        "wa" => Ok(|po| {
             if (matches!(po.i, 0..=1) && po.f == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "wae" => |po| {
+        }),
+        "wae" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "wo" => |po| PluralCategory::OTHER,
-        "xh" => |po| {
+        }),
+        "wo" => Ok(|po| PluralCategory::OTHER),
+        "xh" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "xog" => |po| {
+        }),
+        "xog" => Ok(|po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "yi" => |po| {
+        }),
+        "yi" => Ok(|po| {
             if (po.i == 1 && po.v == 0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        "yo" => |po| PluralCategory::OTHER,
-        "yue" => |po| PluralCategory::OTHER,
-        "zh" => |po| PluralCategory::OTHER,
-        "zu" => |po| {
+        }),
+        "yo" => Ok(|po| PluralCategory::OTHER),
+        "yue" => Ok(|po| PluralCategory::OTHER),
+        "zh" => Ok(|po| PluralCategory::OTHER),
+        "zu" => Ok(|po| {
             if (po.i == 0) || (po.n == 1.0) {
                 PluralCategory::ONE
             } else {
                 PluralCategory::OTHER
             }
-        },
-        _ => panic!("Unknown locale!"),
+        }),
+        _ => Err(()),
     }
 }

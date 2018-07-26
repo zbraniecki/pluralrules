@@ -12,22 +12,27 @@ pub struct PluralOperands {
 }
 
 impl PluralOperands {
-    pub fn new<S: ToString>(num: S) -> Self {
+    pub fn from<S: ToString>(num: S) -> Result<Self, &'static str> {
         let mut str_num: String = num.to_string();
 
         if str_num.starts_with("-") {
             str_num.remove(0);
         }
 
-        let absolute_value = f64::from_str(&str_num).expect("Incorrect number passed!");
+        let absolute_value = match f64::from_str(&str_num) {
+            Ok(value) => value,
+            Err(_) => return Err("Incorrect number passed!"),
+        };
 
         let v: Vec<&str> = str_num.split('.').collect();
 
         let int_str = v.get(0).unwrap();
         let dec_str = v.get(1).unwrap_or(&"");
 
-        let integer_digits =
-            isize::from_str(int_str).expect("Failed to parse the integer to isize");
+        let integer_digits = match isize::from_str(int_str) {
+            Ok(integer_digits) => integer_digits,
+            Err(_) => return Err("Failed to parse the integer to isize"),
+        };
 
         let (num_fraction_digits0, num_fraction_digits, fraction_digits0, fraction_digits) =
             if dec_str.is_empty() {
@@ -42,13 +47,13 @@ impl PluralOperands {
                 )
             };
 
-        PluralOperands {
+        Ok(PluralOperands {
             n: absolute_value,
             i: integer_digits,
             v: num_fraction_digits0,
             w: num_fraction_digits,
             f: fraction_digits0,
             t: fraction_digits,
-        }
+        })
     }
 }
