@@ -31,6 +31,7 @@ pub fn generate_rs(cldr_json: &str) -> String {
 
     // rule_tokens is a vector of TokenStreams that represent the CLDR plural rules as Rust expressions.
     let mut rule_tokens = Vec::<TokenStream>::new();
+    let mut langnames = Vec::<String>::new();
 
     if let Some(rules) = resource_items {
         for (lang_code, r) in rules {
@@ -69,9 +70,10 @@ pub fn generate_rs(cldr_json: &str) -> String {
             }
             // convert language rules to TokenStream and add them to all the rules
             rule_tokens.push(parser::gen_rs::gen_mid(&lang, this_lang_rules));
+            langnames.push(lang);
         }
     }
 
     // Call gen_rs to get Rust code. Convert TokenStream to string for file out.
-    parser::gen_rs::gen_fn(rule_tokens).to_string()
+    parser::gen_rs::gen_fn(rule_tokens, langnames).to_string()
 }

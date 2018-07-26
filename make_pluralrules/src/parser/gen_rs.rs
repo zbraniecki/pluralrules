@@ -12,14 +12,15 @@ fn create_match_state(lang: &str, filling: TokenStream) -> TokenStream {
     quote! { #match_name => |po| { #filling }}
 }
 
-fn create_gen_pr_fn(filling: TokenStream) -> TokenStream {
+fn create_gen_pr_fn(filling: TokenStream, langnames : Vec<String>) -> TokenStream {
     let ignore_noncritical_errors = quote! { #![allow(unused_variables, unused_parens)] };
     let extern_crates = quote! { extern crate matches; };
     let use_statements = quote! { use super::operands::PluralOperands; use super::PluralCategory; };
     let plural_function = quote! { type PluralRule = fn(PluralOperands) -> PluralCategory; };
-    let head = quote! { #ignore_noncritical_errors #extern_crates #use_statements #plural_function};
+    let langs_arr = quote! { static LOCALES: &[&'static str] = &[ #(#langnames),* ]; };
+    let head = quote! { #ignore_noncritical_errors #extern_crates #use_statements #plural_function #langs_arr};
     let get_pr_function =
-        quote! { pub fn get_pr(lang: &str) -> PluralRule {match lang { #filling }} };
+        quote! { pub fn get_pr(lang_code: &str) -> PluralRule {let lang = str::replace(&lang_code, "-", ""); match lang { #filling }} };
     quote! { #head #get_pr_function }
 }
 
@@ -63,11 +64,11 @@ pub fn gen_mid(lang: &str, pluralrule_set: Vec<(PluralCategory, TokenStream)>) -
 }
 
 /// Generates the complete TokenStream for the generated Rust code. This wraps the head and tail of the .rs file around the generated CLDR expressions.
-pub fn gen_fn(mut streams: Vec<TokenStream>) -> TokenStream {
+pub fn gen_fn(mut streams: Vec<TokenStream>, langs : Vec<String>) -> TokenStream {
     // Add an unknown local result to locale match
     streams.push(quote! { _ => panic!("Unknown locale!") });
     // Unpack the vector of tokenstreams. Each tokenstream is a pluralrule match result
     let unpacked_tokens = quote!{ #(#streams),* };
     // wrap the match options in the outermost gen code
-    create_gen_pr_fn(unpacked_tokens)
+    create_gen_pr_fn(unpacked_tokens, langs)
 }
