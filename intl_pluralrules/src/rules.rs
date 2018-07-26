@@ -3,7 +3,8 @@ extern crate matches;
 use super::operands::PluralOperands;
 use super::PluralCategory;
 type PluralRule = fn(PluralOperands) -> PluralCategory;
-static LOCALES: &[&'static str] = &[
+pub static CLDR_VERSION: usize = 33;
+pub static LOCALES: &[&'static str] = &[
     "af", "ak", "am", "ar", "ars", "as", "asa", "ast", "az", "be", "bem", "bez", "bg", "bh", "bm",
     "bn", "bo", "br", "brx", "bs", "ca", "ce", "cgg", "chr", "ckb", "cs", "cy", "da", "de", "dsb",
     "dv", "dz", "ee", "el", "en", "eo", "es", "et", "eu", "fa", "ff", "fi", "fil", "fo", "fr",
