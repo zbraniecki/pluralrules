@@ -20,7 +20,7 @@ static LOCALES: &[&'static str] = &[
     "vi", "vo", "vun", "wa", "wae", "wo", "xh", "xog", "yi", "yo", "yue", "zh", "zu",
 ];
 pub fn get_pr(lang_code: &str) -> PluralRule {
-    let lang: &str = &str::replace(&lang_code, "-", "");
+    let lang = str::replace(&lang_code, "-", "");
     match lang {
         "af" => |po| {
             if (po.n == 1.0) {

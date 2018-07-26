@@ -20,7 +20,7 @@ fn create_gen_pr_fn(filling: TokenStream, langnames : Vec<String>) -> TokenStrea
     let langs_arr = quote! { static LOCALES: &[&'static str] = &[ #(#langnames),* ]; };
     let head = quote! { #ignore_noncritical_errors #extern_crates #use_statements #plural_function #langs_arr};
     let get_pr_function =
-        quote! { pub fn get_pr(lang_code: &str) -> PluralRule {let lang = str::replace(&lang_code, "-", ""); match lang { #filling }} };
+        quote! { pub fn get_pr(lang_code: &str) -> PluralRule {let lang: &str = &str::replace(&lang_code, "-", ""); match lang { #filling }} };
     quote! { #head #get_pr_function }
 }
 
