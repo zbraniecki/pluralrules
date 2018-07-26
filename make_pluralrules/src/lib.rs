@@ -27,13 +27,17 @@ pub fn generate_rs(cldr_json: &str) -> String {
     let resources = parse_plurals_resource_from_string(cldr_json);
 
     // resource_items is a struct representation of the raw CLDR rules.
-    let resource_items = resources.unwrap().supplemental.plurals_type_cardinal;
+    let resource_items = resources.unwrap();
+    let plural_rule_data = resource_items.supplemental.plurals_type_cardinal;
+    let cldr_version = resource_items.supplemental.version.cldr_version;
+
+    println!("{}", cldr_version);
 
     // rule_tokens is a vector of TokenStreams that represent the CLDR plural rules as Rust expressions.
     let mut rule_tokens = Vec::<TokenStream>::new();
     let mut langnames = Vec::<String>::new();
 
-    if let Some(rules) = resource_items {
+    if let Some(rules) = plural_rule_data {
         for (lang_code, r) in rules {
             // `-` cannot appear in a function name. This removes a Rust-breaking character.
             let lang = str::replace(&lang_code, "-", "");
@@ -75,5 +79,5 @@ pub fn generate_rs(cldr_json: &str) -> String {
     }
 
     // Call gen_rs to get Rust code. Convert TokenStream to string for file out.
-    parser::gen_rs::gen_fn(rule_tokens, langnames).to_string()
+    parser::gen_rs::gen_fn(rule_tokens, langnames, cldr_version).to_string()
 }

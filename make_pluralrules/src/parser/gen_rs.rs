@@ -1,6 +1,5 @@
 //! gen_rs is a Rust code generator for expression representations of CLDR plural rules.
 use super::plural_category::PluralCategory;
-
 use proc_macro2::{Literal, TokenStream};
 
 fn convert_litstr(s: &str) -> Literal {
@@ -12,12 +11,14 @@ fn create_match_state(lang: &str, filling: TokenStream) -> TokenStream {
     quote! { #match_name => |po| { #filling }}
 }
 
-fn create_gen_pr_fn(filling: TokenStream, langnames : Vec<String>) -> TokenStream {
+fn create_gen_pr_fn(filling: TokenStream, langnames : Vec<String>, vr: String) -> TokenStream {
     let ignore_noncritical_errors = quote! { #![allow(unused_variables, unused_parens)] };
     let extern_crates = quote! { extern crate matches; };
     let use_statements = quote! { use super::operands::PluralOperands; use super::PluralCategory; };
     let plural_function = quote! { type PluralRule = fn(PluralOperands) -> PluralCategory; };
-    let version = quote! { pub static CLDR_VERSION: usize = 33; };
+    let num: isize = vr.parse().unwrap();
+    let ver = Literal::u64_unsuffixed(num as u64);
+    let version = quote! { pub static CLDR_VERSION: usize = #ver; };
     let langs_arr = quote! { pub static LOCALES: &[&'static str] = &[ #(#langnames),* ]; };
     let head = quote! { #ignore_noncritical_errors #extern_crates #use_statements #plural_function #version #langs_arr};
     let get_pr_function =
@@ -65,11 +66,11 @@ pub fn gen_mid(lang: &str, pluralrule_set: Vec<(PluralCategory, TokenStream)>) -
 }
 
 /// Generates the complete TokenStream for the generated Rust code. This wraps the head and tail of the .rs file around the generated CLDR expressions.
-pub fn gen_fn(mut streams: Vec<TokenStream>, langs : Vec<String>) -> TokenStream {
+pub fn gen_fn(mut streams: Vec<TokenStream>, langs : Vec<String>, version: String) -> TokenStream {
     // Add an unknown local result to locale match
     streams.push(quote! { _ => panic!("Unknown locale!") });
     // Unpack the vector of tokenstreams. Each tokenstream is a pluralrule match result
     let unpacked_tokens = quote!{ #(#streams),* };
     // wrap the match options in the outermost gen code
-    create_gen_pr_fn(unpacked_tokens, langs)
+    create_gen_pr_fn(unpacked_tokens, langs, version)
 }
