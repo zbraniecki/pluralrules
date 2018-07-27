@@ -34,7 +34,7 @@ fn main() -> std::io::Result<()> {
 
     let output_path = matches.value_of("output-file").unwrap();
     let mut file = File::create(output_path)?;
-    file.write(complete_rs_code.as_bytes())?;
+    file.write_all(complete_rs_code.as_bytes())?;
 
     Command::new("rustfmt")
         .args(&[output_path])

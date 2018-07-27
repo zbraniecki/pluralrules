@@ -37,7 +37,7 @@ named!(range_list<CompleteStr, RangeList >,
         fold_many1!( range_list_item, Vec::new(), |mut acc: Vec<_>, item| {
         acc.push(item);
         acc
-        }), |recast| RangeList(recast)
+        }), RangeList
     ))
 );
 
@@ -122,12 +122,12 @@ named!(check_eq_operator<CompleteStr,Operator>,
 named!(operand<CompleteStr,Operand>,
     ws!(map!(
         alt_complete!(
-            tag!("n") | 
-            tag!("i") | 
-            tag!("v") | 
-            tag!("w") | 
-            tag!("f") | 
-            tag!("t") ), 
+            tag!("n") |
+            tag!("i") |
+            tag!("v") |
+            tag!("w") |
+            tag!("f") |
+            tag!("t") ),
         |recast| Operand (char::from_str(&recast).unwrap()
         )
     ))
