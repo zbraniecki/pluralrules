@@ -54,6 +54,8 @@ extern crate matches;
 pub mod operands;
 mod rules;
 
+use rules::*;
+
 #[derive(Debug, Eq, PartialEq)]
 pub enum PluralCategory {
     ZERO,
@@ -68,12 +70,16 @@ pub fn get_cldr_version() -> usize {
     rules::CLDR_VERSION
 }
 
-pub fn get_locales<'a>() -> &'a [&'static str] {
-    rules::LOCALES
+pub fn get_locales<'a>(prt : PluralRuleType) -> &'a [&'static str] {
+    rules::get_locales(prt)
 }
 
-pub fn select<N: ToString>(lang: &str, number: N) -> Result<PluralCategory, &'static str> {
-    let f = rules::get_pr(lang);
+pub fn get_locale_rules() -> Result<PluralRule, ()> {
+    unimplemented!();
+}
+
+pub fn select<N: ToString>(lang: &str, number: N, prt : PluralRuleType) -> Result<PluralCategory, &'static str> {
+    let f = rules::get_pr(lang, prt);
     match f {
         Ok(pr) => {
             let ops = operands::PluralOperands::from(number);
@@ -89,12 +95,13 @@ pub fn select<N: ToString>(lang: &str, number: N) -> Result<PluralCategory, &'st
 #[cfg(test)]
 mod tests {
     use super::{get_cldr_version, get_locales, select, PluralCategory};
+    use rules::*;
     #[test]
     fn it_works() {
-        assert_eq!(select("naq", 1), Ok(PluralCategory::ONE));
-        assert_eq!(select("naq", 2), Ok(PluralCategory::TWO));
-        assert_eq!(select("naq", 5), Ok(PluralCategory::OTHER));
-        assert_eq!(!select("quan", 5).is_ok(), select("quan", 5).is_err());
+        assert_eq!(select("naq", 1, PluralRuleType::CARDINAL), Ok(PluralCategory::ONE));
+        assert_eq!(select("naq", 2, PluralRuleType::CARDINAL), Ok(PluralCategory::TWO));
+        assert_eq!(select("naq", 5, PluralRuleType::CARDINAL), Ok(PluralCategory::OTHER));
+        assert_eq!(!select("quan", 5, PluralRuleType::CARDINAL).is_ok(), select("quan", 5, PluralRuleType::CARDINAL).is_err());
     }
     #[test]
     fn version_test() {
@@ -113,7 +120,7 @@ mod tests {
             "ky", "lag", "lb", "lg", "lkt", "ln", "lo", "lt", "lv", "mas", "mg", "mgo", "mk", "ml",
             "mn", "mo", "mr", "ms", "mt", "my", "nah", "naq", "nb", "nd", "ne", "nl", "nn", "nnh",
             "no", "nqo", "nr", "nso", "ny", "nyn", "om", "or", "os", "pa", "pap", "pl", "prg",
-            "ps", "pt", "ptPT", "rm", "ro", "rof", "root", "ru", "rwk", "sah", "saq", "scn", "sd",
+            "ps", "pt", "pt-PT", "rm", "ro", "rof", "root", "ru", "rwk", "sah", "saq", "scn", "sd",
             "sdh", "se", "seh", "ses", "sg", "sh", "shi", "si", "sk", "sl", "sma", "smi", "smj",
             "smn", "sms", "sn", "so", "sq", "sr", "ss", "ssy", "st", "sv", "sw", "syr", "ta", "te",
             "teo", "th", "ti", "tig", "tk", "tl", "tn", "to", "tr", "ts", "tzm", "ug", "uk", "ur",
@@ -121,6 +128,6 @@ mod tests {
             "zu",
         ];
 
-        assert_eq!(get_locales(), TEST_ARRAY);
+        assert_eq!(get_locales(PluralRuleType::CARDINAL), TEST_ARRAY);
     }
 }
