@@ -34,7 +34,7 @@ pub fn gen_fn(
     }
     let filling = quote!{ #(#tokens),* };
     let get_pr_function =
-        quote! { pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()> {match pr_type { #filling }} };
+        quote! { #[cfg_attr(tarpaulin, skip)] pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()> {match pr_type { #filling }} };
     quote! { #head #get_pr_function }
 }
 
@@ -50,7 +50,7 @@ fn gen_get_locales(locales: BTreeMap<String, Vec<String>>) -> TokenStream {
         let locales_tokens = quote! { &[ #(#locales),* ] };
         tokens.push(quote! { #match_name => #locales_tokens });
     }
-    quote! { pub fn get_locales(pr_type: PluralRuleType) -> &'static [&'static str] { match pr_type { #(#tokens),* } } }
+    quote! { #[cfg_attr(tarpaulin, skip)] pub fn get_locales(pr_type: PluralRuleType) -> &'static [&'static str] { match pr_type { #(#tokens),* } } }
 }
 
 fn create_gen_pr_type_fn(pr_type: &str, mut streams: Vec<TokenStream>) -> TokenStream {
