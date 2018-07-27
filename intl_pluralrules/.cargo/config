@@ -1,0 +1,2 @@
+[alias]
+regenerate-data = "run -p make_pluralrules -- -i ./cldr_data/cldr_pluralrules_cardinals.json ./cldr_data/cldr_pluralrules_ordinals.json -o ./src/rules.rs"
