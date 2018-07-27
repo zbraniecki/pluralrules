@@ -1,17 +1,49 @@
+//! Plural operands in compliance with [CLDR Plural Rules](http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules).
+//!
+//! # Example Plural Operands
+//!
+//! See [full operands description](http://unicode.org/reports/tr35/tr35-numbers.html#Operands).
+//!
+//! | n | i | v | w | f | t |
+//! | - | - | - | - | - | - |
+//! | 1.230 | 1 | 3 | 2 | 230 | 23 |
+
 use std::isize;
 use std::str::FromStr;
 
+/// A full plural operands representation of a number. See [CLDR Plural Rules](http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules) for complete operands description.
 #[derive(Debug, PartialEq)]
 pub struct PluralOperands {
+    /// Absolute value of input
     pub n: f64,
+    /// Integer value of input
     pub i: isize,
+    /// Number of visible fraction digits with zeros
     pub v: isize,
+    /// Number of visible fraction digits without zeros
     pub w: isize,
+    /// Visible fraction digits with zeros
     pub f: isize,
+    /// Visible fraction digits without zeros
     pub t: isize,
 }
 
 impl PluralOperands {
+    /// Given numerical input (as numeric type or reference), returns the PluralOperands representation of the input.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use intl_pluralrules::operands::*;
+    /// assert_eq!(Ok(PluralOperands {
+    ///    n: 123.45_f64,
+    ///    i: 123,
+    ///    v: 2,
+    ///    w: 2,
+    ///    f: 45,
+    ///    t: 45,
+    /// }), PluralOperands::from(123.45))
+    /// ```
     pub fn from<S: ToString>(num: S) -> Result<Self, &'static str> {
         let mut str_num: String = num.to_string();
 
