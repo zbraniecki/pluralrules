@@ -4,9 +4,8 @@
 //!
 //! The ouput is a Rust file, specified by the user in the comand
 //! ```text
-//! cargo run -- -i <./path/to/cldr.json> -o <./path/to/output.rs>
+//! cargo run -- -i <./path/to/cldr.json>... -o <./path/to/output.rs>
 //! ```
-//! * *Can accept multiple input files.*
 #[macro_use]
 extern crate serde_derive;
 extern crate serde;
@@ -24,7 +23,7 @@ use parser::resource::*;
 use proc_macro2::TokenStream;
 use std::collections::BTreeMap;
 
-/// Takes a string representation of a CLDR JSON file and produces a string representation of the generated Rust code for the plural rules. 
+/// Takes a string representation of a CLDR JSON file and produces a string representation of the generated Rust code for the plural rules.
 ///
 /// The string representation of the Rust code is written to a specified Rust file and can be used to get the plural category for numerical input.
 pub fn generate_rs(cldr_jsons: &[String]) -> String {

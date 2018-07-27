@@ -40,7 +40,7 @@ pub fn gen_fn(
     quote! { #head #get_pr_function }
 }
 
-// Function writes the get locales function 
+// Function writes the get locales function
 fn gen_get_locales(locales: BTreeMap<String, Vec<String>>) -> TokenStream {
     let mut tokens = Vec::<TokenStream>::new();
 

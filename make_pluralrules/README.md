@@ -16,10 +16,8 @@ The generator currently generates code for cardinal plural rules from CLDR 33 in
 Launch make_pluralrules with:
 
 ```
-cargo run -- -i <./path/to/cldr.json> -o <./path/to/output.rs>
+cargo run -- -i <./path/to/cldr.json>... -o <./path/to/output.rs>
 ```
-
-* *Can accept multiple input files.*
 
 Local Development
 -----------------
