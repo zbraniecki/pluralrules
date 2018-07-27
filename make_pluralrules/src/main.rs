@@ -8,27 +8,32 @@ use std::fs::File;
 use std::io::prelude::*;
 
 fn main() -> std::io::Result<()> {
-    let matches = App::new("CLDR Plura Rules Rust Generator")
+    let matches = App::new("CLDR Plural Rules Rust Generator")
         .version("0.1.0")
         .about("Generates Rust code for CLDR plural rules.")
         .args_from_usage(
-            "<CLDR_JSON> 'Sets the input file to use'
-            <OUTPUT_RS> 'Sets the output file to use'",
+            "<input-files> -i, --input=<PATH>... 'Input CLDR JSON plural rules files'
+             <output-file> -o, --output=<PATH> 'Output RS file'",
         )
         .get_matches();
 
-    let cldr_path = matches.value_of("CLDR_JSON").unwrap();
-    let output_path = matches.value_of("OUTPUT_RS").unwrap();
+    let input_paths: Vec<&str> = matches.values_of("input-files").unwrap().collect();
 
-    let mut f = File::open(cldr_path).expect("file not found");
+    let input_jsons = input_paths
+        .iter()
+        .map(|path| {
+            let mut f = File::open(path).expect("file not found");
+            let mut contents = String::new();
+            f.read_to_string(&mut contents)
+                .expect("something went wrong reading the file");
+            contents
+        })
+        .collect::<Vec<_>>();
+    let complete_rs_code = generate_rs(&input_jsons);
 
-    let mut contents = String::new();
-    f.read_to_string(&mut contents)
-        .expect("something went wrong reading the file");
-
-    let complete_rs_code = generate_rs(&contents);
-
+    let output_path = matches.value_of("output-file").unwrap();
     let mut file = File::create(output_path)?;
     file.write(complete_rs_code.as_bytes())?;
+
     Ok(())
 }
