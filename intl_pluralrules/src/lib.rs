@@ -66,46 +66,52 @@ pub enum PluralCategory {
     OTHER,
 }
 
-pub fn get_cldr_version() -> usize {
-    rules::CLDR_VERSION
+pub use rules::get_locales;
+pub use rules::CLDR_VERSION;
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct IntlPluralRules {
+    function: PluralRule,
 }
 
-pub fn get_locales<'a>(prt : PluralRuleType) -> &'a [&'static str] {
-    rules::get_locales(prt)
-}
-
-pub fn get_locale_rules() -> Result<PluralRule, ()> {
-    unimplemented!();
-}
-
-pub fn select<N: ToString>(lang: &str, number: N, prt : PluralRuleType) -> Result<PluralCategory, &'static str> {
-    let f = rules::get_pr(lang, prt);
-    match f {
-        Ok(pr) => {
-            let ops = operands::PluralOperands::from(number);
-            match ops {
-                Ok(ops) => Ok(pr(ops)),
-                Err(_) => Err("Argument can not be parsed to operands."),
-            }
+impl IntlPluralRules {
+    pub fn create(lang: &str, prt: PluralRuleType) -> Result<Self, &'static str> {
+        let returned_rule = rules::get_pr(lang, prt);
+        match returned_rule {
+            Ok(returned_rule) => Ok(Self {
+                function: returned_rule,
+            }),
+            Err(_) => Err("unknown locale"),
         }
-        Err(_) => Err("unknown locale"),
+    }
+
+    pub fn select<N: ToString>(&self, number: N) -> Result<PluralCategory, &'static str> {
+        let ops = operands::PluralOperands::from(number);
+        let pr = self.function;
+        match ops {
+            Ok(ops) => Ok(pr(ops)),
+            Err(_) => Err("Argument can not be parsed to operands."),
+        }
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{get_cldr_version, get_locales, select, PluralCategory};
+    use super::{get_locales, IntlPluralRules, PluralCategory, CLDR_VERSION};
     use rules::*;
     #[test]
     fn it_works() {
-        assert_eq!(select("naq", 1, PluralRuleType::CARDINAL), Ok(PluralCategory::ONE));
-        assert_eq!(select("naq", 2, PluralRuleType::CARDINAL), Ok(PluralCategory::TWO));
-        assert_eq!(select("naq", 5, PluralRuleType::CARDINAL), Ok(PluralCategory::OTHER));
-        assert_eq!(!select("quan", 5, PluralRuleType::CARDINAL).is_ok(), select("quan", 5, PluralRuleType::CARDINAL).is_err());
+        let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
+        assert_eq!(pr_naq.select(1), Ok(PluralCategory::ONE));
+        assert_eq!(pr_naq.select(2), Ok(PluralCategory::TWO));
+        assert_eq!(pr_naq.select(5), Ok(PluralCategory::OTHER));
+
+        let pr_broken = IntlPluralRules::create("test", PluralRuleType::CARDINAL);
+        assert_eq!(pr_broken.is_err(), !pr_broken.is_ok());
     }
     #[test]
     fn version_test() {
-        assert_eq!(get_cldr_version(), 33);
+        assert_eq!(CLDR_VERSION, 33);
     }
     #[test]
     fn locale_test() {
