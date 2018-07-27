@@ -3,7 +3,6 @@
 use serde_json;
 
 use std::collections::BTreeMap;
-use std::collections::HashMap;
 use std::error::Error;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -28,15 +27,6 @@ pub struct Supplemental {
     pub plurals_type_cardinal: Option<BTreeMap<String, BTreeMap<String, String>>>,
     #[serde(rename = "plurals-type-ordinal")]
     pub plurals_type_ordinal: Option<BTreeMap<String, BTreeMap<String, String>>>,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct HashSupplemental {
-    pub version: Version,
-    #[serde(rename = "plurals-type-cardinal")]
-    pub plurals_type_cardinal: Option<HashMap<String, HashMap<String, String>>>,
-    #[serde(rename = "plurals-type-ordinal")]
-    pub plurals_type_ordinal: Option<HashMap<String, HashMap<String, String>>>,
 }
 
 /// Will parse a CLDR compliant source from a &str.

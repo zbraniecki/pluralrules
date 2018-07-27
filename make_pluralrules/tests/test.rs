@@ -15,12 +15,14 @@ fn read_file(path: &str) -> Result<String, io::Error> {
 
 #[test]
 fn simple_test() {
-    let input_json =
-        read_file("./tests/fixtures/cldr_pluralrules_33.json").expect("Could not read input json");
+    let cardinal_json = read_file("./tests/fixtures/cldr_pluralrules_cardinals_33.json")
+        .expect("Could not read input json");
+    let ordinal_json = read_file("./tests/fixtures/cldr_pluralrules_ordinals_33.json")
+        .expect("Could not read input json");
     let output_rs =
         read_file("./tests/fixtures/cldr_pluralrules_33.rs").expect("Could not read output rs");
 
-    let output = generate_rs(&input_json);
+    let output = generate_rs(&[cardinal_json, ordinal_json]);
 
     assert_eq!(output_rs, output);
 }
