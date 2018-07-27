@@ -1,22 +1,21 @@
-# CLDR Plural Rules
+# CLDR Plural Rules [![Build Status](https://travis-ci.org/unclenachoduh/pluralrules.svg?branch=master)](https://travis-ci.org/unclenachoduh/pluralrules) [![Coverage Status](https://coveralls.io/repos/github/unclenachoduh/pluralrules/badge.svg?branch=master)](https://coveralls.io/github/unclenachoduh/pluralrules?branch=master)
 
 `cldr_pluralrules` is a collection of Rust crates for identifying the plural rule, according to [CLDR](https://github.com/unicode-cldr/cldr-core/blob/master/supplemental/plurals.json), for a given number.
 
-[![crates.io](http://meritbadge.herokuapp.com/cldr_pluralrules_parser)](https://crates.io/crates/cldr_pluralrules_parser)
-[![Build Status](https://travis-ci.org/unclenachoduh/pluralrules.svg?branch=master)](https://travis-ci.org/unclenachoduh/pluralrules)
-[![Coverage Status](https://coveralls.io/repos/github/unclenachoduh/pluralrules/badge.svg?branch=master)](https://coveralls.io/github/unclenachoduh/pluralrules?branch=master)
-
 The crates perform the following functions:
 
-## intl_pluralrules
+## intl_pluralrules [![crates.io](http://meritbadge.herokuapp.com/intl_pluralrules)](https://crates.io/crates/intl_pluralrules)
+
 
 This library returns the plural rule given numeric input.
 
-## cldr_pluralrules_parser
+## cldr_pluralrules_parser [![crates.io](http://meritbadge.herokuapp.com/cldr_pluralrules_parser)](https://crates.io/crates/cldr_pluralrules_parser)
+
 
 This library creates an AST from plural rules, according to [CLDR plural rule syntax](http://unicode.org/reports/tr35/tr35-numbers.html#Plural_rules_syntax).
 
-## make_pluralrules
+## make_pluralrules [![crates.io](http://meritbadge.herokuapp.com/make_pluralrules)](https://crates.io/crates/make_pluralrules)
+
 
 This executable generates a Rust file with a public function representation of CLDR plural rules from a specified source.
 
