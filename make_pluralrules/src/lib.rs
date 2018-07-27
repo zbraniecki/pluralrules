@@ -67,7 +67,7 @@ pub fn generate_rs(cldr_jsons: &[String]) -> String {
     }
 
     // Call gen_rs to get Rust code. Convert TokenStream to string for file out.
-    parser::gen_rs::gen_fn(tokens, locales, cldr_version.unwrap()).to_string()
+    parser::gen_rs::gen_fn(tokens, locales, &cldr_version.unwrap()).to_string()
 }
 
 fn gen_type_rs(
@@ -83,7 +83,7 @@ fn gen_type_rs(
 
         for (rule_name, rule_line) in r {
             // cat_name is the simplified category name from the CLDR source file
-            let cat_name = rule_name.split("-").collect::<Vec<_>>()[2];
+            let cat_name = rule_name.split('-').collect::<Vec<_>>()[2];
 
             // representation is the
             let representation = cldr_pluralrules_parser::parse_plural_rule(&rule_line);
@@ -109,7 +109,7 @@ fn gen_type_rs(
             }
         }
         // convert language rules to TokenStream and add them to all the rules
-        rule_tokens.push(parser::gen_rs::gen_mid(&lang, this_lang_rules));
+        rule_tokens.push(parser::gen_rs::gen_mid(&lang, &this_lang_rules));
         langnames.push(lang);
     }
     (langnames, rule_tokens)

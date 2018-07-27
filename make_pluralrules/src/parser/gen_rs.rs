@@ -9,7 +9,7 @@ fn convert_litstr(s: &str) -> Literal {
 }
 
 // Function makes a match statement for language
-fn create_match_state(lang: &str, filling: TokenStream) -> TokenStream {
+fn create_match_state(lang: &str, filling: &TokenStream) -> TokenStream {
     let match_name = convert_litstr(lang);
     quote! { #match_name => Ok(|po| { #filling }) }
 }
@@ -18,7 +18,7 @@ fn create_match_state(lang: &str, filling: TokenStream) -> TokenStream {
 pub fn gen_fn(
     streams: BTreeMap<String, Vec<TokenStream>>,
     locales: BTreeMap<String, Vec<String>>,
-    vr: String,
+    vr: &str,
 ) -> TokenStream {
     let ignore_noncritical_errors = quote! { #![allow(unused_variables, unused_parens)] };
     let extern_crates = quote! { extern crate matches; };
@@ -86,7 +86,7 @@ fn create_return(cat: PluralCategory, exp: &TokenStream) -> TokenStream {
 /// Generates the match statements that comprise the majority of the generated rust code.
 ///
 /// These statements are the expression representations of the CLDR plural rules.
-pub fn gen_mid(lang: &str, pluralrule_set: Vec<(PluralCategory, TokenStream)>) -> TokenStream {
+pub fn gen_mid(lang: &str, pluralrule_set: &[(PluralCategory, TokenStream)]) -> TokenStream {
     // make pluralrule_set iterable
     let mut iter = pluralrule_set.iter();
 
@@ -108,5 +108,5 @@ pub fn gen_mid(lang: &str, pluralrule_set: Vec<(PluralCategory, TokenStream)>) -
     };
 
     // return the world's best tokenstream
-    create_match_state(lang, rule_tokens)
+    create_match_state(lang, &rule_tokens)
 }

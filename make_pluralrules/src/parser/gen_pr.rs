@@ -158,7 +158,7 @@ fn create_relation(rel: Relation) -> TokenStream {
     }
 
     // Unfold all expressions from folded expressions
-    let relationexpr = match operator {
+    match operator {
         Operator::In | Operator::Is | Operator::EQ => if relations.len() > 1 {
             quote!{ ( #(#relations)||* ) }
         } else {
@@ -166,8 +166,7 @@ fn create_relation(rel: Relation) -> TokenStream {
         },
         Operator::NotIn | Operator::NotEQ | Operator::IsNot => quote!{ #(#relations)&&* },
         Operator::Within | Operator::NotWithin => quote!{ #(#relations)||* },
-    };
-    relationexpr
+    }
 }
 
 // Unfold AndConditions and tokenize together with &&
