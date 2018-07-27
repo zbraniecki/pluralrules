@@ -13,6 +13,14 @@ Status
 
 The generator currently generates code for cardinal plural rules from CLDR 33 into Rust 1.27 and above.
 
+Launch make_pluralrules with:
+
+```
+cargo run -- -i <./path/to/cldr.json> -o <./path/to/output.rs>
+```
+
+* *Can accept multiple input files.*
+
 Local Development
 -----------------
 

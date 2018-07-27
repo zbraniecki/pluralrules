@@ -3,10 +3,12 @@ use super::plural_category::PluralCategory;
 use proc_macro2::{Literal, TokenStream};
 use std::collections::BTreeMap;
 
+// Function converts lang name into a literal string
 fn convert_litstr(s: &str) -> Literal {
     Literal::string(s)
 }
 
+// Function makes a match statement for language
 fn create_match_state(lang: &str, filling: TokenStream) -> TokenStream {
     let match_name = convert_litstr(lang);
     quote! { #match_name => Ok(|po| { #filling }) }
@@ -38,6 +40,7 @@ pub fn gen_fn(
     quote! { #head #get_pr_function }
 }
 
+// Function writes the get locales function 
 fn gen_get_locales(locales: BTreeMap<String, Vec<String>>) -> TokenStream {
     let mut tokens = Vec::<TokenStream>::new();
 
@@ -53,6 +56,7 @@ fn gen_get_locales(locales: BTreeMap<String, Vec<String>>) -> TokenStream {
     quote! { #[cfg_attr(tarpaulin, skip)] pub fn get_locales(pr_type: PluralRuleType) -> &'static [&'static str] { match pr_type { #(#tokens),* } } }
 }
 
+// Function wraps all match statements for plural rules in a match for ordinal and cardinal rules
 fn create_gen_pr_type_fn(pr_type: &str, mut streams: Vec<TokenStream>) -> TokenStream {
     // Add an unknown local result to locale match
     streams.push(quote! { _ => Err(()) });
@@ -67,6 +71,7 @@ fn create_gen_pr_type_fn(pr_type: &str, mut streams: Vec<TokenStream>) -> TokenS
     quote! { #match_name => match lang_code { #unpacked_tokens } }
 }
 
+// Function wraps an expression in a match statement for plural category
 fn create_return(cat: PluralCategory, exp: &TokenStream) -> TokenStream {
     match cat {
         PluralCategory::ZERO => quote! {if #exp { PluralCategory::ZERO } },
@@ -102,6 +107,6 @@ pub fn gen_mid(lang: &str, pluralrule_set: Vec<(PluralCategory, TokenStream)>) -
         None => quote! { { PluralCategory::OTHER }  },
     };
 
-    // return the world's best tokenstreamn
+    // return the world's best tokenstream
     create_match_state(lang, rule_tokens)
 }
