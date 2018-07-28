@@ -1,13 +1,50 @@
 //! Plural operands in compliance with [CLDR Plural Rules](http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules).
 //!
-//! # Example Plural Operands
-//!
 //! See [full operands description](http://unicode.org/reports/tr35/tr35-numbers.html#Operands).
 //!
-//! | n | i | v | w | f | t |
-//! | - | - | - | - | - | - |
-//! | 1.230 | 1 | 3 | 2 | 230 | 23 |
-
+//! # Examples
+//!
+//! From int
+//!
+//! ```
+//! use intl_pluralrules::operands::*;
+//! assert_eq!(Ok(PluralOperands {
+//!    n: 2_f64,
+//!    i: 2,
+//!    v: 0,
+//!    w: 0,
+//!    f: 0,
+//!    t: 0,
+//! }), PluralOperands::from(2))
+//! ```
+//!
+//! From float
+//!
+//! ```
+//! use intl_pluralrules::operands::*;
+//! assert_eq!(Ok(PluralOperands {
+//!    n: 1234.567_f64,
+//!    i: 1234,
+//!    v: 3,
+//!    w: 3,
+//!    f: 567,
+//!    t: 567,
+//! }), PluralOperands::from("-1234.567"))
+//! ```
+//!
+//! From &str
+//!
+//! ```
+//! use intl_pluralrules::operands::*;
+//! assert_eq!(Ok(PluralOperands {
+//!    n: 123.45_f64,
+//!    i: 123,
+//!    v: 2,
+//!    w: 2,
+//!    f: 45,
+//!    t: 45,
+//! }), PluralOperands::from(123.45))
+//! ```
 use std::isize;
 use std::str::FromStr;
 

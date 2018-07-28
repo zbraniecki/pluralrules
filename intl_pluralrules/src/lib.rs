@@ -6,46 +6,14 @@
 //!
 //! # Examples
 //!
-//! From int
-//!
 //! ```
-//! use intl_pluralrules::operands::*;
-//! assert_eq!(Ok(PluralOperands {
-//!    n: 2_f64,
-//!    i: 2,
-//!    v: 0,
-//!    w: 0,
-//!    f: 0,
-//!    t: 0,
-//! }), PluralOperands::from(2))
-//! ```
+//! extern crate intl_pluralrules;
+//! use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
 //!
-//! From float
-//!
-//! ```
-//! use intl_pluralrules::operands::*;
-//! assert_eq!(Ok(PluralOperands {
-//!    n: 1234.567_f64,
-//!    i: 1234,
-//!    v: 3,
-//!    w: 3,
-//!    f: 567,
-//!    t: 567,
-//! }), PluralOperands::from("-1234.567"))
-//! ```
-//!
-//! From &str
-//!
-//! ```
-//! use intl_pluralrules::operands::*;
-//! assert_eq!(Ok(PluralOperands {
-//!    n: 123.45_f64,
-//!    i: 123,
-//!    v: 2,
-//!    w: 2,
-//!    f: 45,
-//!    t: 45,
-//! }), PluralOperands::from(123.45))
+//! let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
+//! assert_eq!(pr_naq.select(1), Ok(PluralCategory::ONE));
+//! assert_eq!(pr_naq.select("2"), Ok(PluralCategory::TWO));
+//! assert_eq!(pr_naq.select(5.0), Ok(PluralCategory::OTHER));
 //! ```
 #[macro_use]
 extern crate matches;
@@ -70,7 +38,19 @@ pub use rules::PluralRuleType;
 /// CLDR_VERSION is the version of CLDR extracted from the file used to generate rules.rs.
 pub use rules::CLDR_VERSION;
 
-/// A callable function from rules.rs that returns the plural category of numerical input.
+/// The main structure for selecting plural rules.
+///
+/// # Examples
+///
+/// ```
+/// extern crate intl_pluralrules;
+/// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
+///
+/// let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
+/// assert_eq!(pr_naq.select(1), Ok(PluralCategory::ONE));
+/// assert_eq!(pr_naq.select("2"), Ok(PluralCategory::TWO));
+/// assert_eq!(pr_naq.select(5.0), Ok(PluralCategory::OTHER));
+/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct IntlPluralRules {
     function: PluralRule,
