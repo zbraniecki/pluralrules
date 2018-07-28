@@ -57,9 +57,7 @@ pub struct IntlPluralRules {
 }
 
 impl IntlPluralRules {
-    /// Returns a result of the function for the given language.
-    ///
-    /// If the language does not exist, returns an error.
+    /// Returns an instance of IntlPluralRules.
     ///
     /// # Examples
     /// ```
