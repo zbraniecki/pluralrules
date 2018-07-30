@@ -152,7 +152,11 @@ fn create_relation(rel: Relation) -> TokenStream {
                 )
             };
 
-            let rel_tokens = quote! { matches!( #symbol, #rfront ..= #rback) #perim };
+            let rel_tokens = match operator {
+                Operator::In | Operator::Is | Operator::EQ => quote! { matches!( #symbol, #rfront ..= #rback) #perim }, 
+                Operator::NotIn | Operator::NotEQ | Operator::IsNot => quote! { !matches!( #symbol, #rfront ..= #rback) #perim },
+                Operator::Within | Operator::NotWithin => panic!("There was a problem with the source file.")
+            };
             relations.push(rel_tokens);
         }
     }
