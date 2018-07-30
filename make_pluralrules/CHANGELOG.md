@@ -4,6 +4,10 @@
 
   - …
 
+## make_pluralrules 0.3.1 (July 30, 2018)
+
+  - Negate matches for ranges.
+
 ## make_pluralrules 0.3.0 (July 26, 2018)
 
   - Arguments with Clap
