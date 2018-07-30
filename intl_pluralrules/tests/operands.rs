@@ -4,7 +4,8 @@
 
 extern crate intl_pluralrules;
 
-use intl_pluralrules::operands::*;
+// use intl_pluralrules::operands::*;
+use intl_pluralrules::{operands::*, IntlPluralRules, PluralRuleType};
 
 #[test]
 fn test_operands_from_str() {
@@ -93,4 +94,10 @@ fn test_operands_from_float() {
 #[test]
 fn test_incorrect_operand() {
     assert_eq!(PluralOperands::from("foo").is_err(), true);
+}
+
+#[test]
+fn test_get_locale() {
+    let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
+    assert_eq!(pr_naq.get_locale(), "naq");
 }
