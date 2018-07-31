@@ -35,6 +35,10 @@ fn bench_total(b: &mut Bencher) {
         ipr.select(3).unwrap();
         ipr.select(4).unwrap();
         ipr.select(5).unwrap();
+        ipr.select(25).unwrap();
+        ipr.select(134).unwrap();
+        ipr.select(5090).unwrap();
+        ipr.select(910293019).unwrap();
         ipr.select(5.2).unwrap();
         ipr.select(-0.2).unwrap();
         ipr.select("12.06").unwrap();
