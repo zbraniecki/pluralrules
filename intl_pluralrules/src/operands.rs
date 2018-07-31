@@ -82,39 +82,43 @@ impl PluralOperands {
     /// }), PluralOperands::from(123.45))
     /// ```
     pub fn from<S: ToString>(num: S) -> Result<Self, &'static str> {
-        let mut str_num: String = num.to_string();
+        let str_num = num.to_string();
 
-        if str_num.starts_with("-") {
-            str_num.remove(0);
+        let abs_str = if str_num.starts_with("-") {
+            &str_num[1..]
+        } else {
+            &str_num
+        };
+
+        let absolute_value = f64::from_str(&abs_str).map_err(|_| "Incorrect number passed!")?;
+
+        let integer_digits;
+        let num_fraction_digits0;
+        let num_fraction_digits;
+        let fraction_digits0;
+        let fraction_digits;
+
+        if let Some(dec_pos) = abs_str.find('.') {
+            let int_str = &abs_str[..dec_pos];
+            let dec_str = &abs_str[(dec_pos + 1)..];
+
+            integer_digits =
+                isize::from_str(&int_str).map_err(|_| "Could not convert string to integer!")?;
+
+            let backtrace = dec_str.trim_right_matches('0');
+
+            num_fraction_digits0 = dec_str.chars().count() as isize;
+            num_fraction_digits = backtrace.chars().count() as isize;
+            fraction_digits0 =
+                isize::from_str(dec_str).map_err(|_| "Could not convert string to integer!")?;
+            fraction_digits = isize::from_str(backtrace).unwrap_or(0);
+        } else {
+            integer_digits = absolute_value as isize;
+            num_fraction_digits0 = 0;
+            num_fraction_digits = 0;
+            fraction_digits0 = 0;
+            fraction_digits = 0;
         }
-
-        let absolute_value = match f64::from_str(&str_num) {
-            Ok(value) => value,
-            Err(_) => return Err("Incorrect number passed!"),
-        };
-
-        let v: Vec<&str> = str_num.split('.').collect();
-
-        let int_str = v.get(0).unwrap();
-        let dec_str = v.get(1).unwrap_or(&"");
-
-        let integer_digits = match isize::from_str(int_str) {
-            Ok(integer_digits) => integer_digits,
-            Err(_) => return Err("Failed to parse the integer to isize"),
-        };
-
-        let (num_fraction_digits0, num_fraction_digits, fraction_digits0, fraction_digits) =
-            if dec_str.is_empty() {
-                (0, 0, 0, 0)
-            } else {
-                let backtrace = dec_str.trim_right_matches('0');
-                (
-                    dec_str.chars().count() as isize,
-                    backtrace.chars().count() as isize,
-                    isize::from_str(dec_str).unwrap(),
-                    isize::from_str(&backtrace).unwrap_or(0),
-                )
-            };
 
         Ok(PluralOperands {
             n: absolute_value,
