@@ -1,6 +1,6 @@
 [package]
 name = "intl_pluralrules"
-version = "0.8.0"
+version = "0.8.1"
 authors = ["Kekoa Riggin <kekoariggin@gmail.com>", "Zibi Braniecki <zbraniecki@mozilla.com>"]
 description = "A plural rule categorizer for numeric input."
 license = "Apache-2.0/MIT"
