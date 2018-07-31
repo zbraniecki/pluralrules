@@ -53,6 +53,7 @@ pub use rules::CLDR_VERSION;
 /// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct IntlPluralRules {
+    locale: String,
     function: PluralRule,
 }
 
@@ -74,6 +75,7 @@ impl IntlPluralRules {
         let returned_rule = rules::get_pr(lang, prt);
         match returned_rule {
             Ok(returned_rule) => Ok(Self {
+                locale: lang.to_string(),
                 function: returned_rule,
             }),
             Err(_) => Err("unknown locale"),
@@ -118,6 +120,20 @@ impl IntlPluralRules {
     /// ```
     pub fn get_locales(prt: PluralRuleType) -> &'static [&'static str] {
         rules::get_locales(prt)
+    }
+
+    /// Returns the locale name for this PluralRule instance.
+    ///
+    /// # Examples
+    /// ```
+    /// extern crate intl_pluralrules;
+    /// use intl_pluralrules::{IntlPluralRules, PluralRuleType};
+    ///
+    /// let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
+    /// assert_eq!(pr_naq.get_locale(), "naq");
+    /// ```
+    pub fn get_locale(&self) -> &str {
+        &self.locale
     }
 }
 
