@@ -29,12 +29,56 @@ fn full_cldr_test() {
 
 #[test]
 fn within_test() {
-    let cardinal_json = read_file("./tests/fixtures/cldr_pluralrules_cardinals_test.json")
-        .expect("Could not read input json");
-    let output_rs =
-        read_file("./tests/fixtures/cldr_pluralrules_test.rs").expect("Could not read output rs");
+    // let cardinal_json = read_file("./tests/fixtures/cldr_pluralrules_cardinals_test.json")
+    //     .expect("Could not read input json");
+    let text = String::from(
+"{
+  \"supplemental\": {
+    \"version\": {
+      \"_number\": \"$Revision: 13898 $\",
+      \"_unicodeVersion\": \"10.0.0\",
+      \"_cldrVersion\": \"0\"
+    },
+    \"plurals-type-cardinal\": {
+      \"test\": {
+        \"pluralRule-count-one\": \"n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000\",
+        \"pluralRule-count-two\": \"n % 10 within 1..2 @ 11, 12, 21, 22...\",
+        \"pluralRule-count-few\": \"n within 2..10 and i not within 8..9 @ 1.1, 1.2, 2, 3, 4, 5, 6, 7, 10\",
+        \"pluralRule-count-other\": \" @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, … @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, …\"
+      }
+    }
+  }
+}");
+    let output_rs = read_file("./tests/fixtures/cldr_pluralrules_within_test.rs")
+        .expect("Could not read output rs");
 
-    let output = generate_rs(&[cardinal_json]);
+    let output = generate_rs(&[text]);
 
     assert_eq!(output_rs, output);
+}
+
+#[test]
+#[should_panic]
+fn bad_type_test() {
+    // let cardinal_json = read_file("./tests/fixtures/cldr_pluralrules_cardinals_bad.json")
+    //     .expect("Could not read input json");
+
+    let text = String::from(
+"{
+  \"supplemental\": {
+    \"version\": {
+      \"_number\": \"$Revision: 13898 $\",
+      \"_unicodeVersion\": \"10.0.0\",
+      \"_cldrVersion\": \"0\"
+    },
+    \"plurals-type-cardinals\": {
+      \"test\": {
+        \"pluralRule-count-one\": \"n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000\",
+        \"pluralRule-count-other\": \" @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, … @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, …\"
+      }
+    }
+  }
+}");
+
+    generate_rs(&[text]);
 }
