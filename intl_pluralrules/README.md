@@ -14,6 +14,14 @@ Status
 
 Currently produces operands compliant with CLDR 33 into Rust 1.27 and above.
 
+**Using External CLDR Data**
+
+If you would like to use plural rules that are not the specified version above, you can regenerate intl_pluralrules's internal rules with the command:
+
+	cargo regenerate-data
+
+You will need to replace the JSON files under `/cldr_data/` with your own CLDR-compliant JSON files.
+
 Local Development
 -----------------
 

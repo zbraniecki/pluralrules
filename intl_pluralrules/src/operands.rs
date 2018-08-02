@@ -55,13 +55,13 @@ pub struct PluralOperands {
     pub n: f64,
     /// Integer value of input
     pub i: isize,
-    /// Number of visible fraction digits with zeros
+    /// Number of visible fraction digits with trailing zeros
     pub v: isize,
-    /// Number of visible fraction digits without zeros
+    /// Number of visible fraction digits without trailing zeros
     pub w: isize,
-    /// Visible fraction digits with zeros
+    /// Visible fraction digits with trailing zeros
     pub f: isize,
-    /// Visible fraction digits without zeros
+    /// Visible fraction digits without trailing zeros
     pub t: isize,
 }
 
