@@ -29,8 +29,6 @@ fn full_cldr_test() {
 
 #[test]
 fn within_test() {
-    // let cardinal_json = read_file("./tests/fixtures/cldr_pluralrules_cardinals_test.json")
-    //     .expect("Could not read input json");
     let text = String::from(
 "{
   \"supplemental\": {
@@ -60,9 +58,6 @@ fn within_test() {
 #[test]
 #[should_panic]
 fn bad_type_test() {
-    // let cardinal_json = read_file("./tests/fixtures/cldr_pluralrules_cardinals_bad.json")
-    //     .expect("Could not read input json");
-
     let text = String::from(
 "{
   \"supplemental\": {
