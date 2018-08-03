@@ -4,6 +4,10 @@
 
   - …
 
+## make_pluralrules 0.3.2 (August 3, 2018)
+
+  - Test coverage.
+
 ## make_pluralrules 0.3.1 (July 30, 2018)
 
   - Negate matches for ranges.
