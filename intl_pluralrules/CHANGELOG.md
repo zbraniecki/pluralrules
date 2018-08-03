@@ -4,6 +4,10 @@
 
   - …
 
+## intl_pluralrules 0.9.0 (August 3, 2018)
+
+  - Updates to docs.
+
 ## intl_pluralrules 0.8.2 (July 31, 2018)
 
   - Optimization for operands.rs.
