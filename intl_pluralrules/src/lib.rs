@@ -10,10 +10,17 @@
 //! extern crate intl_pluralrules;
 //! use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
 //!
-//! let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
+//! let permanent: &'static str = "naq";
+//! let locale_code = &permanent;
+//!  
+//! assert!(IntlPluralRules::get_locales(PluralRuleType::CARDINAL).contains(&permanent));
+//!
+//! let pr_naq = IntlPluralRules::create(locale_code, PluralRuleType::CARDINAL).unwrap();
 //! assert_eq!(pr_naq.select(1), Ok(PluralCategory::ONE));
 //! assert_eq!(pr_naq.select("2"), Ok(PluralCategory::TWO));
 //! assert_eq!(pr_naq.select(5.0), Ok(PluralCategory::OTHER));
+//!
+//! assert_eq!(pr_naq.get_locale(), "naq");
 //! ```
 #[macro_use]
 extern crate matches;
@@ -112,7 +119,6 @@ impl IntlPluralRules {
     /// extern crate intl_pluralrules;
     /// use intl_pluralrules::{IntlPluralRules, PluralRuleType};
     ///
-    /// let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL);
     /// assert_eq!(
     ///     IntlPluralRules::get_locales(PluralRuleType::CARDINAL).is_empty(),
     ///     false

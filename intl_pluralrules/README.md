@@ -14,6 +14,14 @@ Status
 
 Currently produces operands compliant with CLDR 33 into Rust 1.27 and above.
 
+**Updating CLDR Data**
+
+If you would like to update rules.rs with plural rules that are not the specified version above (e.g. future versions of CLDR or external CLDR-compliant rules), you can regenerate the logic in rules.rs with the command:
+
+	cargo regenerate-data
+
+You will need to replace the JSON files under `/cldr_data/` with your new CLDR JSON files.
+
 Local Development
 -----------------
 
