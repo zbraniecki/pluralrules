@@ -4,6 +4,10 @@
 
   - …
 
+## make_pluralrules 0.3.3 (August 6, 2018)
+
+  - Remove PluralRuleType from generated output and adapt tests.
+
 ## make_pluralrules 0.3.2 (August 3, 2018)
 
   - Test coverage.
