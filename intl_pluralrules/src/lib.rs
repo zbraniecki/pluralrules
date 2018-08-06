@@ -6,21 +6,23 @@
 //!
 //! # Examples
 //!
+//! Plural rules example for Polish
+//!
 //! ```
 //! extern crate intl_pluralrules;
 //! use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
 //!
-//! let permanent: &'static str = "naq";
-//! let locale_code = &permanent;
+//! let locale_code = "pl";
 //!  
-//! assert!(IntlPluralRules::get_locales(PluralRuleType::CARDINAL).contains(&permanent));
+//! assert!(IntlPluralRules::get_locales(PluralRuleType::CARDINAL).contains(&locale_code));
 //!
-//! let pr_naq = IntlPluralRules::create(locale_code, PluralRuleType::CARDINAL).unwrap();
-//! assert_eq!(pr_naq.select(1), Ok(PluralCategory::ONE));
-//! assert_eq!(pr_naq.select("2"), Ok(PluralCategory::TWO));
-//! assert_eq!(pr_naq.select(5.0), Ok(PluralCategory::OTHER));
+//! let pr = IntlPluralRules::create(locale_code, PluralRuleType::CARDINAL).unwrap();
+//! assert_eq!(pr.select(1), Ok(PluralCategory::ONE));
+//! assert_eq!(pr.select("3"), Ok(PluralCategory::FEW));
+//! assert_eq!(pr.select(12), Ok(PluralCategory::MANY));
+//! assert_eq!(pr.select("5.0"), Ok(PluralCategory::OTHER));
 //!
-//! assert_eq!(pr_naq.get_locale(), "naq");
+//! assert_eq!(pr.get_locale(), locale_code);
 //! ```
 #[macro_use]
 extern crate matches;
@@ -31,6 +33,8 @@ mod rules;
 
 use rules::*;
 
+/// A public enum for handling the plural category.
+/// Each plural category will vary, depending on the language that is being used and whether that language has that plural category.
 #[derive(Debug, Eq, PartialEq)]
 pub enum PluralCategory {
     ZERO,
@@ -41,7 +45,15 @@ pub enum PluralCategory {
     OTHER,
 }
 
-pub use rules::PluralRuleType;
+/// A public enum for handlling plural type.
+pub enum PluralRuleType {
+    /// Ordinal numbers express position or rank in a sequence. [More about oridinal numbers](https://en.wikipedia.org/wiki/Ordinal_number_(linguistics))
+    ORDINAL,
+    /// Cardinal numbers are natural numbers. [More about cardinal numbers](https://en.wikipedia.org/wiki/Cardinal_number)
+    CARDINAL,
+}
+
+// pub use rules::PluralRuleType;
 /// CLDR_VERSION is the version of CLDR extracted from the file used to generate rules.rs.
 pub use rules::CLDR_VERSION;
 

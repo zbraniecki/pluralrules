@@ -22,14 +22,13 @@ pub fn gen_fn(
 ) -> TokenStream {
     let ignore_noncritical_errors = quote! { #![allow(unused_variables, unused_parens)] };
     let extern_crates = quote! { extern crate matches; };
-    let use_statements = quote! { use super::operands::PluralOperands; use super::PluralCategory; };
+    let use_statements = quote! { use super::operands::PluralOperands; use super::{PluralCategory, PluralRuleType}; };
     let plural_function = quote! { pub type PluralRule = fn(PluralOperands) -> PluralCategory; };
-    let pr_type = quote! { pub enum PluralRuleType { ORDINAL, CARDINAL } };
     let num: isize = vr.parse().unwrap();
     let ver = Literal::u64_unsuffixed(num as u64);
     let version = quote! { pub static CLDR_VERSION: usize = #ver; };
     let get_locales = gen_get_locales(locales);
-    let head = quote! { #ignore_noncritical_errors #extern_crates #use_statements #pr_type #plural_function #version #get_locales };
+    let head = quote! { #ignore_noncritical_errors #extern_crates #use_statements #plural_function #version #get_locales };
     let mut tokens = Vec::<TokenStream>::new();
     for (pr_type, stream) in streams {
         tokens.push(create_gen_pr_type_fn(&pr_type, stream));

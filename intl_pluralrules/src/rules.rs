@@ -1,11 +1,7 @@
 #![allow(unused_variables, unused_parens)]
 extern crate matches;
 use super::operands::PluralOperands;
-use super::PluralCategory;
-pub enum PluralRuleType {
-    ORDINAL,
-    CARDINAL,
-}
+use super::{PluralCategory, PluralRuleType};
 pub type PluralRule = fn(PluralOperands) -> PluralCategory;
 pub static CLDR_VERSION: usize = 33;
 #[cfg_attr(tarpaulin, skip)]
