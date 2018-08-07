@@ -4,6 +4,12 @@
 
   - …
 
+## intl_pluralrules 0.9.1 (August 6, 2018)
+
+  - Updates to docs for PluralRuleType.
+  - Move PluralRuleType from rules.rs to lib.rs.
+  - Fix lib.rs doc.
+
 ## intl_pluralrules 0.9.0 (August 3, 2018)
 
   - Updates to docs.
