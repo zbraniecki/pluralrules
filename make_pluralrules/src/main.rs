@@ -36,7 +36,6 @@ fn main() -> std::io::Result<()> {
     file.write_all(complete_rs_code.as_bytes())?;
 
     if !matches.is_present("ugly") {
-        println!("{:?}", "Yes");
         Command::new("rustfmt")
             .args(&[output_path])
             .output()
