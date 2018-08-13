@@ -1,6 +1,6 @@
 # Make Plural Rules
 
-`make_pluralrules` is a coe generator applications that turns a [CLDR plural rules][] AST into Rust code.
+`make_pluralrules` is a coe generator applications that turns a [Unicode CLDR plural rules](http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules) AST into Rust code.
 
 [![crates.io](http://meritbadge.herokuapp.com/make_pluralrules)](https://crates.io/crates/make_pluralrules)
 [![Build Status](https://travis-ci.org/unclenachoduh/pluralrules.svg?branch=master)](https://travis-ci.org/unclenachoduh/pluralrules)
