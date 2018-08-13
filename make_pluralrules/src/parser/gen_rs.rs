@@ -20,7 +20,10 @@ pub fn gen_fn(
     locales: BTreeMap<String, Vec<String>>,
     vr: &str,
 ) -> TokenStream {
-    let ignore_noncritical_errors = quote! { #![allow(unused_variables, unused_parens)] };
+    let ignore_noncritical_errors = quote! {
+        #![allow(unused_variables, unused_parens)]
+        #[cfg_attr(feature = "cargo-clippy", allow(float_cmp))]
+    };
     let extern_crates = quote! { extern crate matches; };
     let use_statements = quote! { use super::operands::PluralOperands; use super::{PluralCategory, PluralRuleType}; };
     let plural_function = quote! { pub type PluralRule = fn(PluralOperands) -> PluralCategory; };

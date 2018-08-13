@@ -1,4 +1,5 @@
 #![allow(unused_variables, unused_parens)]
+#[cfg_attr(feature = "cargo-clippy", allow(float_cmp))]
 extern crate matches;
 use super::operands::PluralOperands;
 use super::{PluralCategory, PluralRuleType};

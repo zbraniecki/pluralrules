@@ -36,10 +36,10 @@ fn main() -> std::io::Result<()> {
     let mut file = File::create(output_path)?;
     file.write_all(complete_rs_code.as_bytes())?;
 
-    Command::new("rustfmt")
-        .args(&[output_path])
-        .output()
-        .expect("Failed to format the output using `rustfmt`");
+    // Command::new("rustfmt")
+    //     .args(&[output_path])
+    //     .output()
+    //     .expect("Failed to format the output using `rustfmt`");
 
     Ok(())
 }
