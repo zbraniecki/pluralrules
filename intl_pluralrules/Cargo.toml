@@ -17,3 +17,4 @@ maintenance = { status = "actively-developed" }
 
 [dependencies]
 matches = "0.1.6"
+phf = "0.7.22"

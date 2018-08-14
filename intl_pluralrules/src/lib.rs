@@ -26,6 +26,7 @@
 //! ```
 #[macro_use]
 extern crate matches;
+extern crate phf;
 
 /// A public AST module for plural rule representations.
 pub mod operands;
