@@ -92,6 +92,7 @@ impl PluralOperands {
 /// # Example
 ///
 /// ```
+/// use intl_pluralrules::operands::*;
 /// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
 ///
 /// struct MyType {
