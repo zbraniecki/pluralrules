@@ -87,6 +87,36 @@ impl PluralOperands {
 }
 
 // once TryFrom stabilizes we can use that instead
+/// A trait that can be implemented on any type to allow it for passing to [`select`](../struct.IntlPluralRules.html#method.select). This trait is made public for implementations of custom types. If you are using generic types, you should use [`from`](struct.PluralOperands.html#method.from).
+/// 
+/// # Example
+///
+/// ```
+/// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
+///
+/// struct MyType {
+///     value: isize
+/// }
+///
+/// impl IntoPluralOperands for MyType {
+///     fn into_plural(self) -> Result<PluralOperands, &'static str> {
+///         Ok(PluralOperands {
+///             n: self.value as f64,
+///             i: self.value as isize,
+///             v: 0,
+///             w: 0,
+///             f: 0,
+///             t: 0,
+///         })
+///     }
+/// }
+///
+/// let pr = IntlPluralRules::create("en", PluralRuleType::CARDINAL).unwrap();
+/// let v = MyType { value: 5 };
+///
+/// assert_eq!(pr.select(v), Ok(PluralCategory::OTHER));
+///
+/// ```
 pub trait IntoPluralOperands {
     fn into_plural(self) -> Result<PluralOperands, &'static str>;
 }
