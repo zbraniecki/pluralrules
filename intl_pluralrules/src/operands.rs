@@ -117,8 +117,8 @@ impl<'a> IntoPluralOperands for &'a str {
 
             let backtrace = dec_str.trim_right_matches('0');
 
-            num_fraction_digits0 = dec_str.chars().count() as isize;
-            num_fraction_digits = backtrace.chars().count() as isize;
+            num_fraction_digits0 = dec_str.len() as isize;
+            num_fraction_digits = backtrace.len() as isize;
             fraction_digits0 =
                 isize::from_str(dec_str).map_err(|_| "Could not convert string to integer!")?;
             fraction_digits = isize::from_str(backtrace).unwrap_or(0);
