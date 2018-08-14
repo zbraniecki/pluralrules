@@ -81,13 +81,23 @@ impl PluralOperands {
     ///    t: 45,
     /// }), PluralOperands::from(123.45))
     /// ```
-    pub fn from<S: ToString>(num: S) -> Result<Self, &'static str> {
-        let str_num = num.to_string();
+    pub fn from<S: IntoPluralOperands>(num: S) -> Result<Self, &'static str> {
+        num.into_plural()
+    }
+}
 
-        let abs_str = if str_num.starts_with("-") {
-            &str_num[1..]
+// once TryFrom stabilizes we can use that instead
+pub trait IntoPluralOperands {
+    fn into_plural(self) -> Result<PluralOperands, &'static str>;
+}
+
+
+impl<'a> IntoPluralOperands for &'a str {
+    fn into_plural(self) -> Result<PluralOperands, &'static str> {
+        let abs_str = if self.starts_with("-") {
+            &self[1..]
         } else {
-            &str_num
+            &self
         };
 
         let absolute_value = f64::from_str(&abs_str).map_err(|_| "Incorrect number passed!")?;
@@ -130,3 +140,64 @@ impl PluralOperands {
         })
     }
 }
+
+macro_rules! impl_integer_type {
+    ($ty:ident) => {
+        impl IntoPluralOperands for $ty {
+            fn into_plural(self) -> Result<PluralOperands, &'static str> {
+                // XXXManishearth converting from u32 or u64 to isize may wrap
+                Ok(PluralOperands {
+                    n: self as f64,
+                    i: self as isize,
+                    v: 0,
+                    w: 0,
+                    f: 0,
+                    t: 0,
+                })
+            }
+        }
+    };
+    ($($ty:ident)+) => {
+        $(impl_integer_type!($ty);)+
+    };
+}
+
+macro_rules! impl_signed_integer_type {
+    ($ty:ident) => {
+        impl IntoPluralOperands for $ty {
+            fn into_plural(self) -> Result<PluralOperands, &'static str> {
+                // XXXManishearth converting from i64 to isize may wrap
+                let x = (self as isize).checked_abs().ok_or("Number too big")?;
+                Ok(PluralOperands {
+                    n: x as f64,
+                    i: x as isize,
+                    v: 0,
+                    w: 0,
+                    f: 0,
+                    t: 0,
+                })
+            }
+        }
+    };
+    ($($ty:ident)+) => {
+        $(impl_signed_integer_type!($ty);)+
+    };
+}
+
+macro_rules! impl_convert_type {
+    ($ty:ident) => {
+        impl IntoPluralOperands for $ty {
+            fn into_plural(self) -> Result<PluralOperands, &'static str> {
+                <&str>::into_plural(&*self.to_string())
+            }
+        }
+    };
+    ($($ty:ident)+) => {
+        $(impl_convert_type!($ty);)+
+    };
+}
+
+impl_integer_type!(u8 u16 u32 u64 usize);
+impl_signed_integer_type!(i8 i16 i32 i64 isize);
+// XXXManishearth we can likely have dedicated float impls here
+impl_convert_type!(f32 f64 String);

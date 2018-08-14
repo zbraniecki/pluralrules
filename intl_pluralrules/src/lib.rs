@@ -115,7 +115,7 @@ impl IntlPluralRules {
     /// assert_eq!(pr_naq.select(2), Ok(PluralCategory::TWO));
     /// assert_eq!(pr_naq.select(5), Ok(PluralCategory::OTHER));
     /// ```
-    pub fn select<N: ToString>(&self, number: N) -> Result<PluralCategory, &'static str> {
+    pub fn select<N: operands::IntoPluralOperands>(&self, number: N) -> Result<PluralCategory, &'static str> {
         let ops = operands::PluralOperands::from(number);
         let pr = self.function;
         match ops {
