@@ -29,8 +29,14 @@ If you want to update the test fixtures to match your latest changes, please use
 
 	cargo regenerate-fixtures_within | cargo regenerate-fixtures
 
-
 When submitting a PR please use  `cargo fmt`.
+
+Contributors
+------------
+
+* [manishearth](https://github.com/manishearth)
+
+Thank you to all contributors!
 
 [CLDR]: http://cldr.unicode.org/
 [PluralRules]: http://cldr.unicode.org/index/cldr-spec/plural-rules

@@ -30,6 +30,13 @@ Local Development
 
 When submitting a PR please use  `cargo fmt`.
 
+Contributors
+------------
+
+* [manishearth](https://github.com/manishearth)
+
+Thank you to all contributors!
+
 [CLDR]: http://cldr.unicode.org/
 [PluralRules]: http://cldr.unicode.org/index/cldr-spec/plural-rules
 [LDML Language Plural Rules Syntax]: http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules
