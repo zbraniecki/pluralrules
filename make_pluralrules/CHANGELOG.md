@@ -4,6 +4,13 @@
 
   - …
 
+## make_pluralrules 0.4.0 (August 15, 2018)
+
+  - Add fixtures regenerator
+  - Use PHF for generated matches
+  - Update generated code
+  - Update fixtures
+
 ## make_pluralrules 0.3.3 (August 6, 2018)
 
   - Remove PluralRuleType from generated output and adapt tests.

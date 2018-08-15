@@ -1,6 +1,6 @@
 [package]
 name = "make_pluralrules"
-version = "0.3.3"
+version = "0.4.0"
 authors = ["Kekoa Riggin <kekoariggin@gmail.com>", "Zibi Braniecki <zbraniecki@mozilla.com>"]
 description = "A Rustcode generator for CLDR plural rules."
 license = "Apache-2.0/MIT"
