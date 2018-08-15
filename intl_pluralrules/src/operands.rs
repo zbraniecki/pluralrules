@@ -91,7 +91,6 @@ pub trait IntoPluralOperands {
     fn into_plural(self) -> Result<PluralOperands, &'static str>;
 }
 
-
 impl<'a> IntoPluralOperands for &'a str {
     fn into_plural(self) -> Result<PluralOperands, &'static str> {
         let abs_str = if self.starts_with("-") {

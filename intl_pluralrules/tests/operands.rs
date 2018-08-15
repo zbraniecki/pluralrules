@@ -102,3 +102,29 @@ fn test_get_locale() {
     let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
     assert_eq!(pr_naq.get_locale(), "naq");
 }
+
+#[test]
+fn custom_type() {
+    use intl_pluralrules::{IntlPluralRules, PluralCategory, PluralRuleType};
+    struct MyType {
+        value: isize,
+    }
+
+    impl IntoPluralOperands for MyType {
+        fn into_plural(self) -> Result<PluralOperands, &'static str> {
+            Ok(PluralOperands {
+                n: self.value as f64,
+                i: self.value as isize,
+                v: 0,
+                w: 0,
+                f: 0,
+                t: 0,
+            })
+        }
+    }
+
+    let pr = IntlPluralRules::create("en", PluralRuleType::CARDINAL).unwrap();
+    let v = MyType { value: 5 };
+
+    assert_eq!(pr.select(v), Ok(PluralCategory::OTHER));
+}
