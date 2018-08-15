@@ -4,6 +4,12 @@
 
   - …
 
+## intl_pluralrules 1.0.0 (August 15, 2018)
+
+  - Add dedicated impls for PluralOperands::from
+  - New trait extends impls to custom types
+  - Other minor optimizations
+
 ## intl_pluralrules 0.9.1 (August 6, 2018)
 
   - Updates to docs for PluralRuleType.
