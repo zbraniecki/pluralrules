@@ -14,6 +14,7 @@ extern crate serde_json;
 extern crate quote;
 extern crate clap;
 extern crate cldr_pluralrules_parser;
+extern crate phf_codegen;
 extern crate proc_macro2;
 
 mod parser;
@@ -72,9 +73,9 @@ pub fn generate_rs(cldr_jsons: &[String]) -> String {
 
 fn gen_type_rs(
     rules: BTreeMap<String, BTreeMap<String, String>>,
-) -> (Vec<String>, Vec<TokenStream>) {
+) -> (Vec<String>, Vec<(String, TokenStream)>) {
     // rule_tokens is a vector of TokenStreams that represent the CLDR plural rules as Rust expressions.
-    let mut rule_tokens = Vec::<TokenStream>::new();
+    let mut rule_tokens = Vec::<(String, TokenStream)>::new();
     let mut langnames = Vec::<String>::new();
 
     for (lang, r) in rules {
@@ -109,7 +110,7 @@ fn gen_type_rs(
             }
         }
         // convert language rules to TokenStream and add them to all the rules
-        rule_tokens.push(parser::gen_rs::gen_mid(&lang, &this_lang_rules));
+        rule_tokens.push((lang.clone(), parser::gen_rs::gen_mid(&lang, &this_lang_rules)));
         langnames.push(lang);
     }
     (langnames, rule_tokens)
