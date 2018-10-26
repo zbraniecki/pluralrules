@@ -41,7 +41,7 @@ pub fn get_locales(pr_type: PluralRuleType) -> &'static [&'static str] {
     }
 }
 #[cfg_attr(tarpaulin, skip)]
-pub fn get_pr(lang_code: &str, pr_type: &PluralRuleType) -> Result<PluralRule, ()> {
+pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()> {
     match pr_type {
         PluralRuleType::CARDINAL => {
             static LANGUAGES: phf::Map<&'static str, PluralRule> = ::phf::Map {

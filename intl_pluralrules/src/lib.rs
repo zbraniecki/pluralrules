@@ -93,7 +93,7 @@ impl IntlPluralRules {
     /// assert_eq!(pr_broken.is_err(), !pr_broken.is_ok());
     /// ```
     pub fn create(lang: &str, prt: PluralRuleType) -> Result<Self, &'static str> {
-        let returned_rule = rules::get_pr(lang, &prt);
+        let returned_rule = rules::get_pr(lang, prt);
         match returned_rule {
             Ok(returned_rule) => Ok(Self {
                 locale: lang.to_string(),

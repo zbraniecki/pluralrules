@@ -32,7 +32,7 @@ pub fn gen_fn(
     }
     let filling = quote!{ #(#tokens),* };
     let get_pr_function =
-        quote! { #[cfg_attr(tarpaulin, skip)] pub fn get_pr(lang_code: &str, pr_type: &PluralRuleType) -> Result<PluralRule, ()> {match pr_type { #filling }} };
+        quote! { #[cfg_attr(tarpaulin, skip)] pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()> {match pr_type { #filling }} };
     quote! { #head #get_pr_function }
 }
 
