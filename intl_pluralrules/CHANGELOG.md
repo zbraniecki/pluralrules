@@ -4,6 +4,11 @@
 
   - …
 
+## intl_pluralrules 1.0.1 (October 26, 2018)
+
+  - Update CLDR to 34
+  - Update rules to pass enums by reference
+
 ## intl_pluralrules 1.0.0 (August 15, 2018)
 
   - Add dedicated impls for PluralOperands::from
