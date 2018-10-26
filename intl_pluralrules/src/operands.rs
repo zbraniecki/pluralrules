@@ -45,6 +45,7 @@
 //!    t: 45,
 //! }), PluralOperands::from(123.45))
 //! ```
+#![cfg_attr(feature = "cargo-clippy", allow(clippy::cast_lossless))]
 use std::isize;
 use std::str::FromStr;
 
@@ -124,7 +125,7 @@ pub trait IntoPluralOperands {
 
 impl<'a> IntoPluralOperands for &'a str {
     fn into_plural(self) -> Result<PluralOperands, &'static str> {
-        let abs_str = if self.starts_with("-") {
+        let abs_str = if self.starts_with('-') {
             &self[1..]
         } else {
             &self

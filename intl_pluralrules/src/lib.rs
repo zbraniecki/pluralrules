@@ -71,7 +71,7 @@ pub use rules::CLDR_VERSION;
 /// assert_eq!(pr_naq.select("2"), Ok(PluralCategory::TWO));
 /// assert_eq!(pr_naq.select(5.0), Ok(PluralCategory::OTHER));
 /// ```
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Clone)]
 pub struct IntlPluralRules {
     locale: String,
     function: PluralRule,
@@ -91,7 +91,7 @@ impl IntlPluralRules {
     /// let pr_broken = IntlPluralRules::create("test", PluralRuleType::CARDINAL);
     /// assert_eq!(pr_broken.is_err(), !pr_broken.is_ok());
     /// ```
-    pub fn create(lang: &str, prt: PluralRuleType) -> Result<Self, &'static str> {
+    pub fn create(lang: &str, prt: &PluralRuleType) -> Result<Self, &'static str> {
         let returned_rule = rules::get_pr(lang, prt);
         match returned_rule {
             Ok(returned_rule) => Ok(Self {
@@ -123,7 +123,7 @@ impl IntlPluralRules {
         let ops = operands::PluralOperands::from(number);
         let pr = self.function;
         match ops {
-            Ok(ops) => Ok(pr(ops)),
+            Ok(ops) => Ok(pr(&ops)),
             Err(_) => Err("Argument can not be parsed to operands."),
         }
     }
@@ -140,7 +140,7 @@ impl IntlPluralRules {
     ///     false
     /// );
     /// ```
-    pub fn get_locales(prt: PluralRuleType) -> &'static [&'static str] {
+    pub fn get_locales(prt: &PluralRuleType) -> &'static [&'static str] {
         rules::get_locales(prt)
     }
 
