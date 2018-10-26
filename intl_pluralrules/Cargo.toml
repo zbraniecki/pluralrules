@@ -16,5 +16,5 @@ coveralls = { repository = "unclenachoduh/pluralrules", branch = "master", servi
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-matches = "0.1.6"
-phf = "0.7.22"
+matches = "0.1.8"
+phf = "0.7.23"
