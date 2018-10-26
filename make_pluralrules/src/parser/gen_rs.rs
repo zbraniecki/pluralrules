@@ -49,7 +49,7 @@ fn gen_get_locales(locales: BTreeMap<String, Vec<String>>) -> TokenStream {
         let locales_tokens = quote! { &[ #(#locales),* ] };
         tokens.push(quote! { #match_name => #locales_tokens });
     }
-    quote! { #[cfg_attr(tarpaulin, skip)] pub fn get_locales(pr_type: &PluralRuleType) -> &'static [&'static str] { match pr_type { #(#tokens),* } } }
+    quote! { #[cfg_attr(tarpaulin, skip)] pub fn get_locales(pr_type: PluralRuleType) -> &'static [&'static str] { match pr_type { #(#tokens),* } } }
 }
 
 // Function wraps all match statements for plural rules in a match for ordinal and cardinal rules

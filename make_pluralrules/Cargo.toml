@@ -16,11 +16,11 @@ coveralls = { repository = "unclenachoduh/pluralrules", branch = "master", servi
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-cldr_pluralrules_parser = "1.0.0"
+cldr_pluralrules_parser = "1.0"
 serde_json = "1.0"
 serde = "1.0"
 serde_derive = "1.0"
 quote = "0.6"
 proc-macro2 = "0.4"
 clap = "2.32"
-phf_codegen = "0.7.22"
+phf_codegen = "0.7.23"

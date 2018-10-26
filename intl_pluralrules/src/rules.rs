@@ -9,7 +9,7 @@ use phf;
 pub type PluralRule = fn(&PluralOperands) -> PluralCategory;
 pub static CLDR_VERSION: usize = 34;
 #[cfg_attr(tarpaulin, skip)]
-pub fn get_locales(pr_type: &PluralRuleType) -> &'static [&'static str] {
+pub fn get_locales(pr_type: PluralRuleType) -> &'static [&'static str] {
     match pr_type {
         PluralRuleType::CARDINAL => &[
             "af", "ak", "am", "ar", "ars", "as", "asa", "ast", "az", "be", "bem", "bez", "bg",

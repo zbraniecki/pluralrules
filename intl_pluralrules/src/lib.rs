@@ -46,7 +46,8 @@ pub enum PluralCategory {
     OTHER,
 }
 
-/// A public enum for handlling plural type.
+/// A public enum for handling plural type.
+#[derive(Copy, Clone)]
 pub enum PluralRuleType {
     /// Ordinal numbers express position or rank in a sequence. [More about oridinal numbers](https://en.wikipedia.org/wiki/Ordinal_number_(linguistics))
     ORDINAL,
@@ -91,8 +92,8 @@ impl IntlPluralRules {
     /// let pr_broken = IntlPluralRules::create("test", PluralRuleType::CARDINAL);
     /// assert_eq!(pr_broken.is_err(), !pr_broken.is_ok());
     /// ```
-    pub fn create(lang: &str, prt: &PluralRuleType) -> Result<Self, &'static str> {
-        let returned_rule = rules::get_pr(lang, prt);
+    pub fn create(lang: &str, prt: PluralRuleType) -> Result<Self, &'static str> {
+        let returned_rule = rules::get_pr(lang, &prt);
         match returned_rule {
             Ok(returned_rule) => Ok(Self {
                 locale: lang.to_string(),
@@ -140,7 +141,7 @@ impl IntlPluralRules {
     ///     false
     /// );
     /// ```
-    pub fn get_locales(prt: &PluralRuleType) -> &'static [&'static str] {
+    pub fn get_locales(prt: PluralRuleType) -> &'static [&'static str] {
         rules::get_locales(prt)
     }
 
