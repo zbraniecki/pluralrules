@@ -4,6 +4,10 @@
 
   - …
 
+## make_pluralrules 0.4.1 (October 26, 2018)
+
+  - Update the generated rules to use references.
+
 ## make_pluralrules 0.4.0 (August 15, 2018)
 
   - Add fixtures regenerator
