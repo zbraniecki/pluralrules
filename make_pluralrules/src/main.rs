@@ -16,7 +16,8 @@ fn main() -> std::io::Result<()> {
             "<input-files> -i, --input=<PATH>... 'Input CLDR JSON plural rules files'
              <output-file> -o, --output=<PATH> 'Output RS file'
              [ugly] -u, --ugly",
-        ).get_matches();
+        )
+        .get_matches();
 
     let input_paths: Vec<&str> = matches.values_of("input-files").unwrap().collect();
 
@@ -28,7 +29,8 @@ fn main() -> std::io::Result<()> {
             f.read_to_string(&mut contents)
                 .expect("something went wrong reading the file");
             contents
-        }).collect::<Vec<_>>();
+        })
+        .collect::<Vec<_>>();
     let complete_rs_code = generate_rs(&input_jsons);
 
     let output_path = matches.value_of("output-file").unwrap();

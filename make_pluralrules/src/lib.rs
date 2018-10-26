@@ -110,7 +110,10 @@ fn gen_type_rs(
             }
         }
         // convert language rules to TokenStream and add them to all the rules
-        rule_tokens.push((lang.clone(), parser::gen_rs::gen_mid(&lang, &this_lang_rules)));
+        rule_tokens.push((
+            lang.clone(),
+            parser::gen_rs::gen_mid(&lang, &this_lang_rules),
+        ));
         langnames.push(lang);
     }
     (langnames, rule_tokens)
