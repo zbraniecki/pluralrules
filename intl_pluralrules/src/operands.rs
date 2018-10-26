@@ -88,7 +88,7 @@ impl PluralOperands {
 
 // once TryFrom stabilizes we can use that instead
 /// A trait that can be implemented on any type to allow it for passing to [`select`](../struct.IntlPluralRules.html#method.select). This trait is made public for implementations of custom types. If you are using generic types, you should use [`from`](struct.PluralOperands.html#method.from).
-/// 
+///
 /// # Example
 ///
 /// ```
