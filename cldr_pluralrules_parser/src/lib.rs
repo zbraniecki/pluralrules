@@ -31,6 +31,7 @@
 //!
 //! assert_eq!(condition, parse_plural_rule("i is 5 or v within 2"))
 //! ```
+
 #[macro_use]
 extern crate nom;
 
@@ -39,9 +40,9 @@ pub mod ast;
 /// A private parsing module for plural rules.
 mod parser;
 
-use ast::*;
+use crate::ast::*;
+use crate::parser::*;
 use nom::types::CompleteStr;
-use parser::*;
 
 /// Given a string reference of a plural rule, will return the AST representation of that rule.
 ///

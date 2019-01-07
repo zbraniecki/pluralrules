@@ -1,5 +1,3 @@
-extern crate cldr_pluralrules_parser;
-
 use cldr_pluralrules_parser::ast::*;
 use cldr_pluralrules_parser::*;
 

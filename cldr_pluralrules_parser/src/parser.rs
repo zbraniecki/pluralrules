@@ -1,5 +1,3 @@
-extern crate nom;
-
 use super::ast::*;
 use nom::{digit1, types::CompleteStr};
 use std::str::FromStr;

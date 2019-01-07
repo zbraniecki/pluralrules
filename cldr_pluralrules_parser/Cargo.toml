@@ -1,6 +1,7 @@
 [package]
 name = "cldr_pluralrules_parser"
 version = "1.0.0"
+edition = "2018"
 authors = ["Kekoa Riggin <kekoariggin@gmail.com>", "Zibi Braniecki <zbraniecki@mozilla.com>"]
 description = "A parser for CLDR plural rules."
 license = "Apache-2.0/MIT"
@@ -16,4 +17,4 @@ coveralls = { repository = "unclenachoduh/pluralrules", branch = "master", servi
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-nom = "^4.0"
+nom = "^4.1"
