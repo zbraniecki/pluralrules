@@ -12,7 +12,7 @@ This library is intended to be used to find the plural category of numeric input
 Status
 ------
 
-Currently produces operands compliant with CLDR 34 into Rust 1.29 and above.
+Currently produces operands compliant with CLDR 34 into Rust 1.31 and above.
 
 **Updating CLDR Data**
 

@@ -27,11 +27,11 @@ The parser is fully compliant with UTS #35 version 33.
 
 ### make_pluralrules
 
-Generates all cardinal plural rules for Rust 1.27 and above, baed on CLDR 33.
+Generates all cardinal plural rules for Rust 1.31 and above, based on CLDR 33.
 
 ### intl_pluralrules
 
-Currentl supports cardinal plural rules for all languages from CLDR 33.
+Currently supports cardinal plural rules for all languages from CLDR 34.
 
 Get Involved
 ------------

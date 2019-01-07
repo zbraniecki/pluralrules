@@ -11,7 +11,7 @@ The application is intended to generate code necessary for calculating correct p
 Status
 ------
 
-The generator currently generates code for cardinal plural rules from CLDR 33 into Rust 1.27 and above.
+The generator currently generates code for cardinal plural rules from CLDR 34 into Rust 1.31 and above.
 
 Launch make_pluralrules with:
 
