@@ -2,8 +2,6 @@
 // Non-numeric input
 // Empty Input
 
-extern crate intl_pluralrules;
-
 // use intl_pluralrules::operands::*;
 use intl_pluralrules::{operands::*, IntlPluralRules, PluralRuleType};
 
