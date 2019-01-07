@@ -2,6 +2,7 @@
 use super::plural_category::PluralCategory;
 use phf_codegen::Map;
 use proc_macro2::{Ident, Literal, Span, TokenStream};
+use quote::quote;
 use std::collections::BTreeMap;
 use std::str;
 use std::str::FromStr;
@@ -30,9 +31,8 @@ pub fn gen_fn(
     for (pr_type, stream) in streams {
         tokens.push(create_gen_pr_type_fn(&pr_type, stream));
     }
-    let filling = quote!{ #(#tokens),* };
-    let get_pr_function =
-        quote! { #[cfg_attr(tarpaulin, skip)] pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()> {match pr_type { #filling }} };
+    let filling = quote! { #(#tokens),* };
+    let get_pr_function = quote! { #[cfg_attr(tarpaulin, skip)] pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()> {match pr_type { #filling }} };
     quote! { #head #get_pr_function }
 }
 

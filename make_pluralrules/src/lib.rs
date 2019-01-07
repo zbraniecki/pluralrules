@@ -8,19 +8,11 @@
 //! ```
 #[macro_use]
 extern crate serde_derive;
-extern crate serde;
-extern crate serde_json;
-#[macro_use]
-extern crate quote;
-extern crate clap;
-extern crate cldr_pluralrules_parser;
-extern crate phf_codegen;
-extern crate proc_macro2;
 
 mod parser;
 
-use parser::plural_category::PluralCategory;
-use parser::resource::*;
+use crate::parser::plural_category::PluralCategory;
+use crate::parser::resource::*;
 use proc_macro2::TokenStream;
 use std::collections::BTreeMap;
 

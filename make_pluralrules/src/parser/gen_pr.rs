@@ -6,6 +6,7 @@
 use cldr_pluralrules_parser::ast::*;
 /// proc_macro2 provides the TokenStream type
 use proc_macro2::{Ident, Literal, Span, TokenStream};
+use quote::quote;
 
 /// Convert a usize to a Literal
 fn convert_literal(num: usize) -> Literal {
@@ -126,7 +127,7 @@ fn create_relation(rel: Relation) -> TokenStream {
                 )
             };
 
-            let rel_tokens = quote!{ #symbol #o #rval };
+            let rel_tokens = quote! { #symbol #o #rval };
             relations.push(rel_tokens);
         }
         // Recursively fold all ranges
@@ -137,9 +138,9 @@ fn create_relation(rel: Relation) -> TokenStream {
             // Variants handled here
             let (symbol, perim) = if left.operand.0 == 'n' {
                 if !mod_check {
-                    (quote!(po.i), quote!{ && po.f == 0})
+                    (quote!(po.i), quote! { && po.f == 0})
                 } else {
-                    (quote!(po.i), quote!{})
+                    (quote!(po.i), quote! {})
                 }
             } else {
                 (
@@ -148,7 +149,7 @@ fn create_relation(rel: Relation) -> TokenStream {
                     } else {
                         quote!(po.#l % #m)
                     },
-                    quote!{},
+                    quote! {},
                 )
             };
 
@@ -171,13 +172,13 @@ fn create_relation(rel: Relation) -> TokenStream {
     match operator {
         Operator::In | Operator::Is | Operator::EQ => {
             if relations.len() > 1 {
-                quote!{ ( #(#relations)||* ) }
+                quote! { ( #(#relations)||* ) }
             } else {
-                quote!{ #(#relations)||* }
+                quote! { #(#relations)||* }
             }
         }
-        Operator::NotIn | Operator::NotEQ | Operator::IsNot => quote!{ #(#relations)&&* },
-        Operator::Within | Operator::NotWithin => quote!{ #(#relations)||* },
+        Operator::NotIn | Operator::NotEQ | Operator::IsNot => quote! { #(#relations)&&* },
+        Operator::Within | Operator::NotWithin => quote! { #(#relations)||* },
     }
 }
 
@@ -191,7 +192,7 @@ fn create_and_condition(acond: AndCondition) -> TokenStream {
     }
 
     // Unfold AndConditions and tokenize together with &&
-    quote!{ ( #(#andcondvec)&&* ) }
+    quote! { ( #(#andcondvec)&&* ) }
 }
 
 // unfold OrConditions and tokenize together with ||
@@ -204,7 +205,7 @@ fn create_condition(cond: Condition) -> TokenStream {
     }
 
     // unfold OrConditions and tokenize together with ||
-    quote!{ #(#condvec)||* }
+    quote! { #(#condvec)||* }
 }
 
 /// This Function takes a full condition as input and returns a TokenStream of the expression of the plural rule in Rust.

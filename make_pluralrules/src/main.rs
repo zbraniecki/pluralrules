@@ -1,6 +1,3 @@
-extern crate clap;
-extern crate make_pluralrules;
-
 use clap::App;
 use make_pluralrules::generate_rs;
 
