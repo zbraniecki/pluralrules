@@ -146,7 +146,7 @@ impl<'a> IntoPluralOperands for &'a str {
             integer_digits =
                 isize::from_str(&int_str).map_err(|_| "Could not convert string to integer!")?;
 
-            let backtrace = dec_str.trim_right_matches('0');
+            let backtrace = dec_str.trim_end_matches('0');
 
             num_fraction_digits0 = dec_str.len() as isize;
             num_fraction_digits = backtrace.len() as isize;

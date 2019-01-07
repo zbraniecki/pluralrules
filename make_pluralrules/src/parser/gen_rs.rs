@@ -19,14 +19,18 @@ pub fn gen_fn(
         #![cfg_attr(feature = "cargo-clippy", allow(clippy::unreadable_literal))]
         #![cfg_attr(feature = "cargo-clippy", allow(clippy::nonminimal_bool))]
     };
-    let extern_crates = quote! { extern crate matches; use phf; };
-    let use_statements = quote! { use super::operands::PluralOperands; use super::{PluralCategory, PluralRuleType}; };
+    let use_statements = quote! {
+        use matches::matches;
+        use phf;
+        use super::operands::PluralOperands;
+        use super::{PluralCategory, PluralRuleType};
+    };
     let plural_function = quote! { pub type PluralRule = fn(&PluralOperands) -> PluralCategory; };
     let num: isize = vr.parse().unwrap();
     let ver = Literal::u64_unsuffixed(num as u64);
     let version = quote! { pub static CLDR_VERSION: usize = #ver; };
     let get_locales = gen_get_locales(locales);
-    let head = quote! { #ignore_noncritical_errors #extern_crates #use_statements #plural_function #version #get_locales };
+    let head = quote! { #ignore_noncritical_errors #use_statements #plural_function #version #get_locales };
     let mut tokens = Vec::<TokenStream>::new();
     for (pr_type, stream) in streams {
         tokens.push(create_gen_pr_type_fn(&pr_type, stream));

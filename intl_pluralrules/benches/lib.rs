@@ -1,6 +1,5 @@
 #![feature(test)]
 
-extern crate intl_pluralrules;
 extern crate test;
 
 use intl_pluralrules::{IntlPluralRules, PluralRuleType};

@@ -9,7 +9,6 @@
 //! Plural rules example for Polish
 //!
 //! ```
-//! extern crate intl_pluralrules;
 //! use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
 //!
 //! let locale_code = "pl";
@@ -24,15 +23,12 @@
 //!
 //! assert_eq!(pr.get_locale(), locale_code);
 //! ```
-#[macro_use]
-extern crate matches;
-extern crate phf;
 
 /// A public AST module for plural rule representations.
 pub mod operands;
 mod rules;
 
-use rules::*;
+use crate::rules::*;
 
 /// A public enum for handling the plural category.
 /// Each plural category will vary, depending on the language that is being used and whether that language has that plural category.
@@ -57,14 +53,13 @@ pub enum PluralRuleType {
 
 // pub use rules::PluralRuleType;
 /// CLDR_VERSION is the version of CLDR extracted from the file used to generate rules.rs.
-pub use rules::CLDR_VERSION;
+pub use crate::rules::CLDR_VERSION;
 
 /// The main structure for selecting plural rules.
 ///
 /// # Examples
 ///
 /// ```
-/// extern crate intl_pluralrules;
 /// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
 ///
 /// let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
@@ -83,7 +78,6 @@ impl IntlPluralRules {
     ///
     /// # Examples
     /// ```
-    /// extern crate intl_pluralrules;
     /// use intl_pluralrules::{IntlPluralRules, PluralRuleType};
     ///
     /// let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL);
@@ -109,7 +103,6 @@ impl IntlPluralRules {
     ///
     /// # Examples
     /// ```
-    /// extern crate intl_pluralrules;
     /// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
     ///
     /// let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
@@ -133,7 +126,6 @@ impl IntlPluralRules {
     ///
     /// # Examples
     /// ```
-    /// extern crate intl_pluralrules;
     /// use intl_pluralrules::{IntlPluralRules, PluralRuleType};
     ///
     /// assert_eq!(
@@ -149,7 +141,6 @@ impl IntlPluralRules {
     ///
     /// # Examples
     /// ```
-    /// extern crate intl_pluralrules;
     /// use intl_pluralrules::{IntlPluralRules, PluralRuleType};
     ///
     /// let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
