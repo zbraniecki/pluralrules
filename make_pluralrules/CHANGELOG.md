@@ -4,6 +4,10 @@
 
   - …
 
+## make_pluralrules 0.4.2 (January 7, 2019)
+
+  - Update to Rust 2018.
+
 ## make_pluralrules 0.4.1 (October 26, 2018)
 
   - Update the generated rules to use references.
