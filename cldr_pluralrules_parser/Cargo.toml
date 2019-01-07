@@ -1,6 +1,6 @@
 [package]
 name = "cldr_pluralrules_parser"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2018"
 authors = ["Kekoa Riggin <kekoariggin@gmail.com>", "Zibi Braniecki <zbraniecki@mozilla.com>"]
 description = "A parser for CLDR plural rules."
