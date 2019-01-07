@@ -1,23 +1,20 @@
 language: rust
 sudo: required
-cache: cargo
 dist: trusty
 addons:
     apt:
         packages:
             - libssl-dev
+cache: cargo
 rust:
-  - nightly
-  - beta
   - stable
-
-script:
-- cargo clean
-- cargo build
-- cargo test
+  - beta
+  - nightly
+matrix:
+  allow_failures:
+    - rust: nightly
 
 before_cache: |
   if [[ "$TRAVIS_RUST_VERSION" == nightly ]]; then
-    RUSTFLAGS="--cfg procmacro2_semver_exempt" cargo install cargo-tarpaulin
-    cargo +nightly tarpaulin --ciserver travis-ci --coveralls $TRAVIS_JOB_ID
+    RUSTFLAGS="--cfg procmacro2_semver_exempt" cargo install cargo-tarpaulin -f
   fi
