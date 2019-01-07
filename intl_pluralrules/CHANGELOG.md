@@ -4,6 +4,10 @@
 
   - …
 
+## intl_pluralrules 1.0.2 (January 7, 2019)
+
+  - Update to Rust 2018.
+
 ## intl_pluralrules 1.0.1 (October 26, 2018)
 
   - Update CLDR to 34
