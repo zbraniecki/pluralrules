@@ -31,7 +31,7 @@ Generates all cardinal plural rules for Rust 1.31 and above, based on CLDR 33.
 
 ### intl_pluralrules
 
-Currently supports cardinal plural rules for all languages from CLDR 34.
+Currently supports cardinal plural rules for all languages from CLDR 35.
 
 Get Involved
 ------------
