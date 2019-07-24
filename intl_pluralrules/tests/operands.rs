@@ -2,8 +2,9 @@
 // Non-numeric input
 // Empty Input
 
-// use intl_pluralrules::operands::*;
 use intl_pluralrules::{operands::*, IntlPluralRules, PluralRuleType};
+use std::convert::TryFrom;
+use unic_langid::LanguageIdentifier;
 
 #[test]
 fn test_operands_from_str() {
@@ -97,8 +98,9 @@ fn test_incorrect_operand() {
 
 #[test]
 fn test_get_locale() {
-    let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
-    assert_eq!(pr_naq.get_locale(), "naq");
+    let langid = LanguageIdentifier::try_from("naq").expect("Failed to parse.");
+    let pr_naq = IntlPluralRules::create(langid.clone(), PluralRuleType::CARDINAL).unwrap();
+    assert_eq!(pr_naq.get_locale(), &langid);
 }
 
 #[test]
@@ -121,7 +123,8 @@ fn custom_type() {
         }
     }
 
-    let pr = IntlPluralRules::create("en", PluralRuleType::CARDINAL).unwrap();
+    let langid = LanguageIdentifier::try_from("en").expect("Failed to parse.");
+    let pr = IntlPluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
     let v = MyType { value: 5 };
 
     assert_eq!(pr.select(v), Ok(PluralCategory::OTHER));

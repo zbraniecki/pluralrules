@@ -10,23 +10,28 @@
 //!
 //! ```
 //! use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
+//! use unic_langid::LanguageIdentifier;
+//! use std::convert::TryFrom;
 //!
-//! let locale_code = "pl";
-//!  
-//! assert!(IntlPluralRules::get_locales(PluralRuleType::CARDINAL).contains(&locale_code));
+//! let langid = LanguageIdentifier::try_from("pl").expect("Parsing failed.");
 //!
-//! let pr = IntlPluralRules::create(locale_code, PluralRuleType::CARDINAL).unwrap();
+//! assert!(IntlPluralRules::get_locales(PluralRuleType::CARDINAL).contains(&langid));
+//!
+//! let pr = IntlPluralRules::create(langid.clone(), PluralRuleType::CARDINAL).unwrap();
 //! assert_eq!(pr.select(1), Ok(PluralCategory::ONE));
 //! assert_eq!(pr.select("3"), Ok(PluralCategory::FEW));
 //! assert_eq!(pr.select(12), Ok(PluralCategory::MANY));
 //! assert_eq!(pr.select("5.0"), Ok(PluralCategory::OTHER));
 //!
-//! assert_eq!(pr.get_locale(), locale_code);
+//! assert_eq!(pr.get_locale(), &langid);
 //! ```
 
 /// A public AST module for plural rule representations.
 pub mod operands;
 mod rules;
+
+use std::convert::TryFrom;
+use unic_langid::LanguageIdentifier;
 
 use crate::rules::*;
 
@@ -60,16 +65,19 @@ pub use crate::rules::CLDR_VERSION;
 /// # Examples
 ///
 /// ```
+/// use std::convert::TryFrom;
 /// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
+/// use unic_langid::LanguageIdentifier;
 ///
-/// let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
+/// let langid = LanguageIdentifier::try_from("naq").expect("Parsing failed.");
+/// let pr_naq = IntlPluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
 /// assert_eq!(pr_naq.select(1), Ok(PluralCategory::ONE));
 /// assert_eq!(pr_naq.select("2"), Ok(PluralCategory::TWO));
 /// assert_eq!(pr_naq.select(5.0), Ok(PluralCategory::OTHER));
 /// ```
 #[derive(Clone)]
 pub struct IntlPluralRules {
-    locale: String,
+    locale: LanguageIdentifier,
     function: PluralRule,
 }
 
@@ -78,19 +86,27 @@ impl IntlPluralRules {
     ///
     /// # Examples
     /// ```
-    /// use intl_pluralrules::{IntlPluralRules, PluralRuleType};
+    /// use std::convert::TryFrom;
+    /// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
+    /// use unic_langid::LanguageIdentifier;
     ///
-    /// let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL);
+    /// let langid = LanguageIdentifier::try_from("naq").expect("Parsing failed.");
+    /// let pr_naq = IntlPluralRules::create(langid, PluralRuleType::CARDINAL);
     /// assert_eq!(pr_naq.is_ok(), !pr_naq.is_err());
     ///
-    /// let pr_broken = IntlPluralRules::create("test", PluralRuleType::CARDINAL);
+    /// let langid = LanguageIdentifier::try_from("xx").expect("Parsing failed.");
+    /// let pr_broken = IntlPluralRules::create(langid, PluralRuleType::CARDINAL);
     /// assert_eq!(pr_broken.is_err(), !pr_broken.is_ok());
     /// ```
-    pub fn create(lang: &str, prt: PluralRuleType) -> Result<Self, &'static str> {
-        let returned_rule = rules::get_pr(lang, prt);
+    pub fn create<L: Into<LanguageIdentifier>>(
+        langid: L,
+        prt: PluralRuleType,
+    ) -> Result<Self, &'static str> {
+        let langid = langid.into();
+        let returned_rule = rules::get_pr(&langid.to_string(), prt);
         match returned_rule {
             Ok(returned_rule) => Ok(Self {
-                locale: lang.to_string(),
+                locale: langid,
                 function: returned_rule,
             }),
             Err(_) => Err("unknown locale"),
@@ -103,9 +119,12 @@ impl IntlPluralRules {
     ///
     /// # Examples
     /// ```
+    /// use std::convert::TryFrom;
     /// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
+    /// use unic_langid::LanguageIdentifier;
     ///
-    /// let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
+    /// let langid = LanguageIdentifier::try_from("naq").expect("Parsing failed.");
+    /// let pr_naq = IntlPluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
     /// assert_eq!(pr_naq.select(1), Ok(PluralCategory::ONE));
     /// assert_eq!(pr_naq.select(2), Ok(PluralCategory::TWO));
     /// assert_eq!(pr_naq.select(5), Ok(PluralCategory::OTHER));
@@ -133,42 +152,55 @@ impl IntlPluralRules {
     ///     false
     /// );
     /// ```
-    pub fn get_locales(prt: PluralRuleType) -> &'static [&'static str] {
+    pub fn get_locales(prt: PluralRuleType) -> Vec<LanguageIdentifier> {
         rules::get_locales(prt)
+            .iter()
+            .filter(|s| *s != &"root")
+            .map(|s| LanguageIdentifier::try_from(*s).expect(&format!("Parsing failed: {}.", s)))
+            .collect()
     }
 
     /// Returns the locale name for this PluralRule instance.
     ///
     /// # Examples
     /// ```
+    /// use std::convert::TryFrom;
     /// use intl_pluralrules::{IntlPluralRules, PluralRuleType};
+    /// use unic_langid::LanguageIdentifier;
     ///
-    /// let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
-    /// assert_eq!(pr_naq.get_locale(), "naq");
+    /// let langid = LanguageIdentifier::try_from("naq").expect("Parsing failed.");
+    /// let pr_naq = IntlPluralRules::create(langid.clone(), PluralRuleType::CARDINAL).unwrap();
+    /// assert_eq!(pr_naq.get_locale(), &langid);
     /// ```
-    pub fn get_locale(&self) -> &str {
+    pub fn get_locale(&self) -> &LanguageIdentifier {
         &self.locale
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use std::convert::TryFrom;
+
     use super::{IntlPluralRules, PluralCategory, PluralRuleType, CLDR_VERSION};
+    use unic_langid::LanguageIdentifier;
 
     #[test]
     fn cardinals_test() {
-        let pr_naq = IntlPluralRules::create("naq", PluralRuleType::CARDINAL).unwrap();
+        let langid = LanguageIdentifier::try_from("naq").expect("Parsing failed.");
+        let pr_naq = IntlPluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
         assert_eq!(pr_naq.select(1), Ok(PluralCategory::ONE));
         assert_eq!(pr_naq.select(2), Ok(PluralCategory::TWO));
         assert_eq!(pr_naq.select(5), Ok(PluralCategory::OTHER));
 
-        let pr_broken = IntlPluralRules::create("test", PluralRuleType::CARDINAL);
+        let langid = LanguageIdentifier::try_from("xx").expect("Parsing failed.");
+        let pr_broken = IntlPluralRules::create(langid, PluralRuleType::CARDINAL);
         assert_eq!(pr_broken.is_err(), !pr_broken.is_ok());
     }
 
     #[test]
     fn ordinals_rules() {
-        let pr_naq = IntlPluralRules::create("uk", PluralRuleType::ORDINAL).unwrap();
+        let langid = LanguageIdentifier::try_from("uk").expect("Parsing failed.");
+        let pr_naq = IntlPluralRules::create(langid, PluralRuleType::ORDINAL).unwrap();
         assert_eq!(pr_naq.select(33), Ok(PluralCategory::FEW));
         assert_eq!(pr_naq.select(113), Ok(PluralCategory::OTHER));
     }

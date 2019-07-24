@@ -93,8 +93,10 @@ impl PluralOperands {
 /// # Example
 ///
 /// ```
+/// use std::convert::TryFrom;
 /// use intl_pluralrules::operands::*;
 /// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
+/// use unic_langid::LanguageIdentifier;
 ///
 /// struct MyType {
 ///     value: isize
@@ -113,7 +115,8 @@ impl PluralOperands {
 ///     }
 /// }
 ///
-/// let pr = IntlPluralRules::create("en", PluralRuleType::CARDINAL).unwrap();
+/// let langid = LanguageIdentifier::try_from("en").expect("Parsing failed.");
+/// let pr = IntlPluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
 /// let v = MyType { value: 5 };
 ///
 /// assert_eq!(pr.select(v), Ok(PluralCategory::OTHER));
