@@ -4,6 +4,10 @@
 
   - …
 
+## intl_pluralrules 1.1.0 (July 24, 2019)
+
+  - Switch to unic_langid for Language Identifiers.
+
 ## intl_pluralrules 1.0.3 (March 29, 2019)
 
   - Update CLDR to 35
