@@ -3,7 +3,6 @@
 // Empty Input
 
 use intl_pluralrules::{operands::*, IntlPluralRules, PluralRuleType};
-use std::convert::TryFrom;
 use unic_langid::LanguageIdentifier;
 
 #[test]
@@ -98,7 +97,7 @@ fn test_incorrect_operand() {
 
 #[test]
 fn test_get_locale() {
-    let langid = LanguageIdentifier::try_from("naq").expect("Failed to parse.");
+    let langid: LanguageIdentifier = "naq".parse().expect("Parsing failed.");
     let pr_naq = IntlPluralRules::create(langid.clone(), PluralRuleType::CARDINAL).unwrap();
     assert_eq!(pr_naq.get_locale(), &langid);
 }
@@ -123,7 +122,7 @@ fn custom_type() {
         }
     }
 
-    let langid = LanguageIdentifier::try_from("en").expect("Failed to parse.");
+    let langid: LanguageIdentifier = "en".parse().expect("Parsing failed.");
     let pr = IntlPluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
     let v = MyType { value: 5 };
 

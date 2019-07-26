@@ -93,7 +93,6 @@ impl PluralOperands {
 /// # Example
 ///
 /// ```
-/// use std::convert::TryFrom;
 /// use intl_pluralrules::operands::*;
 /// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
 /// use unic_langid::LanguageIdentifier;
@@ -115,7 +114,7 @@ impl PluralOperands {
 ///     }
 /// }
 ///
-/// let langid = LanguageIdentifier::try_from("en").expect("Parsing failed.");
+/// let langid: LanguageIdentifier = "en".parse().expect("Parsing failed.");
 /// let pr = IntlPluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
 /// let v = MyType { value: 5 };
 ///

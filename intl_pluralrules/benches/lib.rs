@@ -3,7 +3,6 @@
 extern crate test;
 
 use intl_pluralrules::{IntlPluralRules, PluralRuleType};
-use std::convert::TryFrom;
 use test::Bencher;
 use unic_langid::LanguageIdentifier;
 
@@ -21,7 +20,7 @@ fn bench_create(b: &mut Bencher) {
 
 #[bench]
 fn bench_select(b: &mut Bencher) {
-    let langid_pl = LanguageIdentifier::try_from("pl").expect("Parsing failed.");
+    let langid_pl = "pl".parse().expect("Parsing failed.");
     let ipr = IntlPluralRules::create(langid_pl.clone(), PluralRuleType::CARDINAL).unwrap();
 
     b.iter(|| {
@@ -34,7 +33,7 @@ fn bench_select(b: &mut Bencher) {
 #[bench]
 fn bench_total(b: &mut Bencher) {
     b.iter(|| {
-        let langid_pl = LanguageIdentifier::try_from("pl").expect("Parsing failed.");
+        let langid_pl = "pl".parse().expect("Parsing failed.");
         let ipr = IntlPluralRules::create(langid_pl.clone(), PluralRuleType::CARDINAL).unwrap();
         ipr.select(1).unwrap();
         ipr.select(2).unwrap();

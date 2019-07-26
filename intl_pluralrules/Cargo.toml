@@ -17,6 +17,6 @@ coveralls = { repository = "unclenachoduh/pluralrules", branch = "master", servi
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-matches = "^0.1.8"
-phf = "^0.7.24"
-unic-langid = "^0.3.0"
+matches = "0.1.8"
+phf = "0.7.24"
+unic-langid = { git = "https://github.com/zbraniecki/unic-locale", branch = "master" }
