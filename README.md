@@ -1,4 +1,4 @@
-# CLDR Plural Rules [![Build Status](https://travis-ci.org/unclenachoduh/pluralrules.svg?branch=master)](https://travis-ci.org/unclenachoduh/pluralrules) [![Coverage Status](https://coveralls.io/repos/github/unclenachoduh/pluralrules/badge.svg?branch=master)](https://coveralls.io/github/unclenachoduh/pluralrules?branch=master)
+# CLDR Plural Rules [![Build Status](https://travis-ci.org/zbraniecki/pluralrules.svg?branch=master)](https://travis-ci.org/zbraniecki/pluralrules) [![Coverage Status](https://coveralls.io/repos/github/zbraniecki/pluralrules/badge.svg?branch=master)](https://coveralls.io/github/zbraniecki/pluralrules?branch=master)
 
 `cldr_pluralrules` is a collection of Rust crates for identifying the plural rule, according to [CLDR](https://github.com/unicode-cldr/cldr-core/blob/master/supplemental/plurals.json), for a given number.
 
