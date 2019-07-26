@@ -30,7 +30,7 @@ pub struct Supplemental {
 }
 
 /// Will parse a CLDR compliant source from a &str.
-pub fn parse_plurals_resource_from_string(body: &str) -> Result<Resource, Box<Error>> {
+pub fn parse_plurals_resource_from_string(body: &str) -> Result<Resource, Box<dyn Error>> {
     let u = serde_json::from_str(body)?;
     Ok(u)
 }
