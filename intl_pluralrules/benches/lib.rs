@@ -8,9 +8,9 @@ use unic_langid::LanguageIdentifier;
 
 #[bench]
 fn bench_create(b: &mut Bencher) {
-    let langid_uk = LanguageIdentifier::try_from("uk").expect("Parsing failed.");
-    let langid_de = LanguageIdentifier::try_from("de").expect("Parsing failed.");
-    let langid_sk = LanguageIdentifier::try_from("sk").expect("Parsing failed.");
+    let langid_uk: LanguageIdentifier = "uk".parse().expect("Parsing failed.");
+    let langid_de: LanguageIdentifier = "de".parse().expect("Parsing failed.");
+    let langid_sk: LanguageIdentifier = "sk".parse().expect("Parsing failed.");
     b.iter(|| {
         IntlPluralRules::create(langid_uk.clone(), PluralRuleType::CARDINAL).unwrap();
         IntlPluralRules::create(langid_de.clone(), PluralRuleType::CARDINAL).unwrap();
@@ -20,7 +20,7 @@ fn bench_create(b: &mut Bencher) {
 
 #[bench]
 fn bench_select(b: &mut Bencher) {
-    let langid_pl = "pl".parse().expect("Parsing failed.");
+    let langid_pl: LanguageIdentifier = "pl".parse().expect("Parsing failed.");
     let ipr = IntlPluralRules::create(langid_pl.clone(), PluralRuleType::CARDINAL).unwrap();
 
     b.iter(|| {
@@ -33,7 +33,7 @@ fn bench_select(b: &mut Bencher) {
 #[bench]
 fn bench_total(b: &mut Bencher) {
     b.iter(|| {
-        let langid_pl = "pl".parse().expect("Parsing failed.");
+        let langid_pl: LanguageIdentifier = "pl".parse().expect("Parsing failed.");
         let ipr = IntlPluralRules::create(langid_pl.clone(), PluralRuleType::CARDINAL).unwrap();
         ipr.select(1).unwrap();
         ipr.select(2).unwrap();
