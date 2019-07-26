@@ -11,8 +11,8 @@ keywords = ["localization", "l10n", "i18n", "intl", "internationalization"]
 categories = ["localization", "internationalization"]
 
 [badges]
-travis-ci = { repository = "unclenachoduh/pluralrules", branch = "master" }
-coveralls = { repository = "unclenachoduh/pluralrules", branch = "master", service = "github" }
+travis-ci = { repository = "zbraniecki/pluralrules", branch = "master" }
+coveralls = { repository = "zbraniecki/pluralrules", branch = "master", service = "github" }
 
 maintenance = { status = "actively-developed" }
 
