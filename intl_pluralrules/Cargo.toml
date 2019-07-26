@@ -1,6 +1,6 @@
 [package]
 name = "intl_pluralrules"
-version = "1.1.0"
+version = "2.0.0"
 edition = "2018"
 authors = ["Kekoa Riggin <kekoariggin@gmail.com>", "Zibi Braniecki <zbraniecki@mozilla.com>"]
 description = "A plural rule categorizer for numeric input."
@@ -19,4 +19,4 @@ maintenance = { status = "actively-developed" }
 [dependencies]
 matches = "0.1.8"
 phf = "0.7.24"
-unic-langid = { git = "https://github.com/zbraniecki/unic-locale", branch = "master" }
+unic-langid = "0.4"

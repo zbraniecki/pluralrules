@@ -4,7 +4,7 @@
 
   - …
 
-## intl_pluralrules 1.1.0 (July 24, 2019)
+## intl_pluralrules 2.0.0 (July 26, 2019)
 
   - Switch to unic_langid for Language Identifiers.
 
