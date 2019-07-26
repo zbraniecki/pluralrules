@@ -3,8 +3,8 @@
 `make_pluralrules` is a code generator application that turns a [Unicode CLDR plural rules](http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules) AST into Rust code.
 
 [![crates.io](http://meritbadge.herokuapp.com/make_pluralrules)](https://crates.io/crates/make_pluralrules)
-[![Build Status](https://travis-ci.org/unclenachoduh/pluralrules.svg?branch=master)](https://travis-ci.org/unclenachoduh/pluralrules)
-[![Coverage Status](https://coveralls.io/repos/github/unclenachoduh/pluralrules/badge.svg?branch=master)](https://coveralls.io/github/unclenachoduh/pluralrules?branch=master)
+[![Build Status](https://travis-ci.org/zbraniecki/pluralrules.svg?branch=master)](https://travis-ci.org/zbraniecki/pluralrules)
+[![Coverage Status](https://coveralls.io/repos/github/zbraniecki/pluralrules/badge.svg?branch=master)](https://coveralls.io/github/zbraniecki/pluralrules?branch=master)
 
 The application is intended to generate code necessary for calculating correct plural rules categories.
 
