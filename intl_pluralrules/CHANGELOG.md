@@ -4,6 +4,10 @@
 
   - …
 
+## intl_pluralrules 3.0.0 (September 10, 2019)
+
+  - Upgrade to unic-langid 0.5.
+
 ## intl_pluralrules 2.0.0 (July 26, 2019)
 
   - Switch to unic_langid for Language Identifiers.
