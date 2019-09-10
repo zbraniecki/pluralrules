@@ -15,8 +15,8 @@ matrix:
     - rust: nightly
 
 before_cache: |
-  if [[ "$TRAVIS_RUST_VERSION" == nightly ]]; then
-    RUSTFLAGS="--cfg procmacro2_semver_exempt" cargo install cargo-tarpaulin -f
+  if [[ "$TRAVIS_RUST_VERSION" == stable ]]; then
+    cargo install cargo-tarpaulin -f
   fi
 
 script:
@@ -25,6 +25,6 @@ script:
 - cargo test
 
 after_success: |
-  if [[ "$TRAVIS_RUST_VERSION" == nightly ]]; then
+  if [[ "$TRAVIS_RUST_VERSION" == stable ]]; then
     cargo tarpaulin --ciserver travis-ci --coveralls $TRAVIS_JOB_ID
   fi
