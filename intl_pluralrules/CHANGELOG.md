@@ -4,6 +4,10 @@
 
   - …
 
+## intl_pluralrules 4.0.1 (October 15, 2019)
+
+  - Update CLDR to 36.
+
 ## intl_pluralrules 4.0.0 (October 3, 2019)
 
   - Upgrade to unic-langid 0.6.
