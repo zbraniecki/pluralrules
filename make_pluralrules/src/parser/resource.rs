@@ -13,7 +13,7 @@ pub struct Resource {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Version {
     #[serde(rename = "_number")]
-    pub number: String,
+    pub number: Option<String>,
     #[serde(rename = "_unicodeVersion")]
     pub unicode_version: String,
     #[serde(rename = "_cldrVersion")]
