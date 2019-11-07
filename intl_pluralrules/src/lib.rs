@@ -151,7 +151,10 @@ impl IntlPluralRules {
         rules::get_locales(prt)
             .iter()
             .filter(|s| *s != &"root")
-            .map(|s| s.parse().unwrap_or_else(|_| panic!("Parsing failed: {}.", s)))
+            .map(|s| {
+                s.parse()
+                    .unwrap_or_else(|_| panic!("Parsing failed: {}.", s))
+            })
             .collect()
     }
 

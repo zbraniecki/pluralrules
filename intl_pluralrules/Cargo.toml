@@ -18,5 +18,5 @@ maintenance = { status = "actively-developed" }
 
 [dependencies]
 matches = "0.1.8"
-phf = "0.7.24"
-unic-langid = "0.6"
+phf = "0.8"
+unic-langid = "0.7"

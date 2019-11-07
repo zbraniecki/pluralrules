@@ -47,300 +47,78 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
             static LANGUAGES: phf::Map<&'static str, PluralRule> = ::phf::Map {
                 key: 3213172566270843353,
                 disps: ::phf::Slice::Static(&[
-                    (0, 52),
-                    (3, 77),
-                    (0, 21),
-                    (0, 20),
-                    (1, 85),
-                    (3, 6),
-                    (2, 60),
-                    (0, 135),
-                    (0, 106),
-                    (1, 87),
-                    (3, 50),
-                    (2, 67),
-                    (0, 22),
-                    (1, 66),
-                    (0, 3),
-                    (0, 44),
-                    (1, 134),
-                    (1, 25),
-                    (0, 142),
-                    (1, 49),
-                    (2, 109),
-                    (2, 84),
-                    (0, 12),
-                    (4, 6),
-                    (0, 3),
-                    (1, 177),
+                    (0, 5),
+                    (0, 139),
+                    (0, 18),
+                    (0, 133),
+                    (1, 15),
+                    (0, 4),
                     (0, 0),
-                    (1, 179),
-                    (0, 2),
+                    (0, 10),
+                    (0, 0),
+                    (0, 191),
+                    (2, 167),
+                    (0, 0),
+                    (0, 189),
                     (0, 1),
-                    (7, 182),
-                    (0, 3),
-                    (0, 9),
-                    (1, 139),
-                    (1, 45),
+                    (3, 69),
+                    (0, 116),
+                    (0, 20),
+                    (0, 20),
+                    (4, 6),
+                    (0, 206),
+                    (1, 3),
+                    (0, 48),
+                    (9, 180),
+                    (10, 142),
+                    (5, 195),
+                    (0, 50),
+                    (0, 24),
+                    (1, 76),
+                    (1, 3),
+                    (19, 83),
+                    (0, 28),
+                    (2, 105),
+                    (9, 201),
+                    (0, 15),
+                    (0, 110),
+                    (6, 9),
+                    (0, 136),
+                    (0, 107),
+                    (42, 10),
+                    (0, 20),
+                    (0, 133),
+                    (0, 7),
                     (0, 1),
-                    (1, 42),
-                    (0, 118),
-                    (9, 166),
-                    (0, 207),
-                    (0, 1),
-                    (0, 1),
-                    (34, 91),
                 ]),
                 entries: ::phf::Slice::Static(&[
-                    ("so", {
-                        fn rule_so(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_so
-                    }),
-                    ("gv", {
-                        fn rule_gv(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0
-                                && (po.i % 100 == 0
-                                    || po.i % 100 == 20
-                                    || po.i % 100 == 40
-                                    || po.i % 100 == 60
-                                    || po.i % 100 == 80))
+                    ("dz", {
+                        fn rule_dz(po: &PluralOperands) -> PluralCategory {
                             {
-                                PluralCategory::FEW
-                            } else if (po.v != 0) {
-                                PluralCategory::MANY
-                            } else if (po.v == 0 && po.i % 10 == 1) {
-                                PluralCategory::ONE
-                            } else if (po.v == 0 && po.i % 10 == 2) {
-                                PluralCategory::TWO
-                            } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_gv
+                        rule_dz
                     }),
-                    ("wae", {
-                        fn rule_wae(po: &PluralOperands) -> PluralCategory {
+                    ("haw", {
+                        fn rule_haw(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_wae
+                        rule_haw
                     }),
-                    ("se", {
-                        fn rule_se(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_se
-                    }),
-                    ("bg", {
-                        fn rule_bg(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_bg
-                    }),
-                    ("hy", {
-                        fn rule_hy(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0 || po.i == 1) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_hy
-                    }),
-                    ("nr", {
-                        fn rule_nr(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_nr
-                    }),
-                    ("syr", {
-                        fn rule_syr(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_syr
-                    }),
-                    ("kl", {
-                        fn rule_kl(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_kl
-                    }),
-                    ("en", {
-                        fn rule_en(po: &PluralOperands) -> PluralCategory {
+                    ("sv", {
+                        fn rule_sv(po: &PluralOperands) -> PluralCategory {
                             if (po.i == 1 && po.v == 0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_en
-                    }),
-                    ("lag", {
-                        fn rule_lag(po: &PluralOperands) -> PluralCategory {
-                            if ((po.i == 0 || po.i == 1) && po.n != 0.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 0.0) {
-                                PluralCategory::ZERO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_lag
-                    }),
-                    ("om", {
-                        fn rule_om(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_om
-                    }),
-                    ("pl", {
-                        fn rule_pl(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0
-                                && matches!(po.i % 10, 2..=4)
-                                && !matches!(po.i % 100, 12..=14))
-                            {
-                                PluralCategory::FEW
-                            } else if (po.v == 0 && po.i != 1 && matches!(po.i % 10, 0..=1))
-                                || (po.v == 0 && matches!(po.i % 10, 5..=9))
-                                || (po.v == 0 && matches!(po.i % 100, 12..=14))
-                            {
-                                PluralCategory::MANY
-                            } else if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_pl
-                    }),
-                    ("sms", {
-                        fn rule_sms(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sms
-                    }),
-                    ("xh", {
-                        fn rule_xh(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_xh
-                    }),
-                    ("ii", {
-                        fn rule_ii(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ii
-                    }),
-                    ("bo", {
-                        fn rule_bo(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_bo
-                    }),
-                    ("st", {
-                        fn rule_st(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_st
-                    }),
-                    ("sc", {
-                        fn rule_sc(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sc
-                    }),
-                    ("or", {
-                        fn rule_or(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_or
-                    }),
-                    ("yue", {
-                        fn rule_yue(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_yue
-                    }),
-                    ("ars", {
-                        fn rule_ars(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 3..=10)) {
-                                PluralCategory::FEW
-                            } else if (matches!(po.i, 11..=99)) {
-                                PluralCategory::MANY
-                            } else if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0) {
-                                PluralCategory::TWO
-                            } else if (po.n == 0.0) {
-                                PluralCategory::ZERO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ars
+                        rule_sv
                     }),
                     ("sw", {
                         fn rule_sw(po: &PluralOperands) -> PluralCategory {
@@ -352,329 +130,15 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_sw
                     }),
-                    ("guw", {
-                        fn rule_guw(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 0..=1) && po.f == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_guw
-                    }),
-                    ("dsb", {
-                        fn rule_dsb(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0 && matches!(po.i % 100, 3..=4))
-                                || (matches!(po.f % 100, 3..=4))
-                            {
-                                PluralCategory::FEW
-                            } else if (po.v == 0 && po.i % 100 == 1) || (po.f % 100 == 1) {
-                                PluralCategory::ONE
-                            } else if (po.v == 0 && po.i % 100 == 2) || (po.f % 100 == 2) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_dsb
-                    }),
-                    ("bn", {
-                        fn rule_bn(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0) || (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_bn
-                    }),
-                    ("my", {
-                        fn rule_my(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_my
-                    }),
-                    ("nb", {
-                        fn rule_nb(po: &PluralOperands) -> PluralCategory {
+                    ("ny", {
+                        fn rule_ny(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_nb
-                    }),
-                    ("brx", {
-                        fn rule_brx(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_brx
-                    }),
-                    ("ast", {
-                        fn rule_ast(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ast
-                    }),
-                    ("ta", {
-                        fn rule_ta(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ta
-                    }),
-                    ("af", {
-                        fn rule_af(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_af
-                    }),
-                    ("rof", {
-                        fn rule_rof(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_rof
-                    }),
-                    ("iu", {
-                        fn rule_iu(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_iu
-                    }),
-                    ("sd", {
-                        fn rule_sd(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sd
-                    }),
-                    ("kea", {
-                        fn rule_kea(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_kea
-                    }),
-                    ("in", {
-                        fn rule_in(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_in
-                    }),
-                    ("sr", {
-                        fn rule_sr(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0
-                                && matches!(po.i % 10, 2..=4)
-                                && !matches!(po.i % 100, 12..=14))
-                                || (matches!(po.f % 10, 2..=4) && !matches!(po.f % 100, 12..=14))
-                            {
-                                PluralCategory::FEW
-                            } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
-                                || (po.f % 10 == 1 && po.f % 100 != 11)
-                            {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sr
-                    }),
-                    ("ml", {
-                        fn rule_ml(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ml
-                    }),
-                    ("ms", {
-                        fn rule_ms(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ms
-                    }),
-                    ("smn", {
-                        fn rule_smn(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_smn
-                    }),
-                    ("mr", {
-                        fn rule_mr(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_mr
-                    }),
-                    ("kk", {
-                        fn rule_kk(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_kk
-                    }),
-                    ("saq", {
-                        fn rule_saq(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_saq
-                    }),
-                    ("bez", {
-                        fn rule_bez(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_bez
-                    }),
-                    ("dz", {
-                        fn rule_dz(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_dz
-                    }),
-                    ("sma", {
-                        fn rule_sma(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sma
-                    }),
-                    ("sdh", {
-                        fn rule_sdh(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sdh
-                    }),
-                    ("km", {
-                        fn rule_km(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_km
-                    }),
-                    ("vun", {
-                        fn rule_vun(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_vun
-                    }),
-                    ("yi", {
-                        fn rule_yi(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_yi
-                    }),
-                    ("ca", {
-                        fn rule_ca(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ca
-                    }),
-                    ("th", {
-                        fn rule_th(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_th
-                    }),
-                    ("jgo", {
-                        fn rule_jgo(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_jgo
-                    }),
-                    ("id", {
-                        fn rule_id(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_id
+                        rule_ny
                     }),
                     ("ksh", {
                         fn rule_ksh(po: &PluralOperands) -> PluralCategory {
@@ -688,14 +152,6 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_ksh
                     }),
-                    ("zh", {
-                        fn rule_zh(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_zh
-                    }),
                     ("nah", {
                         fn rule_nah(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
@@ -706,419 +162,47 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_nah
                     }),
-                    ("kaj", {
-                        fn rule_kaj(po: &PluralOperands) -> PluralCategory {
+                    ("syr", {
+                        fn rule_syr(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_kaj
+                        rule_syr
                     }),
-                    ("xog", {
-                        fn rule_xog(po: &PluralOperands) -> PluralCategory {
+                    ("smj", {
+                        fn rule_smj(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_xog
-                    }),
-                    ("gsw", {
-                        fn rule_gsw(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_gsw
-                    }),
-                    ("bs", {
-                        fn rule_bs(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0
-                                && matches!(po.i % 10, 2..=4)
-                                && !matches!(po.i % 100, 12..=14))
-                                || (matches!(po.f % 10, 2..=4) && !matches!(po.f % 100, 12..=14))
-                            {
-                                PluralCategory::FEW
-                            } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
-                                || (po.f % 10 == 1 && po.f % 100 != 11)
-                            {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_bs
-                    }),
-                    ("jmc", {
-                        fn rule_jmc(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_jmc
-                    }),
-                    ("tig", {
-                        fn rule_tig(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_tig
-                    }),
-                    ("ky", {
-                        fn rule_ky(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ky
-                    }),
-                    ("is", {
-                        fn rule_is(po: &PluralOperands) -> PluralCategory {
-                            if (po.t == 0 && po.i % 10 == 1 && po.i % 100 != 11) || (po.t != 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_is
-                    }),
-                    ("hsb", {
-                        fn rule_hsb(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0 && matches!(po.i % 100, 3..=4))
-                                || (matches!(po.f % 100, 3..=4))
-                            {
-                                PluralCategory::FEW
-                            } else if (po.v == 0 && po.i % 100 == 1) || (po.f % 100 == 1) {
-                                PluralCategory::ONE
-                            } else if (po.v == 0 && po.i % 100 == 2) || (po.f % 100 == 2) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_hsb
-                    }),
-                    ("wa", {
-                        fn rule_wa(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 0..=1) && po.f == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_wa
-                    }),
-                    ("sv", {
-                        fn rule_sv(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sv
-                    }),
-                    ("de", {
-                        fn rule_de(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_de
-                    }),
-                    ("nd", {
-                        fn rule_nd(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_nd
-                    }),
-                    ("az", {
-                        fn rule_az(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_az
-                    }),
-                    ("ses", {
-                        fn rule_ses(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ses
-                    }),
-                    ("sq", {
-                        fn rule_sq(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sq
-                    }),
-                    ("tn", {
-                        fn rule_tn(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_tn
-                    }),
-                    ("ceb", {
-                        fn rule_ceb(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0 && (po.i == 1 || po.i == 2 || po.i == 3))
-                                || (po.v == 0 && po.i % 10 != 4 && po.i % 10 != 6 && po.i % 10 != 9)
-                                || (po.v != 0 && po.f % 10 != 4 && po.f % 10 != 6 && po.f % 10 != 9)
-                            {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ceb
-                    }),
-                    ("vo", {
-                        fn rule_vo(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_vo
-                    }),
-                    ("et", {
-                        fn rule_et(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_et
-                    }),
-                    ("fur", {
-                        fn rule_fur(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_fur
-                    }),
-                    ("fil", {
-                        fn rule_fil(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0 && (po.i == 1 || po.i == 2 || po.i == 3))
-                                || (po.v == 0 && po.i % 10 != 4 && po.i % 10 != 6 && po.i % 10 != 9)
-                                || (po.v != 0 && po.f % 10 != 4 && po.f % 10 != 6 && po.f % 10 != 9)
-                            {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_fil
-                    }),
-                    ("ka", {
-                        fn rule_ka(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ka
-                    }),
-                    ("mk", {
-                        fn rule_mk(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
-                                || (po.f % 10 == 1 && po.f % 100 != 11)
-                            {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_mk
-                    }),
-                    ("ar", {
-                        fn rule_ar(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 3..=10)) {
-                                PluralCategory::FEW
-                            } else if (matches!(po.i, 11..=99)) {
-                                PluralCategory::MANY
-                            } else if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else if (po.n == 2.0) {
                                 PluralCategory::TWO
-                            } else if (po.n == 0.0) {
-                                PluralCategory::ZERO
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ar
+                        rule_smj
                     }),
-                    ("osa", {
-                        fn rule_osa(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_osa
-                    }),
-                    ("ku", {
-                        fn rule_ku(po: &PluralOperands) -> PluralCategory {
+                    ("ks", {
+                        fn rule_ks(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ku
+                        rule_ks
                     }),
-                    ("gu", {
-                        fn rule_gu(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0) || (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_gu
-                    }),
-                    ("fy", {
-                        fn rule_fy(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_fy
-                    }),
-                    ("as", {
-                        fn rule_as(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0) || (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_as
-                    }),
-                    ("kde", {
-                        fn rule_kde(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_kde
-                    }),
-                    ("ssy", {
-                        fn rule_ssy(po: &PluralOperands) -> PluralCategory {
+                    ("tk", {
+                        fn rule_tk(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ssy
-                    }),
-                    ("rm", {
-                        fn rule_rm(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_rm
-                    }),
-                    ("chr", {
-                        fn rule_chr(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_chr
-                    }),
-                    ("ee", {
-                        fn rule_ee(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ee
-                    }),
-                    ("pt", {
-                        fn rule_pt(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 0..=1)) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_pt
-                    }),
-                    ("ckb", {
-                        fn rule_ckb(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ckb
-                    }),
-                    ("kab", {
-                        fn rule_kab(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0 || po.i == 1) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_kab
-                    }),
-                    ("ne", {
-                        fn rule_ne(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ne
+                        rule_tk
                     }),
                     ("sh", {
                         fn rule_sh(po: &PluralOperands) -> PluralCategory {
@@ -1138,28 +222,444 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_sh
                     }),
-                    ("ti", {
-                        fn rule_ti(po: &PluralOperands) -> PluralCategory {
+                    ("mn", {
+                        fn rule_mn(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_mn
+                    }),
+                    ("pt-PT", {
+                        fn rule_pt_pt(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_pt_pt
+                    }),
+                    ("lv", {
+                        fn rule_lv(po: &PluralOperands) -> PluralCategory {
+                            if (po.i % 10 == 1 && po.i % 100 != 11)
+                                || (po.v == 2 && po.f % 10 == 1 && po.f % 100 != 11)
+                                || (po.v != 2 && po.f % 10 == 1)
+                            {
+                                PluralCategory::ONE
+                            } else if (po.i % 10 == 0)
+                                || (matches!(po.i, 11..=19))
+                                || (po.v == 2 && matches!(po.f % 100, 11..=19))
+                            {
+                                PluralCategory::ZERO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_lv
+                    }),
+                    ("ka", {
+                        fn rule_ka(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ka
+                    }),
+                    ("kn", {
+                        fn rule_kn(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0) || (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_kn
+                    }),
+                    ("osa", {
+                        fn rule_osa(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_osa
+                    }),
+                    ("lo", {
+                        fn rule_lo(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_lo
+                    }),
+                    ("wo", {
+                        fn rule_wo(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_wo
+                    }),
+                    ("nr", {
+                        fn rule_nr(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_nr
+                    }),
+                    ("st", {
+                        fn rule_st(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_st
+                    }),
+                    ("io", {
+                        fn rule_io(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_io
+                    }),
+                    ("pap", {
+                        fn rule_pap(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_pap
+                    }),
+                    ("yue", {
+                        fn rule_yue(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_yue
+                    }),
+                    ("rm", {
+                        fn rule_rm(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_rm
+                    }),
+                    ("kab", {
+                        fn rule_kab(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0 || po.i == 1) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_kab
+                    }),
+                    ("af", {
+                        fn rule_af(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_af
+                    }),
+                    ("sma", {
+                        fn rule_sma(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sma
+                    }),
+                    ("ln", {
+                        fn rule_ln(po: &PluralOperands) -> PluralCategory {
                             if (matches!(po.i, 0..=1) && po.f == 0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ti
+                        rule_ln
                     }),
-                    ("pa", {
-                        fn rule_pa(po: &PluralOperands) -> PluralCategory {
+                    ("fa", {
+                        fn rule_fa(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0) || (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_fa
+                    }),
+                    ("brx", {
+                        fn rule_brx(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_brx
+                    }),
+                    ("mas", {
+                        fn rule_mas(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_mas
+                    }),
+                    ("tr", {
+                        fn rule_tr(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_tr
+                    }),
+                    ("nl", {
+                        fn rule_nl(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_nl
+                    }),
+                    ("ml", {
+                        fn rule_ml(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ml
+                    }),
+                    ("seh", {
+                        fn rule_seh(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_seh
+                    }),
+                    ("es", {
+                        fn rule_es(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_es
+                    }),
+                    ("so", {
+                        fn rule_so(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_so
+                    }),
+                    ("id", {
+                        fn rule_id(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_id
+                    }),
+                    ("my", {
+                        fn rule_my(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_my
+                    }),
+                    ("bem", {
+                        fn rule_bem(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_bem
+                    }),
+                    ("hu", {
+                        fn rule_hu(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_hu
+                    }),
+                    ("xh", {
+                        fn rule_xh(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_xh
+                    }),
+                    ("lkt", {
+                        fn rule_lkt(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_lkt
+                    }),
+                    ("sdh", {
+                        fn rule_sdh(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sdh
+                    }),
+                    ("nb", {
+                        fn rule_nb(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_nb
+                    }),
+                    ("vo", {
+                        fn rule_vo(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_vo
+                    }),
+                    ("ckb", {
+                        fn rule_ckb(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ckb
+                    }),
+                    ("an", {
+                        fn rule_an(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_an
+                    }),
+                    ("asa", {
+                        fn rule_asa(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_asa
+                    }),
+                    ("fo", {
+                        fn rule_fo(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_fo
+                    }),
+                    ("fi", {
+                        fn rule_fi(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_fi
+                    }),
+                    ("ia", {
+                        fn rule_ia(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ia
+                    }),
+                    ("wa", {
+                        fn rule_wa(po: &PluralOperands) -> PluralCategory {
                             if (matches!(po.i, 0..=1) && po.f == 0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_pa
+                        rule_wa
                     }),
-                    ("hr", {
-                        fn rule_hr(po: &PluralOperands) -> PluralCategory {
+                    ("jmc", {
+                        fn rule_jmc(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_jmc
+                    }),
+                    ("sr", {
+                        fn rule_sr(po: &PluralOperands) -> PluralCategory {
                             if (po.v == 0
                                 && matches!(po.i % 10, 2..=4)
                                 && !matches!(po.i % 100, 12..=14))
@@ -1174,132 +674,192 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_hr
+                        rule_sr
                     }),
-                    ("nn", {
-                        fn rule_nn(po: &PluralOperands) -> PluralCategory {
+                    ("hy", {
+                        fn rule_hy(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0 || po.i == 1) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_hy
+                    }),
+                    ("nso", {
+                        fn rule_nso(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 0..=1) && po.f == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_nso
+                    }),
+                    ("ta", {
+                        fn rule_ta(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_nn
+                        rule_ta
                     }),
-                    ("yo", {
-                        fn rule_yo(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_yo
-                    }),
-                    ("no", {
-                        fn rule_no(po: &PluralOperands) -> PluralCategory {
+                    ("ha", {
+                        fn rule_ha(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_no
+                        rule_ha
                     }),
-                    ("wo", {
-                        fn rule_wo(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_wo
-                    }),
-                    ("uz", {
-                        fn rule_uz(po: &PluralOperands) -> PluralCategory {
+                    ("kk", {
+                        fn rule_kk(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_uz
+                        rule_kk
                     }),
-                    ("bm", {
-                        fn rule_bm(po: &PluralOperands) -> PluralCategory {
+                    ("tl", {
+                        fn rule_tl(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0 && (po.i == 1 || po.i == 2 || po.i == 3))
+                                || (po.v == 0 && po.i % 10 != 4 && po.i % 10 != 6 && po.i % 10 != 9)
+                                || (po.v != 0 && po.f % 10 != 4 && po.f % 10 != 6 && po.f % 10 != 9)
                             {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_bm
-                    }),
-                    ("ja", {
-                        fn rule_ja(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ja
-                    }),
-                    ("ig", {
-                        fn rule_ig(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ig
-                    }),
-                    ("iw", {
-                        fn rule_iw(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0 && !matches!(po.i, 0..=10) && po.f == 0 && po.i % 10 == 0)
-                            {
-                                PluralCategory::MANY
-                            } else if (po.i == 1 && po.v == 0) {
                                 PluralCategory::ONE
-                            } else if (po.i == 2 && po.v == 0) {
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_tl
+                    }),
+                    ("prg", {
+                        fn rule_prg(po: &PluralOperands) -> PluralCategory {
+                            if (po.i % 10 == 1 && po.i % 100 != 11)
+                                || (po.v == 2 && po.f % 10 == 1 && po.f % 100 != 11)
+                                || (po.v != 2 && po.f % 10 == 1)
+                            {
+                                PluralCategory::ONE
+                            } else if (po.i % 10 == 0)
+                                || (matches!(po.i, 11..=19))
+                                || (po.v == 2 && matches!(po.f % 100, 11..=19))
+                            {
+                                PluralCategory::ZERO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_prg
+                    }),
+                    ("saq", {
+                        fn rule_saq(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_saq
+                    }),
+                    ("xog", {
+                        fn rule_xog(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_xog
+                    }),
+                    ("bs", {
+                        fn rule_bs(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0
+                                && matches!(po.i % 10, 2..=4)
+                                && !matches!(po.i % 100, 12..=14))
+                                || (matches!(po.f % 10, 2..=4) && !matches!(po.f % 100, 12..=14))
+                            {
+                                PluralCategory::FEW
+                            } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
+                                || (po.f % 10 == 1 && po.f % 100 != 11)
+                            {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_bs
+                    }),
+                    ("am", {
+                        fn rule_am(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0) || (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_am
+                    }),
+                    ("kkj", {
+                        fn rule_kkj(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_kkj
+                    }),
+                    ("iu", {
+                        fn rule_iu(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0) {
                                 PluralCategory::TWO
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_iw
+                        rule_iu
                     }),
-                    ("asa", {
-                        fn rule_asa(po: &PluralOperands) -> PluralCategory {
+                    ("jv", {
+                        fn rule_jv(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_jv
+                    }),
+                    ("rof", {
+                        fn rule_rof(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_asa
+                        rule_rof
                     }),
-                    ("eo", {
-                        fn rule_eo(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
+                    ("nqo", {
+                        fn rule_nqo(po: &PluralOperands) -> PluralCategory {
+                            {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_eo
+                        rule_nqo
                     }),
-                    ("teo", {
-                        fn rule_teo(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
+                    ("in", {
+                        fn rule_in(po: &PluralOperands) -> PluralCategory {
+                            {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_teo
-                    }),
-                    ("ia", {
-                        fn rule_ia(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ia
+                        rule_in
                     }),
                     ("el", {
                         fn rule_el(po: &PluralOperands) -> PluralCategory {
@@ -1311,6 +871,105 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_el
                     }),
+                    ("mg", {
+                        fn rule_mg(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 0..=1) && po.f == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_mg
+                    }),
+                    ("nd", {
+                        fn rule_nd(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_nd
+                    }),
+                    ("no", {
+                        fn rule_no(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_no
+                    }),
+                    ("su", {
+                        fn rule_su(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_su
+                    }),
+                    ("scn", {
+                        fn rule_scn(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_scn
+                    }),
+                    ("ce", {
+                        fn rule_ce(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ce
+                    }),
+                    ("be", {
+                        fn rule_be(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 2..=4) && !matches!(po.i, 12..=14)) {
+                                PluralCategory::FEW
+                            } else if (po.i % 10 == 0)
+                                || (matches!(po.i, 5..=9))
+                                || (matches!(po.i, 11..=14))
+                            {
+                                PluralCategory::MANY
+                            } else if (po.i % 10 == 1 && po.i % 100 != 11) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_be
+                    }),
+                    ("sah", {
+                        fn rule_sah(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sah
+                    }),
+                    ("ko", {
+                        fn rule_ko(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ko
+                    }),
+                    ("bm", {
+                        fn rule_bm(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_bm
+                    }),
                     ("ak", {
                         fn rule_ak(po: &PluralOperands) -> PluralCategory {
                             if (matches!(po.i, 0..=1) && po.f == 0) {
@@ -1321,37 +980,73 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_ak
                     }),
-                    ("ug", {
-                        fn rule_ug(po: &PluralOperands) -> PluralCategory {
+                    ("lag", {
+                        fn rule_lag(po: &PluralOperands) -> PluralCategory {
+                            if ((po.i == 0 || po.i == 1) && po.n != 0.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 0.0) {
+                                PluralCategory::ZERO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_lag
+                    }),
+                    ("uz", {
+                        fn rule_uz(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ug
+                        rule_uz
                     }),
-                    ("tzm", {
-                        fn rule_tzm(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 0..=1) && po.f == 0)
-                                || (matches!(po.i, 11..=99) && po.f == 0)
-                            {
+                    ("smn", {
+                        fn rule_smn(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_smn
+                    }),
+                    ("it", {
+                        fn rule_it(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_tzm
+                        rule_it
                     }),
-                    ("fa", {
-                        fn rule_fa(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0) || (po.n == 1.0) {
+                    ("sk", {
+                        fn rule_sk(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 2..=4) && po.v == 0) {
+                                PluralCategory::FEW
+                            } else if (po.v != 0) {
+                                PluralCategory::MANY
+                            } else if (po.i == 1 && po.v == 0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_fa
+                        rule_sk
+                    }),
+                    ("nn", {
+                        fn rule_nn(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_nn
                     }),
                     ("dv", {
                         fn rule_dv(po: &PluralOperands) -> PluralCategory {
@@ -1363,6 +1058,50 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_dv
                     }),
+                    ("yi", {
+                        fn rule_yi(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_yi
+                    }),
+                    ("sq", {
+                        fn rule_sq(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sq
+                    }),
+                    ("jw", {
+                        fn rule_jw(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_jw
+                    }),
+                    ("dsb", {
+                        fn rule_dsb(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0 && matches!(po.i % 100, 3..=4))
+                                || (matches!(po.f % 100, 3..=4))
+                            {
+                                PluralCategory::FEW
+                            } else if (po.v == 0 && po.i % 100 == 1) || (po.f % 100 == 1) {
+                                PluralCategory::ONE
+                            } else if (po.v == 0 && po.i % 100 == 2) || (po.f % 100 == 2) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_dsb
+                    }),
                     ("ts", {
                         fn rule_ts(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
@@ -1372,6 +1111,187 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                             }
                         };
                         rule_ts
+                    }),
+                    ("hi", {
+                        fn rule_hi(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0) || (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_hi
+                    }),
+                    ("wae", {
+                        fn rule_wae(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_wae
+                    }),
+                    ("smi", {
+                        fn rule_smi(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_smi
+                    }),
+                    ("jbo", {
+                        fn rule_jbo(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_jbo
+                    }),
+                    ("pt", {
+                        fn rule_pt(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 0..=1)) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_pt
+                    }),
+                    ("ss", {
+                        fn rule_ss(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ss
+                    }),
+                    ("bn", {
+                        fn rule_bn(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0) || (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_bn
+                    }),
+                    ("ca", {
+                        fn rule_ca(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ca
+                    }),
+                    ("he", {
+                        fn rule_he(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0 && !matches!(po.i, 0..=10) && po.f == 0 && po.i % 10 == 0)
+                            {
+                                PluralCategory::MANY
+                            } else if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else if (po.i == 2 && po.v == 0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_he
+                    }),
+                    ("ig", {
+                        fn rule_ig(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ig
+                    }),
+                    ("zu", {
+                        fn rule_zu(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0) || (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_zu
+                    }),
+                    ("ji", {
+                        fn rule_ji(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ji
+                    }),
+                    ("fr", {
+                        fn rule_fr(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0 || po.i == 1) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_fr
+                    }),
+                    ("en", {
+                        fn rule_en(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_en
+                    }),
+                    ("lb", {
+                        fn rule_lb(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_lb
+                    }),
+                    ("zh", {
+                        fn rule_zh(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_zh
+                    }),
+                    ("teo", {
+                        fn rule_teo(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_teo
+                    }),
+                    ("or", {
+                        fn rule_or(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_or
                     }),
                     ("mt", {
                         fn rule_mt(po: &PluralOperands) -> PluralCategory {
@@ -1387,37 +1307,35 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_mt
                     }),
-                    ("ve", {
-                        fn rule_ve(po: &PluralOperands) -> PluralCategory {
+                    ("gl", {
+                        fn rule_gl(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_gl
+                    }),
+                    ("eo", {
+                        fn rule_eo(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ve
+                        rule_eo
                     }),
-                    ("smi", {
-                        fn rule_smi(po: &PluralOperands) -> PluralCategory {
+                    ("ps", {
+                        fn rule_ps(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
-                            } else if (po.n == 2.0) {
-                                PluralCategory::TWO
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_smi
-                    }),
-                    ("zu", {
-                        fn rule_zu(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0) || (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_zu
+                        rule_ps
                     }),
                     ("uk", {
                         fn rule_uk(po: &PluralOperands) -> PluralCategory {
@@ -1439,95 +1357,59 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_uk
                     }),
-                    ("ny", {
-                        fn rule_ny(po: &PluralOperands) -> PluralCategory {
+                    ("pl", {
+                        fn rule_pl(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0
+                                && matches!(po.i % 10, 2..=4)
+                                && !matches!(po.i % 100, 12..=14))
+                            {
+                                PluralCategory::FEW
+                            } else if (po.v == 0 && po.i != 1 && matches!(po.i % 10, 0..=1))
+                                || (po.v == 0 && matches!(po.i % 10, 5..=9))
+                                || (po.v == 0 && matches!(po.i % 100, 12..=14))
+                            {
+                                PluralCategory::MANY
+                            } else if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_pl
+                    }),
+                    ("hsb", {
+                        fn rule_hsb(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0 && matches!(po.i % 100, 3..=4))
+                                || (matches!(po.f % 100, 3..=4))
+                            {
+                                PluralCategory::FEW
+                            } else if (po.v == 0 && po.i % 100 == 1) || (po.f % 100 == 1) {
+                                PluralCategory::ONE
+                            } else if (po.v == 0 && po.i % 100 == 2) || (po.f % 100 == 2) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_hsb
+                    }),
+                    ("lg", {
+                        fn rule_lg(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ny
+                        rule_lg
                     }),
-                    ("an", {
-                        fn rule_an(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
+                    ("bo", {
+                        fn rule_bo(po: &PluralOperands) -> PluralCategory {
+                            {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_an
-                    }),
-                    ("tk", {
-                        fn rule_tk(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_tk
-                    }),
-                    ("ss", {
-                        fn rule_ss(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ss
-                    }),
-                    ("mgo", {
-                        fn rule_mgo(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_mgo
-                    }),
-                    ("pap", {
-                        fn rule_pap(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_pap
-                    }),
-                    ("si", {
-                        fn rule_si(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 0.0 || po.n == 1.0) || (po.i == 0 && po.f == 1) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_si
-                    }),
-                    ("nso", {
-                        fn rule_nso(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 0..=1) && po.f == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_nso
-                    }),
-                    ("tr", {
-                        fn rule_tr(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_tr
+                        rule_bo
                     }),
                     ("kw", {
                         fn rule_kw(po: &PluralOperands) -> PluralCategory {
@@ -1569,58 +1451,613 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_kw
                     }),
-                    ("prg", {
-                        fn rule_prg(po: &PluralOperands) -> PluralCategory {
-                            if (po.i % 10 == 1 && po.i % 100 != 11)
-                                || (po.v == 2 && po.f % 10 == 1 && po.f % 100 != 11)
-                                || (po.v != 2 && po.f % 10 == 1)
+                    ("to", {
+                        fn rule_to(po: &PluralOperands) -> PluralCategory {
                             {
-                                PluralCategory::ONE
-                            } else if (po.i % 10 == 0)
-                                || (matches!(po.i, 11..=19))
-                                || (po.v == 2 && matches!(po.f % 100, 11..=19))
-                            {
-                                PluralCategory::ZERO
-                            } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_prg
+                        rule_to
                     }),
-                    ("be", {
-                        fn rule_be(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 2..=4) && !matches!(po.i, 12..=14)) {
+                    ("gv", {
+                        fn rule_gv(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0
+                                && (po.i % 100 == 0
+                                    || po.i % 100 == 20
+                                    || po.i % 100 == 40
+                                    || po.i % 100 == 60
+                                    || po.i % 100 == 80))
+                            {
                                 PluralCategory::FEW
-                            } else if (po.i % 10 == 0)
-                                || (matches!(po.i, 5..=9))
-                                || (matches!(po.i, 11..=14))
-                            {
+                            } else if (po.v != 0) {
                                 PluralCategory::MANY
-                            } else if (po.i % 10 == 1 && po.i % 100 != 11) {
+                            } else if (po.v == 0 && po.i % 10 == 1) {
+                                PluralCategory::ONE
+                            } else if (po.v == 0 && po.i % 10 == 2) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_gv
+                    }),
+                    ("km", {
+                        fn rule_km(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_km
+                    }),
+                    ("ses", {
+                        fn rule_ses(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ses
+                    }),
+                    ("sc", {
+                        fn rule_sc(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_be
+                        rule_sc
                     }),
-                    ("sn", {
-                        fn rule_sn(po: &PluralOperands) -> PluralCategory {
+                    ("ff", {
+                        fn rule_ff(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0 || po.i == 1) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ff
+                    }),
+                    ("ug", {
+                        fn rule_ug(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_sn
+                        rule_ug
                     }),
-                    ("jv", {
-                        fn rule_jv(po: &PluralOperands) -> PluralCategory {
+                    ("nyn", {
+                        fn rule_nyn(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_nyn
+                    }),
+                    ("is", {
+                        fn rule_is(po: &PluralOperands) -> PluralCategory {
+                            if (po.t == 0 && po.i % 10 == 1 && po.i % 100 != 11) || (po.t != 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_is
+                    }),
+                    ("gu", {
+                        fn rule_gu(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0) || (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_gu
+                    }),
+                    ("hr", {
+                        fn rule_hr(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0
+                                && matches!(po.i % 10, 2..=4)
+                                && !matches!(po.i % 100, 12..=14))
+                                || (matches!(po.f % 10, 2..=4) && !matches!(po.f % 100, 12..=14))
+                            {
+                                PluralCategory::FEW
+                            } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
+                                || (po.f % 10 == 1 && po.f % 100 != 11)
+                            {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_hr
+                    }),
+                    ("kea", {
+                        fn rule_kea(po: &PluralOperands) -> PluralCategory {
                             {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_jv
+                        rule_kea
+                    }),
+                    ("ky", {
+                        fn rule_ky(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ky
+                    }),
+                    ("tig", {
+                        fn rule_tig(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_tig
+                    }),
+                    ("chr", {
+                        fn rule_chr(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_chr
+                    }),
+                    ("gsw", {
+                        fn rule_gsw(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_gsw
+                    }),
+                    ("ru", {
+                        fn rule_ru(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0
+                                && matches!(po.i % 10, 2..=4)
+                                && !matches!(po.i % 100, 12..=14))
+                            {
+                                PluralCategory::FEW
+                            } else if (po.v == 0 && po.i % 10 == 0)
+                                || (po.v == 0 && matches!(po.i % 10, 5..=9))
+                                || (po.v == 0 && matches!(po.i % 100, 11..=14))
+                            {
+                                PluralCategory::MANY
+                            } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ru
+                    }),
+                    ("bg", {
+                        fn rule_bg(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_bg
+                    }),
+                    ("fy", {
+                        fn rule_fy(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_fy
+                    }),
+                    ("de", {
+                        fn rule_de(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_de
+                    }),
+                    ("ve", {
+                        fn rule_ve(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ve
+                    }),
+                    ("ksb", {
+                        fn rule_ksb(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ksb
+                    }),
+                    ("ar", {
+                        fn rule_ar(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 3..=10)) {
+                                PluralCategory::FEW
+                            } else if (matches!(po.i, 11..=99)) {
+                                PluralCategory::MANY
+                            } else if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0) {
+                                PluralCategory::TWO
+                            } else if (po.n == 0.0) {
+                                PluralCategory::ZERO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ar
+                    }),
+                    ("yo", {
+                        fn rule_yo(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_yo
+                    }),
+                    ("bez", {
+                        fn rule_bez(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_bez
+                    }),
+                    ("ga", {
+                        fn rule_ga(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 3..=6) && po.f == 0) {
+                                PluralCategory::FEW
+                            } else if (matches!(po.i, 7..=10) && po.f == 0) {
+                                PluralCategory::MANY
+                            } else if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ga
+                    }),
+                    ("fur", {
+                        fn rule_fur(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_fur
+                    }),
+                    ("naq", {
+                        fn rule_naq(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_naq
+                    }),
+                    ("iw", {
+                        fn rule_iw(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0 && !matches!(po.i, 0..=10) && po.f == 0 && po.i % 10 == 0)
+                            {
+                                PluralCategory::MANY
+                            } else if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else if (po.i == 2 && po.v == 0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_iw
+                    }),
+                    ("kl", {
+                        fn rule_kl(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_kl
+                    }),
+                    ("root", {
+                        fn rule_root(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_root
+                    }),
+                    ("ti", {
+                        fn rule_ti(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 0..=1) && po.f == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ti
+                    }),
+                    ("ur", {
+                        fn rule_ur(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ur
+                    }),
+                    ("bho", {
+                        fn rule_bho(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 0..=1) && po.f == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_bho
+                    }),
+                    ("mk", {
+                        fn rule_mk(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
+                                || (po.f % 10 == 1 && po.f % 100 != 11)
+                            {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_mk
+                    }),
+                    ("pa", {
+                        fn rule_pa(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 0..=1) && po.f == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_pa
+                    }),
+                    ("mgo", {
+                        fn rule_mgo(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_mgo
+                    }),
+                    ("et", {
+                        fn rule_et(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_et
+                    }),
+                    ("da", {
+                        fn rule_da(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) || (po.t != 0 && (po.i == 0 || po.i == 1)) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_da
+                    }),
+                    ("guw", {
+                        fn rule_guw(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 0..=1) && po.f == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_guw
+                    }),
+                    ("ms", {
+                        fn rule_ms(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ms
+                    }),
+                    ("vi", {
+                        fn rule_vi(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_vi
+                    }),
+                    ("ceb", {
+                        fn rule_ceb(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0 && (po.i == 1 || po.i == 2 || po.i == 3))
+                                || (po.v == 0 && po.i % 10 != 4 && po.i % 10 != 6 && po.i % 10 != 9)
+                                || (po.v != 0 && po.f % 10 != 4 && po.f % 10 != 6 && po.f % 10 != 9)
+                            {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ceb
+                    }),
+                    ("kde", {
+                        fn rule_kde(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_kde
+                    }),
+                    ("rwk", {
+                        fn rule_rwk(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_rwk
+                    }),
+                    ("eu", {
+                        fn rule_eu(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_eu
+                    }),
+                    ("as", {
+                        fn rule_as(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0) || (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_as
+                    }),
+                    ("tzm", {
+                        fn rule_tzm(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 0..=1) && po.f == 0)
+                                || (matches!(po.i, 11..=99) && po.f == 0)
+                            {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_tzm
+                    }),
+                    ("th", {
+                        fn rule_th(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_th
+                    }),
+                    ("gd", {
+                        fn rule_gd(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 3..=10) && po.f == 0
+                                || matches!(po.i, 13..=19) && po.f == 0)
+                            {
+                                PluralCategory::FEW
+                            } else if (po.n == 1.0 || po.n == 11.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0 || po.n == 12.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_gd
+                    }),
+                    ("se", {
+                        fn rule_se(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_se
+                    }),
+                    ("ku", {
+                        fn rule_ku(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ku
+                    }),
+                    ("nnh", {
+                        fn rule_nnh(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_nnh
+                    }),
+                    ("shi", {
+                        fn rule_shi(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 2..=10) && po.f == 0) {
+                                PluralCategory::FEW
+                            } else if (po.i == 0) || (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_shi
+                    }),
+                    ("jgo", {
+                        fn rule_jgo(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_jgo
+                    }),
+                    ("kcg", {
+                        fn rule_kcg(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_kcg
                     }),
                     ("ro", {
                         fn rule_ro(po: &PluralOperands) -> PluralCategory {
@@ -1634,25 +2071,202 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_ro
                     }),
-                    ("kcg", {
-                        fn rule_kcg(po: &PluralOperands) -> PluralCategory {
+                    ("sn", {
+                        fn rule_sn(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_kcg
+                        rule_sn
                     }),
-                    ("hu", {
-                        fn rule_hu(po: &PluralOperands) -> PluralCategory {
+                    ("si", {
+                        fn rule_si(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 0.0 || po.n == 1.0) || (po.i == 0 && po.f == 1) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_si
+                    }),
+                    ("os", {
+                        fn rule_os(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_hu
+                        rule_os
+                    }),
+                    ("ast", {
+                        fn rule_ast(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ast
+                    }),
+                    ("mo", {
+                        fn rule_mo(po: &PluralOperands) -> PluralCategory {
+                            if (po.v != 0) || (po.n == 0.0) || (matches!(po.i, 2..=19)) {
+                                PluralCategory::FEW
+                            } else if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_mo
+                    }),
+                    ("ii", {
+                        fn rule_ii(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ii
+                    }),
+                    ("az", {
+                        fn rule_az(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_az
+                    }),
+                    ("ee", {
+                        fn rule_ee(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ee
+                    }),
+                    ("cgg", {
+                        fn rule_cgg(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_cgg
+                    }),
+                    ("tn", {
+                        fn rule_tn(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_tn
+                    }),
+                    ("fil", {
+                        fn rule_fil(po: &PluralOperands) -> PluralCategory {
+                            if (po.v == 0 && (po.i == 1 || po.i == 2 || po.i == 3))
+                                || (po.v == 0 && po.i % 10 != 4 && po.i % 10 != 6 && po.i % 10 != 9)
+                                || (po.v != 0 && po.f % 10 != 4 && po.f % 10 != 6 && po.f % 10 != 9)
+                            {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_fil
+                    }),
+                    ("ssy", {
+                        fn rule_ssy(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ssy
+                    }),
+                    ("sd", {
+                        fn rule_sd(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sd
+                    }),
+                    ("te", {
+                        fn rule_te(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_te
+                    }),
+                    ("sms", {
+                        fn rule_sms(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sms
+                    }),
+                    ("sg", {
+                        fn rule_sg(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sg
+                    }),
+                    ("cs", {
+                        fn rule_cs(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 2..=4) && po.v == 0) {
+                                PluralCategory::FEW
+                            } else if (po.v != 0) {
+                                PluralCategory::MANY
+                            } else if (po.i == 1 && po.v == 0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_cs
+                    }),
+                    ("om", {
+                        fn rule_om(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_om
+                    }),
+                    ("kaj", {
+                        fn rule_kaj(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_kaj
                     }),
                     ("br", {
                         fn rule_br(po: &PluralOperands) -> PluralCategory {
@@ -1682,567 +2296,6 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_br
                     }),
-                    ("bho", {
-                        fn rule_bho(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 0..=1) && po.f == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_bho
-                    }),
-                    ("eu", {
-                        fn rule_eu(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_eu
-                    }),
-                    ("ln", {
-                        fn rule_ln(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 0..=1) && po.f == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ln
-                    }),
-                    ("lv", {
-                        fn rule_lv(po: &PluralOperands) -> PluralCategory {
-                            if (po.i % 10 == 1 && po.i % 100 != 11)
-                                || (po.v == 2 && po.f % 10 == 1 && po.f % 100 != 11)
-                                || (po.v != 2 && po.f % 10 == 1)
-                            {
-                                PluralCategory::ONE
-                            } else if (po.i % 10 == 0)
-                                || (matches!(po.i, 11..=19))
-                                || (po.v == 2 && matches!(po.f % 100, 11..=19))
-                            {
-                                PluralCategory::ZERO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_lv
-                    }),
-                    ("da", {
-                        fn rule_da(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) || (po.t != 0 && (po.i == 0 || po.i == 1)) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_da
-                    }),
-                    ("te", {
-                        fn rule_te(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_te
-                    }),
-                    ("ga", {
-                        fn rule_ga(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 3..=6) && po.f == 0) {
-                                PluralCategory::FEW
-                            } else if (matches!(po.i, 7..=10) && po.f == 0) {
-                                PluralCategory::MANY
-                            } else if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ga
-                    }),
-                    ("mo", {
-                        fn rule_mo(po: &PluralOperands) -> PluralCategory {
-                            if (po.v != 0) || (po.n == 0.0) || (matches!(po.i, 2..=19)) {
-                                PluralCategory::FEW
-                            } else if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_mo
-                    }),
-                    ("cs", {
-                        fn rule_cs(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 2..=4) && po.v == 0) {
-                                PluralCategory::FEW
-                            } else if (po.v != 0) {
-                                PluralCategory::MANY
-                            } else if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_cs
-                    }),
-                    ("haw", {
-                        fn rule_haw(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_haw
-                    }),
-                    ("io", {
-                        fn rule_io(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_io
-                    }),
-                    ("su", {
-                        fn rule_su(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_su
-                    }),
-                    ("ps", {
-                        fn rule_ps(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ps
-                    }),
-                    ("fr", {
-                        fn rule_fr(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0 || po.i == 1) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_fr
-                    }),
-                    ("mas", {
-                        fn rule_mas(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_mas
-                    }),
-                    ("he", {
-                        fn rule_he(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0 && !matches!(po.i, 0..=10) && po.f == 0 && po.i % 10 == 0)
-                            {
-                                PluralCategory::MANY
-                            } else if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else if (po.i == 2 && po.v == 0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_he
-                    }),
-                    ("seh", {
-                        fn rule_seh(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_seh
-                    }),
-                    ("gd", {
-                        fn rule_gd(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 3..=10) && po.f == 0
-                                || matches!(po.i, 13..=19) && po.f == 0)
-                            {
-                                PluralCategory::FEW
-                            } else if (po.n == 1.0 || po.n == 11.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0 || po.n == 12.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_gd
-                    }),
-                    ("bem", {
-                        fn rule_bem(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_bem
-                    }),
-                    ("ha", {
-                        fn rule_ha(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ha
-                    }),
-                    ("lb", {
-                        fn rule_lb(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_lb
-                    }),
-                    ("lt", {
-                        fn rule_lt(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 2..=9) && !matches!(po.i, 11..=19)) {
-                                PluralCategory::FEW
-                            } else if (po.f != 0) {
-                                PluralCategory::MANY
-                            } else if (po.i % 10 == 1 && !matches!(po.i, 11..=19)) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_lt
-                    }),
-                    ("rwk", {
-                        fn rule_rwk(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_rwk
-                    }),
-                    ("lg", {
-                        fn rule_lg(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_lg
-                    }),
-                    ("vi", {
-                        fn rule_vi(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_vi
-                    }),
-                    ("cgg", {
-                        fn rule_cgg(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_cgg
-                    }),
-                    ("nnh", {
-                        fn rule_nnh(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_nnh
-                    }),
-                    ("kn", {
-                        fn rule_kn(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0) || (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_kn
-                    }),
-                    ("ur", {
-                        fn rule_ur(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ur
-                    }),
-                    ("jw", {
-                        fn rule_jw(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_jw
-                    }),
-                    ("nyn", {
-                        fn rule_nyn(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_nyn
-                    }),
-                    ("to", {
-                        fn rule_to(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_to
-                    }),
-                    ("smj", {
-                        fn rule_smj(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_smj
-                    }),
-                    ("ksb", {
-                        fn rule_ksb(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ksb
-                    }),
-                    ("root", {
-                        fn rule_root(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_root
-                    }),
-                    ("pt-PT", {
-                        fn rule_pt_pt(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_pt_pt
-                    }),
-                    ("mg", {
-                        fn rule_mg(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 0..=1) && po.f == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_mg
-                    }),
-                    ("ji", {
-                        fn rule_ji(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ji
-                    }),
-                    ("jbo", {
-                        fn rule_jbo(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_jbo
-                    }),
-                    ("sk", {
-                        fn rule_sk(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 2..=4) && po.v == 0) {
-                                PluralCategory::FEW
-                            } else if (po.v != 0) {
-                                PluralCategory::MANY
-                            } else if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sk
-                    }),
-                    ("lkt", {
-                        fn rule_lkt(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_lkt
-                    }),
-                    ("hi", {
-                        fn rule_hi(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0) || (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_hi
-                    }),
-                    ("fo", {
-                        fn rule_fo(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_fo
-                    }),
-                    ("naq", {
-                        fn rule_naq(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_naq
-                    }),
-                    ("ks", {
-                        fn rule_ks(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ks
-                    }),
-                    ("nqo", {
-                        fn rule_nqo(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_nqo
-                    }),
-                    ("ru", {
-                        fn rule_ru(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0
-                                && matches!(po.i % 10, 2..=4)
-                                && !matches!(po.i % 100, 12..=14))
-                            {
-                                PluralCategory::FEW
-                            } else if (po.v == 0 && po.i % 10 == 0)
-                                || (po.v == 0 && matches!(po.i % 10, 5..=9))
-                                || (po.v == 0 && matches!(po.i % 100, 11..=14))
-                            {
-                                PluralCategory::MANY
-                            } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ru
-                    }),
-                    ("sg", {
-                        fn rule_sg(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sg
-                    }),
-                    ("mn", {
-                        fn rule_mn(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_mn
-                    }),
-                    ("fi", {
-                        fn rule_fi(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_fi
-                    }),
-                    ("am", {
-                        fn rule_am(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0) || (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_am
-                    }),
-                    ("ko", {
-                        fn rule_ko(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ko
-                    }),
-                    ("lo", {
-                        fn rule_lo(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_lo
-                    }),
                     ("cy", {
                         fn rule_cy(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 3.0) {
@@ -2261,65 +2314,29 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_cy
                     }),
-                    ("shi", {
-                        fn rule_shi(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 2..=10) && po.f == 0) {
+                    ("ne", {
+                        fn rule_ne(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ne
+                    }),
+                    ("lt", {
+                        fn rule_lt(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 2..=9) && !matches!(po.i, 11..=19)) {
                                 PluralCategory::FEW
-                            } else if (po.i == 0) || (po.n == 1.0) {
+                            } else if (po.f != 0) {
+                                PluralCategory::MANY
+                            } else if (po.i % 10 == 1 && !matches!(po.i, 11..=19)) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_shi
-                    }),
-                    ("scn", {
-                        fn rule_scn(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_scn
-                    }),
-                    ("gl", {
-                        fn rule_gl(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_gl
-                    }),
-                    ("ff", {
-                        fn rule_ff(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0 || po.i == 1) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ff
-                    }),
-                    ("it", {
-                        fn rule_it(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_it
-                    }),
-                    ("sah", {
-                        fn rule_sah(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sah
+                        rule_lt
                     }),
                     ("sl", {
                         fn rule_sl(po: &PluralOperands) -> PluralCategory {
@@ -2335,68 +2352,51 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_sl
                     }),
-                    ("ce", {
-                        fn rule_ce(po: &PluralOperands) -> PluralCategory {
+                    ("mr", {
+                        fn rule_mr(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ce
+                        rule_mr
                     }),
-                    ("os", {
-                        fn rule_os(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_os
-                    }),
-                    ("nl", {
-                        fn rule_nl(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 1 && po.v == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_nl
-                    }),
-                    ("tl", {
-                        fn rule_tl(po: &PluralOperands) -> PluralCategory {
-                            if (po.v == 0 && (po.i == 1 || po.i == 2 || po.i == 3))
-                                || (po.v == 0 && po.i % 10 != 4 && po.i % 10 != 6 && po.i % 10 != 9)
-                                || (po.v != 0 && po.f % 10 != 4 && po.f % 10 != 6 && po.f % 10 != 9)
+                    ("ja", {
+                        fn rule_ja(po: &PluralOperands) -> PluralCategory {
                             {
-                                PluralCategory::ONE
-                            } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_tl
+                        rule_ja
                     }),
-                    ("es", {
-                        fn rule_es(po: &PluralOperands) -> PluralCategory {
+                    ("vun", {
+                        fn rule_vun(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_es
+                        rule_vun
                     }),
-                    ("kkj", {
-                        fn rule_kkj(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
+                    ("ars", {
+                        fn rule_ars(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 3..=10)) {
+                                PluralCategory::FEW
+                            } else if (matches!(po.i, 11..=99)) {
+                                PluralCategory::MANY
+                            } else if (po.n == 1.0) {
                                 PluralCategory::ONE
+                            } else if (po.n == 2.0) {
+                                PluralCategory::TWO
+                            } else if (po.n == 0.0) {
+                                PluralCategory::ZERO
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_kkj
+                        rule_ars
                     }),
                 ]),
             };
@@ -2406,28 +2406,125 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
             static LANGUAGES: phf::Map<&'static str, PluralRule> = ::phf::Map {
                 key: 732231254413039614,
                 disps: ::phf::Slice::Static(&[
-                    (0, 1),
+                    (2, 0),
+                    (0, 5),
+                    (0, 2),
+                    (0, 52),
+                    (0, 5),
+                    (0, 2),
+                    (0, 21),
+                    (0, 57),
+                    (3, 58),
+                    (2, 8),
+                    (0, 13),
+                    (2, 11),
+                    (6, 94),
+                    (1, 75),
+                    (0, 48),
+                    (73, 85),
+                    (0, 88),
                     (0, 0),
-                    (0, 3),
-                    (0, 12),
-                    (0, 7),
-                    (0, 1),
-                    (5, 54),
-                    (0, 91),
-                    (8, 41),
-                    (1, 1),
-                    (1, 43),
-                    (1, 14),
-                    (7, 52),
-                    (58, 82),
-                    (9, 82),
-                    (0, 67),
-                    (1, 0),
-                    (2, 24),
-                    (3, 65),
-                    (1, 18),
+                    (14, 22),
+                    (1, 22),
                 ]),
                 entries: ::phf::Slice::Static(&[
+                    ("pt", {
+                        fn rule_pt(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_pt
+                    }),
+                    ("sc", {
+                        fn rule_sc(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 11.0 || po.n == 8.0 || po.n == 80.0 || po.n == 800.0) {
+                                PluralCategory::MANY
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sc
+                    }),
+                    ("or", {
+                        fn rule_or(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 4.0) {
+                                PluralCategory::FEW
+                            } else if (po.n == 6.0) {
+                                PluralCategory::MANY
+                            } else if (po.n == 1.0
+                                || po.n == 5.0
+                                || matches!(po.i, 7..=9) && po.f == 0)
+                            {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0 || po.n == 3.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_or
+                    }),
+                    ("de", {
+                        fn rule_de(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_de
+                    }),
+                    ("cs", {
+                        fn rule_cs(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_cs
+                    }),
+                    ("it", {
+                        fn rule_it(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 11.0 || po.n == 8.0 || po.n == 80.0 || po.n == 800.0) {
+                                PluralCategory::MANY
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_it
+                    }),
+                    ("my", {
+                        fn rule_my(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_my
+                    }),
+                    ("tl", {
+                        fn rule_tl(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_tl
+                    }),
+                    ("te", {
+                        fn rule_te(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_te
+                    }),
+                    ("root", {
+                        fn rule_root(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_root
+                    }),
                     ("sw", {
                         fn rule_sw(po: &PluralOperands) -> PluralCategory {
                             {
@@ -2436,53 +2533,119 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_sw
                     }),
-                    ("ca", {
-                        fn rule_ca(po: &PluralOperands) -> PluralCategory {
+                    ("sd", {
+                        fn rule_sd(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sd
+                    }),
+                    ("zu", {
+                        fn rule_zu(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_zu
+                    }),
+                    ("bn", {
+                        fn rule_bn(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 4.0) {
                                 PluralCategory::FEW
-                            } else if (po.n == 1.0 || po.n == 3.0) {
+                            } else if (po.n == 6.0) {
+                                PluralCategory::MANY
+                            } else if (po.n == 1.0
+                                || po.n == 5.0
+                                || po.n == 7.0
+                                || po.n == 8.0
+                                || po.n == 9.0
+                                || po.n == 10.0)
+                            {
                                 PluralCategory::ONE
-                            } else if (po.n == 2.0) {
+                            } else if (po.n == 2.0 || po.n == 3.0) {
                                 PluralCategory::TWO
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ca
+                        rule_bn
                     }),
-                    ("ms", {
-                        fn rule_ms(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
+                    ("sh", {
+                        fn rule_sh(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sh
+                    }),
+                    ("uk", {
+                        fn rule_uk(po: &PluralOperands) -> PluralCategory {
+                            if (po.i % 10 == 3 && po.i % 100 != 13) {
+                                PluralCategory::FEW
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_uk
+                    }),
+                    ("eu", {
+                        fn rule_eu(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_eu
+                    }),
+                    ("el", {
+                        fn rule_el(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_el
+                    }),
+                    ("zh", {
+                        fn rule_zh(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_zh
+                    }),
+                    ("fy", {
+                        fn rule_fy(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_fy
+                    }),
+                    ("ne", {
+                        fn rule_ne(po: &PluralOperands) -> PluralCategory {
+                            if (matches!(po.i, 1..=4) && po.f == 0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ms
+                        rule_ne
                     }),
-                    ("bg", {
-                        fn rule_bg(po: &PluralOperands) -> PluralCategory {
+                    ("nb", {
+                        fn rule_nb(po: &PluralOperands) -> PluralCategory {
                             {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_bg
+                        rule_nb
                     }),
-                    ("hr", {
-                        fn rule_hr(po: &PluralOperands) -> PluralCategory {
+                    ("uz", {
+                        fn rule_uz(po: &PluralOperands) -> PluralCategory {
                             {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_hr
-                    }),
-                    ("fi", {
-                        fn rule_fi(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_fi
+                        rule_uz
                     }),
                     ("gu", {
                         fn rule_gu(po: &PluralOperands) -> PluralCategory {
@@ -2500,6 +2663,244 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_gu
                     }),
+                    ("ca", {
+                        fn rule_ca(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 4.0) {
+                                PluralCategory::FEW
+                            } else if (po.n == 1.0 || po.n == 3.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ca
+                    }),
+                    ("mo", {
+                        fn rule_mo(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_mo
+                    }),
+                    ("gl", {
+                        fn rule_gl(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_gl
+                    }),
+                    ("pl", {
+                        fn rule_pl(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_pl
+                    }),
+                    ("mn", {
+                        fn rule_mn(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_mn
+                    }),
+                    ("en", {
+                        fn rule_en(po: &PluralOperands) -> PluralCategory {
+                            if (po.i % 10 == 3 && po.i % 100 != 13) {
+                                PluralCategory::FEW
+                            } else if (po.i % 10 == 1 && po.i % 100 != 11) {
+                                PluralCategory::ONE
+                            } else if (po.i % 10 == 2 && po.i % 100 != 12) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_en
+                    }),
+                    ("prg", {
+                        fn rule_prg(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_prg
+                    }),
+                    ("da", {
+                        fn rule_da(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_da
+                    }),
+                    ("ia", {
+                        fn rule_ia(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ia
+                    }),
+                    ("km", {
+                        fn rule_km(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_km
+                    }),
+                    ("ky", {
+                        fn rule_ky(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ky
+                    }),
+                    ("ps", {
+                        fn rule_ps(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ps
+                    }),
+                    ("mr", {
+                        fn rule_mr(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 4.0) {
+                                PluralCategory::FEW
+                            } else if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0 || po.n == 3.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_mr
+                    }),
+                    ("gd", {
+                        fn rule_gd(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 3.0 || po.n == 13.0) {
+                                PluralCategory::FEW
+                            } else if (po.n == 1.0 || po.n == 11.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0 || po.n == 12.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_gd
+                    }),
+                    ("dsb", {
+                        fn rule_dsb(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_dsb
+                    }),
+                    ("ur", {
+                        fn rule_ur(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ur
+                    }),
+                    ("he", {
+                        fn rule_he(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_he
+                    }),
+                    ("fil", {
+                        fn rule_fil(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_fil
+                    }),
+                    ("ce", {
+                        fn rule_ce(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ce
+                    }),
+                    ("kw", {
+                        fn rule_kw(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 5.0) || (po.i % 100 == 5) {
+                                PluralCategory::MANY
+                            } else if (matches!(po.i, 1..=4) && po.f == 0)
+                                || (matches!(po.i, 1..=4)
+                                    || matches!(po.i, 21..=24)
+                                    || matches!(po.i, 41..=44)
+                                    || matches!(po.i, 61..=64)
+                                    || matches!(po.i, 81..=84))
+                            {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_kw
+                    }),
+                    ("sr", {
+                        fn rule_sr(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sr
+                    }),
+                    ("es", {
+                        fn rule_es(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_es
+                    }),
+                    ("ar", {
+                        fn rule_ar(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ar
+                    }),
+                    ("pa", {
+                        fn rule_pa(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_pa
+                    }),
+                    ("ko", {
+                        fn rule_ko(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ko
+                    }),
                     ("ta", {
                         fn rule_ta(po: &PluralOperands) -> PluralCategory {
                             {
@@ -2507,6 +2908,138 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                             }
                         };
                         rule_ta
+                    }),
+                    ("ro", {
+                        fn rule_ro(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ro
+                    }),
+                    ("yue", {
+                        fn rule_yue(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_yue
+                    }),
+                    ("hy", {
+                        fn rule_hy(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_hy
+                    }),
+                    ("iw", {
+                        fn rule_iw(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_iw
+                    }),
+                    ("is", {
+                        fn rule_is(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_is
+                    }),
+                    ("hr", {
+                        fn rule_hr(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_hr
+                    }),
+                    ("sv", {
+                        fn rule_sv(po: &PluralOperands) -> PluralCategory {
+                            if ((po.i % 10 == 1 || po.i % 10 == 2)
+                                && po.i % 100 != 11
+                                && po.i % 100 != 12)
+                            {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sv
+                    }),
+                    ("lt", {
+                        fn rule_lt(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_lt
+                    }),
+                    ("in", {
+                        fn rule_in(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_in
+                    }),
+                    ("lo", {
+                        fn rule_lo(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_lo
+                    }),
+                    ("an", {
+                        fn rule_an(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_an
+                    }),
+                    ("mk", {
+                        fn rule_mk(po: &PluralOperands) -> PluralCategory {
+                            if ((po.i % 10 == 7 || po.i % 10 == 8)
+                                && po.i % 100 != 17
+                                && po.i % 100 != 18)
+                            {
+                                PluralCategory::MANY
+                            } else if (po.i % 10 == 1 && po.i % 100 != 11) {
+                                PluralCategory::ONE
+                            } else if (po.i % 10 == 2 && po.i % 100 != 12) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_mk
+                    }),
+                    ("hsb", {
+                        fn rule_hsb(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_hsb
+                    }),
+                    ("id", {
+                        fn rule_id(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_id
                     }),
                     ("ga", {
                         fn rule_ga(po: &PluralOperands) -> PluralCategory {
@@ -2518,63 +3051,186 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_ga
                     }),
-                    ("fa", {
-                        fn rule_fa(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_fa
-                    }),
-                    ("mn", {
-                        fn rule_mn(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_mn
-                    }),
-                    ("vi", {
-                        fn rule_vi(po: &PluralOperands) -> PluralCategory {
+                    ("fr", {
+                        fn rule_fr(po: &PluralOperands) -> PluralCategory {
                             if (po.n == 1.0) {
                                 PluralCategory::ONE
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_vi
+                        rule_fr
                     }),
-                    ("my", {
-                        fn rule_my(po: &PluralOperands) -> PluralCategory {
+                    ("hi", {
+                        fn rule_hi(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 4.0) {
+                                PluralCategory::FEW
+                            } else if (po.n == 6.0) {
+                                PluralCategory::MANY
+                            } else if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else if (po.n == 2.0 || po.n == 3.0) {
+                                PluralCategory::TWO
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_hi
+                    }),
+                    ("et", {
+                        fn rule_et(po: &PluralOperands) -> PluralCategory {
                             {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_my
+                        rule_et
                     }),
-                    ("ko", {
-                        fn rule_ko(po: &PluralOperands) -> PluralCategory {
+                    ("sk", {
+                        fn rule_sk(po: &PluralOperands) -> PluralCategory {
                             {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ko
+                        rule_sk
                     }),
-                    ("ps", {
-                        fn rule_ps(po: &PluralOperands) -> PluralCategory {
+                    ("hu", {
+                        fn rule_hu(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0 || po.n == 5.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_hu
+                    }),
+                    ("gsw", {
+                        fn rule_gsw(po: &PluralOperands) -> PluralCategory {
                             {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ps
+                        rule_gsw
                     }),
-                    ("hsb", {
-                        fn rule_hsb(po: &PluralOperands) -> PluralCategory {
+                    ("scn", {
+                        fn rule_scn(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 11.0 || po.n == 8.0 || po.n == 80.0 || po.n == 800.0) {
+                                PluralCategory::MANY
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_scn
+                    }),
+                    ("fi", {
+                        fn rule_fi(po: &PluralOperands) -> PluralCategory {
                             {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_hsb
+                        rule_fi
+                    }),
+                    ("ml", {
+                        fn rule_ml(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ml
+                    }),
+                    ("sl", {
+                        fn rule_sl(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sl
+                    }),
+                    ("th", {
+                        fn rule_th(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_th
+                    }),
+                    ("ka", {
+                        fn rule_ka(po: &PluralOperands) -> PluralCategory {
+                            if (po.i == 0)
+                                || (po.i % 100 == 40
+                                    || po.i % 100 == 60
+                                    || po.i % 100 == 80
+                                    || matches!(po.i % 100, 2..=20))
+                            {
+                                PluralCategory::MANY
+                            } else if (po.i == 1) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ka
+                    }),
+                    ("lv", {
+                        fn rule_lv(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_lv
+                    }),
+                    ("bs", {
+                        fn rule_bs(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_bs
+                    }),
+                    ("ms", {
+                        fn rule_ms(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ms
+                    }),
+                    ("si", {
+                        fn rule_si(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_si
+                    }),
+                    ("bg", {
+                        fn rule_bg(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_bg
+                    }),
+                    ("sq", {
+                        fn rule_sq(po: &PluralOperands) -> PluralCategory {
+                            if (po.i % 10 == 4 && po.i % 100 != 14) {
+                                PluralCategory::MANY
+                            } else if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_sq
+                    }),
+                    ("ru", {
+                        fn rule_ru(po: &PluralOperands) -> PluralCategory {
+                            {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_ru
                     }),
                     ("cy", {
                         fn rule_cy(po: &PluralOperands) -> PluralCategory {
@@ -2594,79 +3250,15 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_cy
                     }),
-                    ("ur", {
-                        fn rule_ur(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ur
-                    }),
-                    ("fy", {
-                        fn rule_fy(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_fy
-                    }),
-                    ("hy", {
-                        fn rule_hy(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
+                    ("tk", {
+                        fn rule_tk(po: &PluralOperands) -> PluralCategory {
+                            if (po.i % 10 == 6 || po.i % 10 == 9) || (po.n == 10.0) {
+                                PluralCategory::FEW
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_hy
-                    }),
-                    ("de", {
-                        fn rule_de(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_de
-                    }),
-                    ("ia", {
-                        fn rule_ia(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ia
-                    }),
-                    ("prg", {
-                        fn rule_prg(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_prg
-                    }),
-                    ("km", {
-                        fn rule_km(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_km
-                    }),
-                    ("pl", {
-                        fn rule_pl(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_pl
-                    }),
-                    ("ml", {
-                        fn rule_ml(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ml
+                        rule_tk
                     }),
                     ("az", {
                         fn rule_az(po: &PluralOperands) -> PluralCategory {
@@ -2704,238 +3296,18 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_az
                     }),
-                    ("te", {
-                        fn rule_te(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_te
-                    }),
-                    ("sk", {
-                        fn rule_sk(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sk
-                    }),
-                    ("root", {
-                        fn rule_root(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_root
-                    }),
-                    ("mk", {
-                        fn rule_mk(po: &PluralOperands) -> PluralCategory {
-                            if ((po.i % 10 == 7 || po.i % 10 == 8)
-                                && po.i % 100 != 17
-                                && po.i % 100 != 18)
+                    ("kk", {
+                        fn rule_kk(po: &PluralOperands) -> PluralCategory {
+                            if (po.i % 10 == 6)
+                                || (po.i % 10 == 9)
+                                || (po.i % 10 == 0 && po.n != 0.0)
                             {
                                 PluralCategory::MANY
-                            } else if (po.i % 10 == 1 && po.i % 100 != 11) {
-                                PluralCategory::ONE
-                            } else if (po.i % 10 == 2 && po.i % 100 != 12) {
-                                PluralCategory::TWO
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_mk
-                    }),
-                    ("sq", {
-                        fn rule_sq(po: &PluralOperands) -> PluralCategory {
-                            if (po.i % 10 == 4 && po.i % 100 != 14) {
-                                PluralCategory::MANY
-                            } else if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sq
-                    }),
-                    ("el", {
-                        fn rule_el(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_el
-                    }),
-                    ("en", {
-                        fn rule_en(po: &PluralOperands) -> PluralCategory {
-                            if (po.i % 10 == 3 && po.i % 100 != 13) {
-                                PluralCategory::FEW
-                            } else if (po.i % 10 == 1 && po.i % 100 != 11) {
-                                PluralCategory::ONE
-                            } else if (po.i % 10 == 2 && po.i % 100 != 12) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_en
-                    }),
-                    ("sh", {
-                        fn rule_sh(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sh
-                    }),
-                    ("lv", {
-                        fn rule_lv(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_lv
-                    }),
-                    ("cs", {
-                        fn rule_cs(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_cs
-                    }),
-                    ("fil", {
-                        fn rule_fil(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_fil
-                    }),
-                    ("yue", {
-                        fn rule_yue(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_yue
-                    }),
-                    ("et", {
-                        fn rule_et(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_et
-                    }),
-                    ("it", {
-                        fn rule_it(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 11.0 || po.n == 8.0 || po.n == 80.0 || po.n == 800.0) {
-                                PluralCategory::MANY
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_it
-                    }),
-                    ("or", {
-                        fn rule_or(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 4.0) {
-                                PluralCategory::FEW
-                            } else if (po.n == 6.0) {
-                                PluralCategory::MANY
-                            } else if (po.n == 1.0
-                                || po.n == 5.0
-                                || matches!(po.i, 7..=9) && po.f == 0)
-                            {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0 || po.n == 3.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_or
-                    }),
-                    ("be", {
-                        fn rule_be(po: &PluralOperands) -> PluralCategory {
-                            if ((po.i % 10 == 2 || po.i % 10 == 3)
-                                && po.i % 100 != 12
-                                && po.i % 100 != 13)
-                            {
-                                PluralCategory::FEW
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_be
-                    }),
-                    ("mr", {
-                        fn rule_mr(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 4.0) {
-                                PluralCategory::FEW
-                            } else if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0 || po.n == 3.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_mr
-                    }),
-                    ("lt", {
-                        fn rule_lt(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_lt
-                    }),
-                    ("af", {
-                        fn rule_af(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_af
-                    }),
-                    ("scn", {
-                        fn rule_scn(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 11.0 || po.n == 8.0 || po.n == 80.0 || po.n == 800.0) {
-                                PluralCategory::MANY
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_scn
-                    }),
-                    ("eu", {
-                        fn rule_eu(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_eu
-                    }),
-                    ("ru", {
-                        fn rule_ru(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ru
-                    }),
-                    ("ne", {
-                        fn rule_ne(po: &PluralOperands) -> PluralCategory {
-                            if (matches!(po.i, 1..=4) && po.f == 0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ne
+                        rule_kk
                     }),
                     ("as", {
                         fn rule_as(po: &PluralOperands) -> PluralCategory {
@@ -2959,75 +3331,6 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_as
                     }),
-                    ("sv", {
-                        fn rule_sv(po: &PluralOperands) -> PluralCategory {
-                            if ((po.i % 10 == 1 || po.i % 10 == 2)
-                                && po.i % 100 != 11
-                                && po.i % 100 != 12)
-                            {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sv
-                    }),
-                    ("zh", {
-                        fn rule_zh(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_zh
-                    }),
-                    ("bn", {
-                        fn rule_bn(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 4.0) {
-                                PluralCategory::FEW
-                            } else if (po.n == 6.0) {
-                                PluralCategory::MANY
-                            } else if (po.n == 1.0
-                                || po.n == 5.0
-                                || po.n == 7.0
-                                || po.n == 8.0
-                                || po.n == 9.0
-                                || po.n == 10.0)
-                            {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0 || po.n == 3.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_bn
-                    }),
-                    ("am", {
-                        fn rule_am(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_am
-                    }),
-                    ("pa", {
-                        fn rule_pa(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_pa
-                    }),
-                    ("tl", {
-                        fn rule_tl(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_tl
-                    }),
                     ("tr", {
                         fn rule_tr(po: &PluralOperands) -> PluralCategory {
                             {
@@ -3044,130 +3347,21 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_ja
                     }),
-                    ("es", {
-                        fn rule_es(po: &PluralOperands) -> PluralCategory {
+                    ("nl", {
+                        fn rule_nl(po: &PluralOperands) -> PluralCategory {
                             {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_es
+                        rule_nl
                     }),
-                    ("pt", {
-                        fn rule_pt(po: &PluralOperands) -> PluralCategory {
+                    ("fa", {
+                        fn rule_fa(po: &PluralOperands) -> PluralCategory {
                             {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_pt
-                    }),
-                    ("sl", {
-                        fn rule_sl(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sl
-                    }),
-                    ("in", {
-                        fn rule_in(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_in
-                    }),
-                    ("uz", {
-                        fn rule_uz(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_uz
-                    }),
-                    ("kk", {
-                        fn rule_kk(po: &PluralOperands) -> PluralCategory {
-                            if (po.i % 10 == 6)
-                                || (po.i % 10 == 9)
-                                || (po.i % 10 == 0 && po.n != 0.0)
-                            {
-                                PluralCategory::MANY
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_kk
-                    }),
-                    ("sd", {
-                        fn rule_sd(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sd
-                    }),
-                    ("nb", {
-                        fn rule_nb(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_nb
-                    }),
-                    ("he", {
-                        fn rule_he(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_he
-                    }),
-                    ("iw", {
-                        fn rule_iw(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_iw
-                    }),
-                    ("dsb", {
-                        fn rule_dsb(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_dsb
-                    }),
-                    ("ce", {
-                        fn rule_ce(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ce
-                    }),
-                    ("hu", {
-                        fn rule_hu(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0 || po.n == 5.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_hu
-                    }),
-                    ("gd", {
-                        fn rule_gd(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 3.0 || po.n == 13.0) {
-                                PluralCategory::FEW
-                            } else if (po.n == 1.0 || po.n == 11.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0 || po.n == 12.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_gd
+                        rule_fa
                     }),
                     ("kn", {
                         fn rule_kn(po: &PluralOperands) -> PluralCategory {
@@ -3177,238 +3371,44 @@ pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()
                         };
                         rule_kn
                     }),
-                    ("ky", {
-                        fn rule_ky(po: &PluralOperands) -> PluralCategory {
+                    ("vi", {
+                        fn rule_vi(po: &PluralOperands) -> PluralCategory {
+                            if (po.n == 1.0) {
+                                PluralCategory::ONE
+                            } else {
+                                PluralCategory::OTHER
+                            }
+                        };
+                        rule_vi
+                    }),
+                    ("am", {
+                        fn rule_am(po: &PluralOperands) -> PluralCategory {
                             {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_ky
+                        rule_am
                     }),
-                    ("ro", {
-                        fn rule_ro(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ro
-                    }),
-                    ("mo", {
-                        fn rule_mo(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_mo
-                    }),
-                    ("lo", {
-                        fn rule_lo(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_lo
-                    }),
-                    ("sc", {
-                        fn rule_sc(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 11.0 || po.n == 8.0 || po.n == 80.0 || po.n == 800.0) {
-                                PluralCategory::MANY
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sc
-                    }),
-                    ("ar", {
-                        fn rule_ar(po: &PluralOperands) -> PluralCategory {
+                    ("be", {
+                        fn rule_be(po: &PluralOperands) -> PluralCategory {
+                            if ((po.i % 10 == 2 || po.i % 10 == 3)
+                                && po.i % 100 != 12
+                                && po.i % 100 != 13)
                             {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ar
-                    }),
-                    ("uk", {
-                        fn rule_uk(po: &PluralOperands) -> PluralCategory {
-                            if (po.i % 10 == 3 && po.i % 100 != 13) {
                                 PluralCategory::FEW
                             } else {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_uk
+                        rule_be
                     }),
-                    ("is", {
-                        fn rule_is(po: &PluralOperands) -> PluralCategory {
+                    ("af", {
+                        fn rule_af(po: &PluralOperands) -> PluralCategory {
                             {
                                 PluralCategory::OTHER
                             }
                         };
-                        rule_is
-                    }),
-                    ("gl", {
-                        fn rule_gl(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_gl
-                    }),
-                    ("tk", {
-                        fn rule_tk(po: &PluralOperands) -> PluralCategory {
-                            if (po.i % 10 == 6 || po.i % 10 == 9) || (po.n == 10.0) {
-                                PluralCategory::FEW
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_tk
-                    }),
-                    ("sr", {
-                        fn rule_sr(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_sr
-                    }),
-                    ("fr", {
-                        fn rule_fr(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_fr
-                    }),
-                    ("th", {
-                        fn rule_th(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_th
-                    }),
-                    ("si", {
-                        fn rule_si(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_si
-                    }),
-                    ("zu", {
-                        fn rule_zu(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_zu
-                    }),
-                    ("id", {
-                        fn rule_id(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_id
-                    }),
-                    ("hi", {
-                        fn rule_hi(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 4.0) {
-                                PluralCategory::FEW
-                            } else if (po.n == 6.0) {
-                                PluralCategory::MANY
-                            } else if (po.n == 1.0) {
-                                PluralCategory::ONE
-                            } else if (po.n == 2.0 || po.n == 3.0) {
-                                PluralCategory::TWO
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_hi
-                    }),
-                    ("ka", {
-                        fn rule_ka(po: &PluralOperands) -> PluralCategory {
-                            if (po.i == 0)
-                                || (po.i % 100 == 40
-                                    || po.i % 100 == 60
-                                    || po.i % 100 == 80
-                                    || matches!(po.i % 100, 2..=20))
-                            {
-                                PluralCategory::MANY
-                            } else if (po.i == 1) {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_ka
-                    }),
-                    ("gsw", {
-                        fn rule_gsw(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_gsw
-                    }),
-                    ("bs", {
-                        fn rule_bs(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_bs
-                    }),
-                    ("kw", {
-                        fn rule_kw(po: &PluralOperands) -> PluralCategory {
-                            if (po.n == 5.0) || (po.i % 100 == 5) {
-                                PluralCategory::MANY
-                            } else if (matches!(po.i, 1..=4) && po.f == 0)
-                                || (matches!(po.i, 1..=4)
-                                    || matches!(po.i, 21..=24)
-                                    || matches!(po.i, 41..=44)
-                                    || matches!(po.i, 61..=64)
-                                    || matches!(po.i, 81..=84))
-                            {
-                                PluralCategory::ONE
-                            } else {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_kw
-                    }),
-                    ("da", {
-                        fn rule_da(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_da
-                    }),
-                    ("an", {
-                        fn rule_an(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_an
-                    }),
-                    ("nl", {
-                        fn rule_nl(po: &PluralOperands) -> PluralCategory {
-                            {
-                                PluralCategory::OTHER
-                            }
-                        };
-                        rule_nl
+                        rule_af
                     }),
                 ]),
             };
