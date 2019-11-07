@@ -4,6 +4,7 @@ use phf_codegen::Map;
 use proc_macro2::{Ident, Literal, Span, TokenStream};
 use quote::quote;
 use std::collections::BTreeMap;
+use std::fmt::Write;
 use std::str;
 use std::str::FromStr;
 
@@ -58,15 +59,17 @@ fn gen_get_locales(locales: BTreeMap<String, Vec<String>>) -> TokenStream {
 
 // Function wraps all match statements for plural rules in a match for ordinal and cardinal rules
 fn create_gen_pr_type_fn(pr_type: &str, streams: Vec<(String, TokenStream)>) -> TokenStream {
-    let mut map = Map::new();
-    for (lang, func) in streams {
-        map.entry(lang, &func.to_string());
+    let mut map_string = String::new();
+
+    let mut map: Map<&str> = Map::new();
+
+    for (lang, func) in &streams {
+        map.entry(lang.as_str(), &func.to_string());
     }
-    let mut map_bytes = Vec::<u8>::new();
-    map.build(&mut map_bytes)
-        .expect("unexpected failure building phf map");
-    let map = str::from_utf8(&map_bytes).expect("phf-codegen constructed non-utf8 code");
-    let map = TokenStream::from_str(map).expect("phf-codegen returned invalid Rust!");
+
+    write!(&mut map_string, "{}", map.build()).expect("phf-codegen built a plural rule");
+
+    let new_map = TokenStream::from_str(&map_string).expect("phf-codegen returned invalid Rust!");
 
     let match_name = match pr_type {
         "cardinal" => quote! { PluralRuleType::CARDINAL },
@@ -75,7 +78,7 @@ fn create_gen_pr_type_fn(pr_type: &str, streams: Vec<(String, TokenStream)>) -> 
     };
     quote! {
         #match_name => {
-            static LANGUAGES: phf::Map<&'static str, PluralRule> = #map;
+            static LANGUAGES: phf::Map<&'static str, PluralRule> = #new_map;
             LANGUAGES.get(lang_code).cloned().ok_or(())
         }
     }
