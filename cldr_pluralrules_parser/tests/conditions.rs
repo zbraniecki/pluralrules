@@ -2,6 +2,45 @@ use cldr_pluralrules_parser::ast::*;
 use cldr_pluralrules_parser::*;
 
 #[test]
+fn simple_empty() {
+    let test = "";
+
+    assert_eq!(
+        Condition(vec![]),
+        parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
+    );
+
+    let test = " ";
+
+    assert_eq!(
+        Condition(vec![]),
+        parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
+    );
+
+    let test = "@integer 0";
+
+    assert_eq!(
+        Condition(vec![]),
+        parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
+    );
+
+    let test = " @integer 0";
+
+    assert_eq!(
+        Condition(vec![]),
+        parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
+    );
+}
+
+#[test]
 fn simple_expression() {
     let test = "i = 5";
 

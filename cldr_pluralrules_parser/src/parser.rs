@@ -173,6 +173,14 @@ pub fn parse_rule(i: &str) -> IResult<&str, Rule> {
 }
 
 pub fn parse_condition(i: &str) -> IResult<&str, Condition> {
+    // We need to handle empty input and/or input that is empty until sample.
+    if i.trim().is_empty() {
+        return IResult::Ok(("", Condition(vec![])));
+    }
+
+    if i.trim().starts_with("@") {
+        return IResult::Ok(("", Condition(vec![])));
+    }
     map(
         separated_nonempty_list(tuple((space1, tag("or"), space1)), and_condition),
         Condition,

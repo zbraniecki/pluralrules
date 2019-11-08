@@ -87,7 +87,8 @@ fn gen_type_rs(rules: BTreeMap<String, BTreeMap<String, String>>) -> (Vec<TokenS
             let cat_name = rule_name.split('-').collect::<Vec<_>>()[2];
 
             // representation is the
-            let representation = cldr_pluralrules_parser::parse_plural_rule(&rule_line);
+            let representation = cldr_pluralrules_parser::parse_plural_condition(rule_line)
+                .expect("Parsing of a condition succeeded");
 
             let cat = if cat_name == "zero" {
                 PluralCategory::ZERO

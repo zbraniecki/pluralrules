@@ -13,11 +13,6 @@ fn convert_literal(num: usize) -> Literal {
     Literal::u64_unsuffixed(num as u64)
 }
 
-/// Convert a string slice into a Ident
-fn convert_ident(id: &str) -> Ident {
-    Ident::new(id, Span::call_site())
-}
-
 /// Convert a usize pair into a tuple of literals
 fn convert_range(low: usize, up: usize) -> (Literal, Literal) {
     let u = convert_literal(up);
@@ -60,7 +55,15 @@ fn create_relation(rel: Relation) -> TokenStream {
     // All relations that need to be represented in the rust code are folded here. They are unfolded into one token steam later.
     let mut relations = Vec::<TokenStream>::new();
 
-    let l = convert_ident(&left.operand.0.to_string());
+    let l = match left.operand {
+        Operand::N => "n",
+        Operand::I => "i",
+        Operand::V => "v",
+        Operand::T => "t",
+        Operand::W => "w",
+        Operand::F => "f",
+    };
+    let l = Ident::new(l, Span::call_site());
     let o = get_operator_symbol(&operator);
     let r1 = convert_rangl(right);
 
@@ -85,7 +88,7 @@ fn create_relation(rel: Relation) -> TokenStream {
         let rback = &(r1.1)[0].1;
 
         // Variants handled here
-        let (rfront, rback, whole_symbol) = if left.operand.0 == 'n' {
+        let (rfront, rback, whole_symbol) = if left.operand == Operand::N {
             if !mod_check {
                 (quote!(#rfront.0), quote!(#rback.0), quote!(po.#l))
             } else {
@@ -110,7 +113,7 @@ fn create_relation(rel: Relation) -> TokenStream {
         // Recurisvely fold all values
         for r in r1.0 {
             // Variants handled here
-            let (symbol, rval) = if left.operand.0 == 'n' {
+            let (symbol, rval) = if left.operand == Operand::N {
                 if !mod_check {
                     (quote!(po.#l), quote!(#r.0))
                 } else {
@@ -136,7 +139,7 @@ fn create_relation(rel: Relation) -> TokenStream {
             let rback = r.1;
 
             // Variants handled here
-            let (symbol, perim) = if left.operand.0 == 'n' {
+            let (symbol, perim) = if left.operand == Operand::N {
                 if !mod_check {
                     (quote!(po.i), quote! { && po.f == 0})
                 } else {
