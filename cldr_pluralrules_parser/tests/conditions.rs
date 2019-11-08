@@ -15,6 +15,8 @@ fn simple_expression() {
             range_list: RangeList(vec![RangeListItem::Value(Value(5))]),
         }])]),
         parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
     );
 }
 
@@ -36,6 +38,8 @@ fn multi_value() {
             ]),
         }])]),
         parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
     );
 }
 
@@ -62,6 +66,8 @@ fn multi_range() {
             ]),
         }])]),
         parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
     );
 }
 
@@ -89,6 +95,8 @@ fn and_condition() {
             },
         ])]),
         parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
     );
 }
 
@@ -116,6 +124,8 @@ fn or_condition() {
             }]),
         ]),
         parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
     );
 }
 
@@ -136,6 +146,8 @@ fn ars_many_rule() {
             })]),
         }])]),
         parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
     );
 }
 
@@ -162,6 +174,8 @@ fn be_one_rule() {
             },
         ])]),
         parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
     );
 }
 
@@ -194,6 +208,8 @@ fn be_few_rule() {
             },
         ])]),
         parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
     );
 }
 
@@ -234,5 +250,7 @@ fn be_many_rule() {
             }]),
         ]),
         parse_plural_rule(test)
+            .expect("Parsing succeeded")
+            .condition
     );
 }

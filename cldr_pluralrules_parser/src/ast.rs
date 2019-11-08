@@ -1,3 +1,28 @@
+pub struct Rule {
+    pub condition: Condition,
+    pub samples: Option<Samples>,
+}
+
+pub struct Samples {
+    pub integer: Option<SampleList>,
+    pub decimal: Option<SampleList>,
+}
+
+pub struct SampleList {
+    pub sample_ranges: Vec<SampleRange>,
+    pub ellipsis: bool,
+}
+
+pub struct SampleRange {
+    pub lower_val: DecimalValue,
+    pub upper_val: Option<DecimalValue>,
+}
+
+pub struct DecimalValue {
+    pub integer: Value,
+    pub decimal: Option<Value>,
+}
+
 /// A complete (and the only complete) AST representation of a plural rule. Comprises a vector of AndConditions.
 ///
 /// # Examples
@@ -48,7 +73,12 @@
 ///     }]),
 /// ]);
 ///
-/// assert_eq!(condition, parse_plural_rule("i is 5 or v within 2"))
+/// assert_eq!(
+///     condition,
+///     parse_plural_rule("i is 5 or v within 2")
+///          .expect("Parsing succeeded")
+///          .condition
+/// )
 /// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct Condition(pub Vec<AndCondition>);

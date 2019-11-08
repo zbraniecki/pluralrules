@@ -1,248 +1,172 @@
 use super::ast::*;
-use nom::{digit1, types::CompleteStr};
-use std::str::FromStr;
+use nom::{
+    branch::alt,
+    //error::context,
+    bytes::complete::tag,
+    character::complete::{digit1, one_of, space0, space1},
+    combinator::{map, map_res, opt},
+    multi::{separated_list, separated_nonempty_list},
+    sequence::{preceded, separated_pair, tuple},
+    IResult,
+};
 
-named!(value<CompleteStr, Value>,
-    ws!(map!(recognize!(many1!(digit1)), |recast| Value(usize::from_str(&recast.to_string()).unwrap() ) ))
-);
+fn value(i: &str) -> IResult<&str, Value> {
+    map_res(digit1, |s: &str| s.parse::<usize>().map(Value))(i)
+}
 
-named!(range<CompleteStr,Range>,
-    ws!(do_parse!(
-        o : value >>
-        map!(tag!(".."), |recast| recast.to_string() ) >>
-        n : value >>
-        (Range {
-            lower_val: o,
-            upper_val : n
-        })
-    ))
-);
+fn range(i: &str) -> IResult<&str, Range> {
+    map(
+        separated_pair(value, tag(".."), value),
+        |(lower_val, upper_val)| Range {
+            lower_val,
+            upper_val,
+        },
+    )(i)
+}
 
-named!(range_list_item<CompleteStr,RangeListItem>,
-    ws!(do_parse!(
-        r: alt!(
-            range   => { |r| RangeListItem::Range(r) } |
-            value   => { |v| RangeListItem::Value(v) }
-        ) >>
-        opt!(tag!(",")) >>
-        (r)
-    ))
+fn range_list_item(i: &str) -> IResult<&str, RangeListItem> {
+    alt((
+        map(range, RangeListItem::Range),
+        map(value, RangeListItem::Value),
+    ))(i)
+}
 
-);
+fn range_list(i: &str) -> IResult<&str, RangeList> {
+    map(
+        separated_list(tuple((space0, tag(","), space0)), range_list_item),
+        RangeList,
+    )(i)
+}
 
-named!(range_list<CompleteStr, RangeList >,
-   ws!(map!(
-        fold_many1!( range_list_item, Vec::new(), |mut acc: Vec<_>, item| {
-        acc.push(item);
-        acc
-        }), RangeList
-    ))
-);
+fn operand(i: &str) -> IResult<&str, Operand> {
+    map(one_of("nivwft"), Operand)(i)
+}
 
-named!(within_operator<CompleteStr,Operator>,
-    ws!(do_parse!(
-        tag!("within") >>
-        (Operator::Within)
-    ))
-);
+fn mod_expression(i: &str) -> IResult<&str, Option<Modulo>> {
+    opt(map(
+        preceded(tuple((space0, alt((tag("mod"), tag("%"))), space1)), value),
+        |v| Modulo(v),
+    ))(i)
+}
 
-named!(not_within_operator<CompleteStr,Operator>,
-    ws!(do_parse!(
-        tag!("not") >>
-        tag!("within") >>
-        (Operator::NotWithin)
-    ))
-);
+fn expression(i: &str) -> IResult<&str, Expression> {
+    map(tuple((operand, mod_expression)), |(operand, modulus)| {
+        Expression { operand, modulus }
+    })(i)
+}
 
-named!(check_within_operator<CompleteStr,Operator>,
-    ws!(alt!(within_operator | not_within_operator))
-);
+fn relation_operator(i: &str) -> IResult<&str, Operator> {
+    alt((
+        map(tag("="), |_| Operator::EQ),
+        map(tag("!="), |_| Operator::NotEQ),
+        map(tuple((tag("is"), space1, opt(tag("not")))), |(_, _, n)| {
+            if n.is_some() {
+                Operator::IsNot
+            } else {
+                Operator::Is
+            }
+        }),
+        map(tag("in"), |_| Operator::In),
+        map(
+            tuple((
+                tag("not"),
+                space1,
+                alt((
+                    map(tag("in"), |_| Operator::NotIn),
+                    map(tag("within"), |_| Operator::NotWithin),
+                )),
+            )),
+            |(_, _, v)| v,
+        ),
+        map(tag("within"), |_| Operator::Within),
+    ))(i)
+}
 
-named!(in_operator<CompleteStr,Operator>,
-    ws!(do_parse!(
-        tag!("in") >>
-        (Operator::In)
-    ))
-);
+fn relation(i: &str) -> IResult<&str, Relation> {
+    map(
+        tuple((expression, space0, relation_operator, space0, range_list)),
+        |(expression, _, operator, _, range_list)| Relation {
+            expression,
+            operator,
+            range_list,
+        },
+    )(i)
+}
 
-named!(not_in_operator<CompleteStr,Operator>,
-    ws!(do_parse!(
-        do_parse!(
-                a: tag!("not") >>
-                tag!("in") >>
-                (a)
-        ) >>
-        (Operator::NotIn)
-    ))
-);
+fn and_condition(i: &str) -> IResult<&str, AndCondition> {
+    map(
+        separated_nonempty_list(tuple((space1, tag("and"), space1)), relation),
+        AndCondition,
+    )(i)
+}
 
-named!(check_in_operator<CompleteStr,Operator>,
-    ws!(alt!(in_operator | not_in_operator))
-);
+fn decimal_value(i: &str) -> IResult<&str, DecimalValue> {
+    map(
+        tuple((value, opt(preceded(tag("."), value)))),
+        |(integer, decimal)| DecimalValue { integer, decimal },
+    )(i)
+}
 
-named!(is_operator<CompleteStr,Operator>,
-    ws!(do_parse!(
-        tag!("is") >>
-        (Operator::Is)
-    ))
-);
+fn sample_range(i: &str) -> IResult<&str, SampleRange> {
+    map(
+        tuple((
+            decimal_value,
+            opt(preceded(tuple((space0, tag("~"), space0)), decimal_value)),
+        )),
+        |(lower_val, upper_val)| SampleRange {
+            lower_val,
+            upper_val,
+        },
+    )(i)
+}
 
-named!(not_is_operator<CompleteStr,Operator>,
-    ws!(do_parse!(
-        tag!("is") >>
-        tag!("not") >>
-        (Operator::IsNot)
-    ))
-);
+fn sample_list(i: &str) -> IResult<&str, SampleList> {
+    map(
+        tuple((
+            separated_nonempty_list(tuple((space0, tag(","), space0)), sample_range),
+            opt(preceded(
+                tuple((space0, tag(","), space0)),
+                alt((tag("..."), tag("…"))),
+            )),
+        )),
+        |(l, ellipsis)| SampleList {
+            sample_ranges: l,
+            ellipsis: ellipsis.is_some(),
+        },
+    )(i)
+}
 
-named!(check_is_operator<CompleteStr,Operator>,
-    ws!(alt!(not_is_operator | is_operator))
-);
+fn samples(i: &str) -> IResult<&str, Option<Samples>> {
+    map(
+        tuple((
+            opt(preceded(
+                tuple((space1, tag("@integer"), space1)),
+                sample_list,
+            )),
+            opt(preceded(
+                tuple((space1, tag("@decimal"), space1)),
+                sample_list,
+            )),
+        )),
+        |(integer, decimal)| {
+            if integer.is_some() || decimal.is_some() {
+                Some(Samples { integer, decimal })
+            } else {
+                None
+            }
+        },
+    )(i)
+}
 
-named!(eq_operator<CompleteStr,Operator>,
-    ws!(do_parse!(
-        tag!("=")>>
-        (Operator::EQ)
-    ))
-);
+pub fn parse_rule(i: &str) -> IResult<&str, Rule> {
+    map(tuple((parse_condition, samples)), |(condition, samples)| {
+        Rule { condition, samples }
+    })(i)
+}
 
-named!(not_eq_operator<CompleteStr,Operator>,
-    ws!(do_parse!(
-        tag!("!=") >>
-        (Operator::NotEQ)
-    ))
-);
-
-named!(check_eq_operator<CompleteStr,Operator>,
-    ws!(alt!(eq_operator | not_eq_operator))
-);
-
-named!(operand<CompleteStr,Operand>,
-    ws!(map!(
-        alt_complete!(
-            tag!("n") |
-            tag!("i") |
-            tag!("v") |
-            tag!("w") |
-            tag!("f") |
-            tag!("t") ),
-        |recast| Operand (char::from_str(&recast).unwrap()
-        )
-    ))
-);
-
-named!(mod_expression<CompleteStr,Modulo>,
-    ws!(do_parse!(
-        alt_complete!( tag!("mod") | tag!("%") ) >>
-        v : value >>
-        (Modulo (v) )
-    ))
-);
-
-named!(expression<CompleteStr,Expression>,
-    ws!(do_parse!(
-        rand: operand >>
-        mod_expr: opt!(mod_expression) >>
-        (Expression {
-            operand: rand,
-            modulus: mod_expr
-        })
-    ))
-);
-
-named!(within_relation<CompleteStr, Relation >,
-    ws!(do_parse!(
-        first_o : expression >>
-        math_o : check_within_operator >>
-        nums : range_list >>
-        (Relation{
-            expression: first_o,
-            operator: math_o,
-            range_list: nums
-        })
-    ))
-);
-
-named!(in_relation<CompleteStr, Relation >,
-    ws!(do_parse!(
-        first_o : expression >>
-        math_o : check_in_operator >>
-        nums : range_list >>
-        (Relation{
-            expression: first_o,
-            operator: math_o,
-            range_list: nums
-        })
-    ))
-);
-
-named!(is_relation<CompleteStr,Relation >,
-    ws!(do_parse!(
-        first_o : expression >>
-        math_o : check_is_operator >>
-        nums : value >>
-        ( Relation {
-            expression: first_o,
-            operator: math_o,
-            range_list: RangeList(vec![RangeListItem::Value(nums)])
-        })
-    ))
-);
-
-named!(eq_relation<CompleteStr, Relation >,
-    ws!(do_parse!(
-        first_o : expression >>
-        math_o : check_eq_operator >>
-        nums : range_list >>
-        (Relation{
-            expression: first_o,
-            operator: math_o,
-            range_list: nums
-        })
-    ))
-);
-
-named!(relation<CompleteStr, Relation >,
-    ws!(alt_complete!(within_relation | in_relation | is_relation | eq_relation))
-);
-
-named!(and_relation<CompleteStr,Relation >,
-    ws!(do_parse!(
-        opt!(tag!("and")) >>
-        r: relation >>
-        (r)
-    ))
-);
-
-named!(and_condition<CompleteStr,AndCondition >,
-    ws!(do_parse!(
-        a : fold_many0!( and_relation, Vec::new(), |mut acc: Vec<_>, item| {
-             acc.push(item);
-             acc
-         }) >>
-        (AndCondition(a) )
-    ))
-);
-
-named!(interm_condition<CompleteStr, AndCondition >,
-    ws!(do_parse!(
-        opt!(tag!("or")) >>
-        s: and_condition >>
-        (s)
-    ))
-);
-
-named!(condition<CompleteStr, Condition >,
-    ws!(do_parse!(
-        a : fold_many0!( interm_condition, Vec::new(), |mut acc: Vec<_>, item| {
-             acc.push(item);
-             acc
-         }) >>
-        (Condition(a))
-    ))
-);
-
-/// A nom macro that accepts a CompleteStr and returns a Condition AST for a plural rule.
-named!(pub parse_rule<CompleteStr,Condition >,
-    ws!(call!(condition))
-);
+pub fn parse_condition(i: &str) -> IResult<&str, Condition> {
+    map(
+        separated_nonempty_list(tuple((space1, tag("or"), space1)), and_condition),
+        Condition,
+    )(i)
+}

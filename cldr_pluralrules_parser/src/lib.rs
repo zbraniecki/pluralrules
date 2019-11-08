@@ -29,20 +29,18 @@
 //!     }]),
 //! ]);
 //!
-//! assert_eq!(condition, parse_plural_rule("i is 5 or v within 2"))
+//! assert_eq!(
+//!     condition,
+//!     parse_plural_rule("i is 5 or v within 2")
+//!         .expect("Parsing succeeded")
+//!         .condition
+//! )
 //! ```
-
-#[macro_use]
-extern crate nom;
 
 /// A public AST module for plural rule representations.
 pub mod ast;
 /// A private parsing module for plural rules.
 mod parser;
-
-use crate::ast::*;
-use crate::parser::*;
-use nom::types::CompleteStr;
 
 /// Given a string reference of a plural rule, will return the AST representation of that rule.
 ///
@@ -71,8 +69,25 @@ use nom::types::CompleteStr;
 ///     }]),
 /// ]);
 ///
-/// assert_eq!(condition, parse_plural_rule("i is 5 or v within 2"))
+/// assert_eq!(
+///     condition,
+///     parse_plural_rule("i is 5 or v within 2")
+///         .expect("Parsing succeeded")
+///         .condition
+/// )
 /// ```
-pub fn parse_plural_rule(source: &str) -> Condition {
-    parse_rule(CompleteStr(source)).unwrap().1
+pub fn parse_plural_rule<S: AsRef<str>>(source: S) -> Result<ast::Rule, String> {
+    match parser::parse_rule(source.as_ref()) {
+        Ok(("", rule)) => Ok(rule),
+        //Ok((_, rule)) => Ok(rule),
+        Ok((left, _)) => Err(format!("Left string: {}", left)),
+        _ => Err("Parser failed".to_string()),
+    }
+}
+
+pub fn parse_plural_condition<S: AsRef<str>>(source: S) -> Result<ast::Condition, String> {
+    match parser::parse_condition(source.as_ref()) {
+        Ok((_, rule)) => Ok(rule),
+        _ => Err("Parser failed".to_string()),
+    }
 }
