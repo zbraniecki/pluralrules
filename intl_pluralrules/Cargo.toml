@@ -20,3 +20,11 @@ maintenance = { status = "actively-developed" }
 matches = "0.1.8"
 phf = "0.8"
 unic-langid = "0.7"
+
+[dev-dependencies]
+criterion = "0.3"
+unic-langid = { version = "0.7", features = ["macros"] }
+
+[[bench]]
+name = "pluralrules"
+harness = false
