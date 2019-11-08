@@ -39,7 +39,15 @@ fn range_list(i: &str) -> IResult<&str, RangeList> {
 }
 
 fn operand(i: &str) -> IResult<&str, Operand> {
-    map(one_of("nivwft"), Operand)(i)
+    map(one_of("nivwft"), |c| match c {
+        'n' => Operand::N,
+        'i' => Operand::I,
+        'v' => Operand::V,
+        'w' => Operand::W,
+        'f' => Operand::F,
+        't' => Operand::T,
+        _ => unreachable!(),
+    })(i)
 }
 
 fn mod_expression(i: &str) -> IResult<&str, Option<Modulo>> {

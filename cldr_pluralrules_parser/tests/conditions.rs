@@ -8,7 +8,7 @@ fn simple_expression() {
     assert_eq!(
         Condition(vec![AndCondition(vec![Relation {
             expression: Expression {
-                operand: Operand('i'),
+                operand: Operand::I,
                 modulus: None,
             },
             operator: Operator::EQ,
@@ -27,7 +27,7 @@ fn multi_value() {
     assert_eq!(
         Condition(vec![AndCondition(vec![Relation {
             expression: Expression {
-                operand: Operand('i'),
+                operand: Operand::I,
                 modulus: None,
             },
             operator: Operator::EQ,
@@ -50,7 +50,7 @@ fn multi_range() {
     assert_eq!(
         Condition(vec![AndCondition(vec![Relation {
             expression: Expression {
-                operand: Operand('i'),
+                operand: Operand::I,
                 modulus: None,
             },
             operator: Operator::In,
@@ -79,7 +79,7 @@ fn and_condition() {
         Condition(vec![AndCondition(vec![
             Relation {
                 expression: Expression {
-                    operand: Operand('i'),
+                    operand: Operand::I,
                     modulus: None,
                 },
                 operator: Operator::In,
@@ -87,7 +87,7 @@ fn and_condition() {
             },
             Relation {
                 expression: Expression {
-                    operand: Operand('v'),
+                    operand: Operand::V,
                     modulus: None,
                 },
                 operator: Operator::NotIn,
@@ -108,7 +108,7 @@ fn or_condition() {
         Condition(vec![
             AndCondition(vec![Relation {
                 expression: Expression {
-                    operand: Operand('i'),
+                    operand: Operand::I,
                     modulus: None,
                 },
                 operator: Operator::Is,
@@ -116,7 +116,7 @@ fn or_condition() {
             }]),
             AndCondition(vec![Relation {
                 expression: Expression {
-                    operand: Operand('v'),
+                    operand: Operand::V,
                     modulus: None,
                 },
                 operator: Operator::Within,
@@ -136,7 +136,7 @@ fn ars_many_rule() {
     assert_eq!(
         Condition(vec![AndCondition(vec![Relation {
             expression: Expression {
-                operand: Operand('n'),
+                operand: Operand::N,
                 modulus: Some(Modulo(Value(100))),
             },
             operator: Operator::EQ,
@@ -158,7 +158,7 @@ fn be_one_rule() {
         Condition(vec![AndCondition(vec![
             Relation {
                 expression: Expression {
-                    operand: Operand('n'),
+                    operand: Operand::N,
                     modulus: Some(Modulo(Value(10))),
                 },
                 operator: Operator::EQ,
@@ -166,7 +166,7 @@ fn be_one_rule() {
             },
             Relation {
                 expression: Expression {
-                    operand: Operand('n'),
+                    operand: Operand::N,
                     modulus: Some(Modulo(Value(100))),
                 },
                 operator: Operator::NotEQ,
@@ -186,7 +186,7 @@ fn be_few_rule() {
         Condition(vec![AndCondition(vec![
             Relation {
                 expression: Expression {
-                    operand: Operand('n'),
+                    operand: Operand::N,
                     modulus: Some(Modulo(Value(10))),
                 },
                 operator: Operator::EQ,
@@ -197,7 +197,7 @@ fn be_few_rule() {
             },
             Relation {
                 expression: Expression {
-                    operand: Operand('n'),
+                    operand: Operand::N,
                     modulus: Some(Modulo(Value(100))),
                 },
                 operator: Operator::NotEQ,
@@ -220,7 +220,7 @@ fn be_many_rule() {
         Condition(vec![
             AndCondition(vec![Relation {
                 expression: Expression {
-                    operand: Operand('n'),
+                    operand: Operand::N,
                     modulus: Some(Modulo(Value(10))),
                 },
                 operator: Operator::EQ,
@@ -228,7 +228,7 @@ fn be_many_rule() {
             }]),
             AndCondition(vec![Relation {
                 expression: Expression {
-                    operand: Operand('n'),
+                    operand: Operand::N,
                     modulus: Some(Modulo(Value(10))),
                 },
                 operator: Operator::EQ,
@@ -239,7 +239,7 @@ fn be_many_rule() {
             }]),
             AndCondition(vec![Relation {
                 expression: Expression {
-                    operand: Operand('n'),
+                    operand: Operand::N,
                     modulus: Some(Modulo(Value(100))),
                 },
                 operator: Operator::EQ,

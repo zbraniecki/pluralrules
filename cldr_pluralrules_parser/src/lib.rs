@@ -13,7 +13,7 @@
 //! let condition = Condition(vec![
 //!     AndCondition(vec![Relation {
 //!         expression: Expression {
-//!             operand: Operand('i'),
+//!             operand: Operand::I,
 //!             modulus: None,
 //!         },
 //!         operator: Operator::Is,
@@ -21,7 +21,7 @@
 //!     }]),
 //!     AndCondition(vec![Relation {
 //!         expression: Expression {
-//!             operand: Operand('v'),
+//!             operand: Operand::V,
 //!             modulus: None,
 //!         },
 //!         operator: Operator::Within,
@@ -53,7 +53,7 @@ mod parser;
 /// let condition = Condition(vec![
 ///     AndCondition(vec![Relation {
 ///         expression: Expression {
-///             operand: Operand('i'),
+///             operand: Operand::I,
 ///             modulus: None,
 ///         },
 ///         operator: Operator::Is,
@@ -61,7 +61,7 @@ mod parser;
 ///     }]),
 ///     AndCondition(vec![Relation {
 ///         expression: Expression {
-///             operand: Operand('v'),
+///             operand: Operand::V,
 ///             modulus: None,
 ///         },
 ///         operator: Operator::Within,

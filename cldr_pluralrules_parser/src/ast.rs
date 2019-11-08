@@ -1,23 +1,28 @@
+#[derive(Debug, Clone, PartialEq)]
 pub struct Rule {
     pub condition: Condition,
     pub samples: Option<Samples>,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Samples {
     pub integer: Option<SampleList>,
     pub decimal: Option<SampleList>,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct SampleList {
     pub sample_ranges: Vec<SampleRange>,
     pub ellipsis: bool,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct SampleRange {
     pub lower_val: DecimalValue,
     pub upper_val: Option<DecimalValue>,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct DecimalValue {
     pub integer: Value,
     pub decimal: Option<Value>,
@@ -40,7 +45,7 @@ pub struct DecimalValue {
 ///
 /// Condition(vec![AndCondition(vec![Relation {
 ///        expression: Expression {
-///            operand: Operand('i'),
+///            operand: Operand::I,
 ///            modulus: None,
 ///        },
 ///        operator: Operator::EQ,
@@ -57,7 +62,7 @@ pub struct DecimalValue {
 /// let condition = Condition(vec![
 ///     AndCondition(vec![Relation {
 ///         expression: Expression {
-///             operand: Operand('i'),
+///             operand: Operand::I,
 ///             modulus: None,
 ///         },
 ///         operator: Operator::Is,
@@ -65,7 +70,7 @@ pub struct DecimalValue {
 ///     }]),
 ///     AndCondition(vec![Relation {
 ///         expression: Expression {
-///             operand: Operand('v'),
+///             operand: Operand::V,
 ///             modulus: None,
 ///         },
 ///         operator: Operator::Within,
@@ -101,7 +106,7 @@ pub struct Condition(pub Vec<AndCondition>);
 /// AndCondition(vec![
 ///     Relation {
 ///         expression: Expression {
-///             operand: Operand('i'),
+///             operand: Operand::I,
 ///             modulus: None,
 ///         },
 ///         operator: Operator::In,
@@ -109,7 +114,7 @@ pub struct Condition(pub Vec<AndCondition>);
 ///     },
 ///     Relation {
 ///         expression: Expression {
-///             operand: Operand('v'),
+///             operand: Operand::V,
 ///             modulus: None,
 ///         },
 ///         operator: Operator::NotIn,
@@ -138,7 +143,7 @@ pub struct AndCondition(pub Vec<Relation>);
 ///
 /// Relation {
 ///     expression: Expression {
-///         operand: Operand('i'),
+///         operand: Operand::I,
 ///         modulus: None,
 ///     },
 ///     operator: Operator::Is,
@@ -196,7 +201,7 @@ pub enum Operator {
 /// use cldr_pluralrules_parser::ast::*;
 ///
 /// Expression {
-///     operand: Operand('i'),
+///     operand: Operand::I,
 ///     modulus: Some(Modulo(Value(100))),
 /// };
 ///
@@ -242,10 +247,17 @@ pub struct Modulo(pub Value);
 /// ```
 /// use cldr_pluralrules_parser::ast::Operand;
 ///
-/// Operand('i');
+/// Operand::I;
 /// ```
 #[derive(Debug, Clone, PartialEq)]
-pub struct Operand(pub char);
+pub enum Operand {
+    N, // Absolute value of input
+    I, // Integer value of input
+    V, // Number of visible fraction digits with trailing zeros
+    W, // Number of visible fraction digits without trailing zeros
+    F, // Visible fraction digits with trailing zeros
+    T, // Visible fraction digits without trailing zeros
+}
 
 /// An incomplete AST representation of a plural rule. Comprises a vector of RangeListItems.
 ///
