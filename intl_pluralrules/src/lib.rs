@@ -99,11 +99,21 @@ impl IntlPluralRules {
         prt: PluralRuleType,
     ) -> Result<Self, &'static str> {
         let langid = langid.into();
-        let returned_rule = rules::get_pr(&langid.to_string(), prt);
+        //let returned_rule = rules::get_pr(&langid.to_string(), prt);
+        let returned_rule = match prt {
+            PluralRuleType::CARDINAL => {
+                let idx = rules::LOCALES_CARDINAL.binary_search(&langid.to_string().as_str());
+                idx.map(|idx| rules::PRS_CARDINAL[idx])
+            },
+            PluralRuleType::ORDINAL => {
+                let idx = rules::LOCALES_ORDINAL.binary_search(&langid.to_string().as_str());
+                idx.map(|idx| rules::PRS_ORDINAL[idx])
+            },
+        };
         match returned_rule {
             Ok(returned_rule) => Ok(Self {
                 locale: langid,
-                function: returned_rule,
+                function: returned_rule.clone(),
             }),
             Err(_) => Err("unknown locale"),
         }
@@ -148,7 +158,11 @@ impl IntlPluralRules {
     /// );
     /// ```
     pub fn get_locales(prt: PluralRuleType) -> Vec<LanguageIdentifier> {
-        rules::get_locales(prt)
+        let locs = match prt {
+            PluralRuleType::CARDINAL => rules::LOCALES_CARDINAL.to_vec(),
+            PluralRuleType::ORDINAL => rules::LOCALES_ORDINAL.to_vec(),
+        };
+        locs
             .iter()
             .filter(|s| *s != &"root")
             .map(|s| {
