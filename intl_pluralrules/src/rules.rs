@@ -3,7 +3,7 @@
 #![cfg_attr(feature = "cargo-clippy", allow(clippy::unreadable_literal))]
 #![cfg_attr(feature = "cargo-clippy", allow(clippy::nonminimal_bool))]
 use super::operands::PluralOperands;
-use super::{PluralCategory, PluralRuleType};
+use super::PluralCategory;
 use matches::matches;
 pub type PluralRule = fn(&PluralOperands) -> PluralCategory;
 pub static CLDR_VERSION: usize = 36;

@@ -104,11 +104,11 @@ impl IntlPluralRules {
             PluralRuleType::CARDINAL => {
                 let idx = rules::LOCALES_CARDINAL.binary_search(&langid.to_string().as_str());
                 idx.map(|idx| rules::PRS_CARDINAL[idx])
-            },
+            }
             PluralRuleType::ORDINAL => {
                 let idx = rules::LOCALES_ORDINAL.binary_search(&langid.to_string().as_str());
                 idx.map(|idx| rules::PRS_ORDINAL[idx])
-            },
+            }
         };
         match returned_rule {
             Ok(returned_rule) => Ok(Self {
@@ -162,8 +162,7 @@ impl IntlPluralRules {
             PluralRuleType::CARDINAL => rules::LOCALES_CARDINAL.to_vec(),
             PluralRuleType::ORDINAL => rules::LOCALES_ORDINAL.to_vec(),
         };
-        locs
-            .iter()
+        locs.iter()
             .filter(|s| *s != &"root")
             .map(|s| {
                 s.parse()

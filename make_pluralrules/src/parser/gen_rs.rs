@@ -1,12 +1,9 @@
 //! gen_rs is a Rust code generator for expression representations of CLDR plural rules.
 use super::plural_category::PluralCategory;
-use phf_codegen::Map;
-use proc_macro2::{Ident, Literal, Span, TokenStream};
+use proc_macro2::{Literal, TokenStream};
 use quote::quote;
 use std::collections::BTreeMap;
-use std::fmt::Write;
 use std::str;
-use std::str::FromStr;
 
 /// Generates the complete TokenStream for the generated Rust code. This wraps the head and tail of the .rs file around the generated CLDR expressions.
 pub fn gen_fn(
@@ -22,66 +19,55 @@ pub fn gen_fn(
     };
     let use_statements = quote! {
         use matches::matches;
-        use phf;
         use super::operands::PluralOperands;
-        use super::{PluralCategory, PluralRuleType};
+        use super::PluralCategory;
     };
     let plural_function = quote! { pub type PluralRule = fn(&PluralOperands) -> PluralCategory; };
     let num: isize = vr.parse().unwrap();
     let ver = Literal::u64_unsuffixed(num as u64);
     let version = quote! { pub static CLDR_VERSION: usize = #ver; };
-    let get_locales = gen_get_locales(locales);
-    let head = quote! { #ignore_noncritical_errors #use_statements #plural_function #version #get_locales };
+    let locales = gen_locales(locales);
+    let head =
+        quote! { #ignore_noncritical_errors #use_statements #plural_function #version #locales };
     let mut tokens = Vec::<TokenStream>::new();
     for (pr_type, stream) in streams {
-        tokens.push(create_gen_pr_type_fn(&pr_type, stream));
+        tokens.push(create_pr_type(&pr_type, stream));
     }
-    let filling = quote! { #(#tokens),* };
-    let get_pr_function = quote! { #[cfg_attr(tarpaulin, skip)] pub fn get_pr(lang_code: &str, pr_type: PluralRuleType) -> Result<PluralRule, ()> {match pr_type { #filling }} };
-    quote! { #head #get_pr_function }
+    let filling = quote! { #(#tokens)* };
+    let prs = quote! { #[cfg_attr(tarpaulin, skip)] #filling };
+    quote! { #head #prs }
 }
 
 // Function writes the get locales function
-fn gen_get_locales(locales: BTreeMap<String, Vec<String>>) -> TokenStream {
+fn gen_locales(locales: BTreeMap<String, Vec<String>>) -> TokenStream {
     let mut tokens = Vec::<TokenStream>::new();
 
     for (pr_type, locales) in locales {
         let match_name = match pr_type.as_str() {
-            "cardinal" => quote! { PluralRuleType::CARDINAL },
-            "ordinal" => quote! { PluralRuleType::ORDINAL },
+            "cardinal" => quote! { LOCALES_CARDINAL },
+            "ordinal" => quote! { LOCALES_ORDINAL },
             _ => panic!("Unknown plural rule type"),
         };
         let locales_tokens = quote! { &[ #(#locales),* ] };
-        tokens.push(quote! { #match_name => #locales_tokens });
+        tokens.push(quote! { pub const #match_name: &[&str] = #locales_tokens; });
     }
-    quote! { #[cfg_attr(tarpaulin, skip)] pub fn get_locales(pr_type: PluralRuleType) -> &'static [&'static str] { match pr_type { #(#tokens),* } } }
+    quote! { #(#tokens)* }
 }
 
 // Function wraps all match statements for plural rules in a match for ordinal and cardinal rules
-fn create_gen_pr_type_fn(pr_type: &str, streams: Vec<(String, TokenStream)>) -> TokenStream {
-    let mut map_string = String::new();
-
-    let mut map: Map<&str> = Map::new();
-
-    for (lang, func) in &streams {
-        map.entry(lang.as_str(), &func.to_string());
-    }
-
-    write!(&mut map_string, "{}", map.build()).expect("phf-codegen built a plural rule");
-
-    let new_map = TokenStream::from_str(&map_string).expect("phf-codegen returned invalid Rust!");
+fn create_pr_type(pr_type: &str, streams: Vec<(String, TokenStream)>) -> TokenStream {
+    let mut tokens = Vec::<TokenStream>::new();
 
     let match_name = match pr_type {
-        "cardinal" => quote! { PluralRuleType::CARDINAL },
-        "ordinal" => quote! { PluralRuleType::ORDINAL },
+        "cardinal" => quote! { PRS_CARDINAL },
+        "ordinal" => quote! { PRS_ORDINAL },
         _ => panic!("Unknown plural rule type"),
     };
-    quote! {
-        #match_name => {
-            static LANGUAGES: phf::Map<&'static str, PluralRule> = #new_map;
-            LANGUAGES.get(lang_code).cloned().ok_or(())
-        }
+
+    for (_, func) in &streams {
+        tokens.push(func.clone());
     }
+    quote! { pub const #match_name: &[PluralRule] = &[ #(#tokens),* ]; }
 }
 
 // Function wraps an expression in a match statement for plural category
@@ -99,11 +85,9 @@ fn create_return(cat: PluralCategory, exp: &TokenStream) -> TokenStream {
 /// Generates the closures that comprise the majority of the generated rust code.
 ///
 /// These statements are the expression representations of the CLDR plural rules.
-pub fn gen_mid(lang: &str, pluralrule_set: &[(PluralCategory, TokenStream)]) -> TokenStream {
+pub fn gen_mid(_lang: &str, pluralrule_set: &[(PluralCategory, TokenStream)]) -> TokenStream {
     // make pluralrule_set iterable
     let mut iter = pluralrule_set.iter();
-    let rule_name = format!("rule_{}", lang.replace("-", "_").to_lowercase());
-    let rule_name = Ident::new(&rule_name, Span::call_site());
 
     let queued = iter.next();
     let rule_tokens = match queued {
@@ -125,11 +109,8 @@ pub fn gen_mid(lang: &str, pluralrule_set: &[(PluralCategory, TokenStream)]) -> 
     // We can't use a closure here because closures can't get rvalue
     // promoted to statics. They may in the future.
     quote! {
-        {
-            fn #rule_name(po: &PluralOperands) -> PluralCategory {
-                #rule_tokens
-            };
-            #rule_name
+        |po| {
+            #rule_tokens
         }
     }
 }
