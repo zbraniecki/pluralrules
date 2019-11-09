@@ -53,7 +53,7 @@ fn operand(i: &str) -> IResult<&str, Operand> {
 fn mod_expression(i: &str) -> IResult<&str, Option<Modulo>> {
     opt(map(
         preceded(tuple((space0, alt((tag("mod"), tag("%"))), space1)), value),
-        |v| Modulo(v),
+        Modulo,
     ))(i)
 }
 

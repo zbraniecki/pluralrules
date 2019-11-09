@@ -113,7 +113,7 @@ impl IntlPluralRules {
         match returned_rule {
             Ok(returned_rule) => Ok(Self {
                 locale: langid,
-                function: returned_rule.clone(),
+                function: returned_rule,
             }),
             Err(_) => Err("unknown locale"),
         }
