@@ -155,10 +155,10 @@ fn create_relation(rel: Relation) -> TokenStream {
 
             let rel_tokens = match operator {
                 Operator::In | Operator::Is | Operator::EQ => {
-                    quote! { matches!( #symbol, #rfront ..= #rback) #perim }
+                    quote! { (#rfront ..= #rback).contains(&(#symbol)) #perim }
                 }
                 Operator::NotIn | Operator::NotEQ | Operator::IsNot => {
-                    quote! { !matches!( #symbol, #rfront ..= #rback) #perim }
+                    quote! { !(#rfront ..= #rback).contains(&(#symbol)) #perim }
                 }
                 Operator::Within | Operator::NotWithin => {
                     panic!("There was a problem with the source file.")

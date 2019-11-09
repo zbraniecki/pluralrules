@@ -4,7 +4,6 @@
 #![cfg_attr(feature = "cargo-clippy", allow(clippy::nonminimal_bool))]
 use super::operands::PluralOperands;
 use super::PluralCategory;
-use matches::matches;
 pub type PluralRule = fn(&PluralOperands) -> PluralCategory;
 pub static CLDR_VERSION: usize = 36;
 pub const LOCALES_CARDINAL: &[&str] = &[
@@ -43,7 +42,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 0..=1) && po.f == 0) {
+        if ((0..=1).contains(&(po.i)) && po.f == 0) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -64,9 +63,9 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 3..=10)) {
+        if ((3..=10).contains(&(po.i))) {
             PluralCategory::FEW
-        } else if (matches!(po.i, 11..=99)) {
+        } else if ((11..=99).contains(&(po.i))) {
             PluralCategory::MANY
         } else if (po.n == 1.0) {
             PluralCategory::ONE
@@ -79,9 +78,9 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 3..=10)) {
+        if ((3..=10).contains(&(po.i))) {
             PluralCategory::FEW
-        } else if (matches!(po.i, 11..=99)) {
+        } else if ((11..=99).contains(&(po.i))) {
             PluralCategory::MANY
         } else if (po.n == 1.0) {
             PluralCategory::ONE
@@ -122,9 +121,9 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 2..=4) && !matches!(po.i, 12..=14)) {
+        if ((2..=4).contains(&(po.i)) && !(12..=14).contains(&(po.i))) {
             PluralCategory::FEW
-        } else if (po.i % 10 == 0) || (matches!(po.i, 5..=9)) || (matches!(po.i, 11..=14)) {
+        } else if (po.i % 10 == 0) || ((5..=9).contains(&(po.i))) || ((11..=14).contains(&(po.i))) {
             PluralCategory::MANY
         } else if (po.i % 10 == 1 && po.i % 100 != 11) {
             PluralCategory::ONE
@@ -154,7 +153,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 0..=1) && po.f == 0) {
+        if ((0..=1).contains(&(po.i)) && po.f == 0) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -170,10 +169,10 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
     },
     |po| PluralCategory::OTHER,
     |po| {
-        if ((po.i % 10 == 9 || matches!(po.i, 3..=4))
-            && !matches!(po.i, 10..=19)
-            && !matches!(po.i, 70..=79)
-            && !matches!(po.i, 90..=99))
+        if ((po.i % 10 == 9 || (3..=4).contains(&(po.i)))
+            && !(10..=19).contains(&(po.i))
+            && !(70..=79).contains(&(po.i))
+            && !(90..=99).contains(&(po.i)))
         {
             PluralCategory::FEW
         } else if (po.n != 0.0 && po.i % 1000000 == 0) {
@@ -194,8 +193,8 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (po.v == 0 && matches!(po.i % 10, 2..=4) && !matches!(po.i % 100, 12..=14))
-            || (matches!(po.f % 10, 2..=4) && !matches!(po.f % 100, 12..=14))
+        if (po.v == 0 && (2..=4).contains(&(po.i % 10)) && !(12..=14).contains(&(po.i % 100)))
+            || ((2..=4).contains(&(po.f % 10)) && !(12..=14).contains(&(po.f % 100)))
         {
             PluralCategory::FEW
         } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
@@ -252,7 +251,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 2..=4) && po.v == 0) {
+        if ((2..=4).contains(&(po.i)) && po.v == 0) {
             PluralCategory::FEW
         } else if (po.v != 0) {
             PluralCategory::MANY
@@ -292,7 +291,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (po.v == 0 && matches!(po.i % 100, 3..=4)) || (matches!(po.f % 100, 3..=4)) {
+        if (po.v == 0 && (3..=4).contains(&(po.i % 100))) || ((3..=4).contains(&(po.f % 100))) {
             PluralCategory::FEW
         } else if (po.v == 0 && po.i % 100 == 1) || (po.f % 100 == 1) {
             PluralCategory::ONE
@@ -419,9 +418,9 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 3..=6) && po.f == 0) {
+        if ((3..=6).contains(&(po.i)) && po.f == 0) {
             PluralCategory::FEW
-        } else if (matches!(po.i, 7..=10) && po.f == 0) {
+        } else if ((7..=10).contains(&(po.i)) && po.f == 0) {
             PluralCategory::MANY
         } else if (po.n == 1.0) {
             PluralCategory::ONE
@@ -432,7 +431,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 3..=10) && po.f == 0 || matches!(po.i, 13..=19) && po.f == 0) {
+        if ((3..=10).contains(&(po.i)) && po.f == 0 || (13..=19).contains(&(po.i)) && po.f == 0) {
             PluralCategory::FEW
         } else if (po.n == 1.0 || po.n == 11.0) {
             PluralCategory::ONE
@@ -464,7 +463,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 0..=1) && po.f == 0) {
+        if ((0..=1).contains(&(po.i)) && po.f == 0) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -504,7 +503,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (po.v == 0 && !matches!(po.i, 0..=10) && po.f == 0 && po.i % 10 == 0) {
+        if (po.v == 0 && !(0..=10).contains(&(po.i)) && po.f == 0 && po.i % 10 == 0) {
             PluralCategory::MANY
         } else if (po.i == 1 && po.v == 0) {
             PluralCategory::ONE
@@ -522,8 +521,8 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (po.v == 0 && matches!(po.i % 10, 2..=4) && !matches!(po.i % 100, 12..=14))
-            || (matches!(po.f % 10, 2..=4) && !matches!(po.f % 100, 12..=14))
+        if (po.v == 0 && (2..=4).contains(&(po.i % 10)) && !(12..=14).contains(&(po.i % 100)))
+            || ((2..=4).contains(&(po.f % 10)) && !(12..=14).contains(&(po.f % 100)))
         {
             PluralCategory::FEW
         } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
@@ -535,7 +534,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (po.v == 0 && matches!(po.i % 100, 3..=4)) || (matches!(po.f % 100, 3..=4)) {
+        if (po.v == 0 && (3..=4).contains(&(po.i % 100))) || ((3..=4).contains(&(po.f % 100))) {
             PluralCategory::FEW
         } else if (po.v == 0 && po.i % 100 == 1) || (po.f % 100 == 1) {
             PluralCategory::ONE
@@ -601,7 +600,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (po.v == 0 && !matches!(po.i, 0..=10) && po.f == 0 && po.i % 10 == 0) {
+        if (po.v == 0 && !(0..=10).contains(&(po.i)) && po.f == 0 && po.i % 10 == 0) {
             PluralCategory::MANY
         } else if (po.i == 1 && po.v == 0) {
             PluralCategory::ONE
@@ -753,7 +752,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
                 && (po.i % 100000 == 40000
                     || po.i % 100000 == 60000
                     || po.i % 100000 == 80000
-                    || matches!(po.i, 1000..=20000)))
+                    || (1000..=20000).contains(&(po.i))))
             || (po.n != 0.0 && po.i % 1000000 == 100000)
         {
             PluralCategory::TWO
@@ -795,7 +794,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
     },
     |po| PluralCategory::OTHER,
     |po| {
-        if (matches!(po.i, 0..=1) && po.f == 0) {
+        if ((0..=1).contains(&(po.i)) && po.f == 0) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -803,11 +802,11 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
     },
     |po| PluralCategory::OTHER,
     |po| {
-        if (matches!(po.i, 2..=9) && !matches!(po.i, 11..=19)) {
+        if ((2..=9).contains(&(po.i)) && !(11..=19).contains(&(po.i))) {
             PluralCategory::FEW
         } else if (po.f != 0) {
             PluralCategory::MANY
-        } else if (po.i % 10 == 1 && !matches!(po.i, 11..=19)) {
+        } else if (po.i % 10 == 1 && !(11..=19).contains(&(po.i))) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -820,8 +819,8 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         {
             PluralCategory::ONE
         } else if (po.i % 10 == 0)
-            || (matches!(po.i, 11..=19))
-            || (po.v == 2 && matches!(po.f % 100, 11..=19))
+            || ((11..=19).contains(&(po.i)))
+            || (po.v == 2 && (11..=19).contains(&(po.f % 100)))
         {
             PluralCategory::ZERO
         } else {
@@ -836,7 +835,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 0..=1) && po.f == 0) {
+        if ((0..=1).contains(&(po.i)) && po.f == 0) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -872,7 +871,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (po.v != 0) || (po.n == 0.0) || (matches!(po.i, 2..=19)) {
+        if (po.v != 0) || (po.n == 0.0) || ((2..=19).contains(&(po.i))) {
             PluralCategory::FEW
         } else if (po.i == 1 && po.v == 0) {
             PluralCategory::ONE
@@ -889,9 +888,9 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
     },
     |po| PluralCategory::OTHER,
     |po| {
-        if (po.n == 0.0) || (matches!(po.i, 2..=10)) {
+        if (po.n == 0.0) || ((2..=10).contains(&(po.i))) {
             PluralCategory::FEW
-        } else if (matches!(po.i, 11..=19)) {
+        } else if ((11..=19).contains(&(po.i))) {
             PluralCategory::MANY
         } else if (po.n == 1.0) {
             PluralCategory::ONE
@@ -974,7 +973,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 0..=1) && po.f == 0) {
+        if ((0..=1).contains(&(po.i)) && po.f == 0) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -1017,7 +1016,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
     },
     |po| PluralCategory::OTHER,
     |po| {
-        if (matches!(po.i, 0..=1) && po.f == 0) {
+        if ((0..=1).contains(&(po.i)) && po.f == 0) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -1031,11 +1030,11 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (po.v == 0 && matches!(po.i % 10, 2..=4) && !matches!(po.i % 100, 12..=14)) {
+        if (po.v == 0 && (2..=4).contains(&(po.i % 10)) && !(12..=14).contains(&(po.i % 100))) {
             PluralCategory::FEW
-        } else if (po.v == 0 && po.i != 1 && matches!(po.i % 10, 0..=1))
-            || (po.v == 0 && matches!(po.i % 10, 5..=9))
-            || (po.v == 0 && matches!(po.i % 100, 12..=14))
+        } else if (po.v == 0 && po.i != 1 && (0..=1).contains(&(po.i % 10)))
+            || (po.v == 0 && (5..=9).contains(&(po.i % 10)))
+            || (po.v == 0 && (12..=14).contains(&(po.i % 100)))
         {
             PluralCategory::MANY
         } else if (po.i == 1 && po.v == 0) {
@@ -1051,8 +1050,8 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         {
             PluralCategory::ONE
         } else if (po.i % 10 == 0)
-            || (matches!(po.i, 11..=19))
-            || (po.v == 2 && matches!(po.f % 100, 11..=19))
+            || ((11..=19).contains(&(po.i)))
+            || (po.v == 2 && (11..=19).contains(&(po.f % 100)))
         {
             PluralCategory::ZERO
         } else {
@@ -1067,7 +1066,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 0..=1)) {
+        if ((0..=1).contains(&(po.i))) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -1088,7 +1087,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (po.v != 0) || (po.n == 0.0) || (matches!(po.i, 2..=19)) {
+        if (po.v != 0) || (po.n == 0.0) || ((2..=19).contains(&(po.i))) {
             PluralCategory::FEW
         } else if (po.i == 1 && po.v == 0) {
             PluralCategory::ONE
@@ -1105,11 +1104,11 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
     },
     |po| PluralCategory::OTHER,
     |po| {
-        if (po.v == 0 && matches!(po.i % 10, 2..=4) && !matches!(po.i % 100, 12..=14)) {
+        if (po.v == 0 && (2..=4).contains(&(po.i % 10)) && !(12..=14).contains(&(po.i % 100))) {
             PluralCategory::FEW
         } else if (po.v == 0 && po.i % 10 == 0)
-            || (po.v == 0 && matches!(po.i % 10, 5..=9))
-            || (po.v == 0 && matches!(po.i % 100, 11..=14))
+            || (po.v == 0 && (5..=9).contains(&(po.i % 10)))
+            || (po.v == 0 && (11..=14).contains(&(po.i % 100)))
         {
             PluralCategory::MANY
         } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11) {
@@ -1180,8 +1179,8 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
     |po| PluralCategory::OTHER,
     |po| PluralCategory::OTHER,
     |po| {
-        if (po.v == 0 && matches!(po.i % 10, 2..=4) && !matches!(po.i % 100, 12..=14))
-            || (matches!(po.f % 10, 2..=4) && !matches!(po.f % 100, 12..=14))
+        if (po.v == 0 && (2..=4).contains(&(po.i % 10)) && !(12..=14).contains(&(po.i % 100)))
+            || ((2..=4).contains(&(po.f % 10)) && !(12..=14).contains(&(po.f % 100)))
         {
             PluralCategory::FEW
         } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
@@ -1193,7 +1192,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 2..=10) && po.f == 0) {
+        if ((2..=10).contains(&(po.i)) && po.f == 0) {
             PluralCategory::FEW
         } else if (po.i == 0) || (po.n == 1.0) {
             PluralCategory::ONE
@@ -1209,7 +1208,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 2..=4) && po.v == 0) {
+        if ((2..=4).contains(&(po.i)) && po.v == 0) {
             PluralCategory::FEW
         } else if (po.v != 0) {
             PluralCategory::MANY
@@ -1220,7 +1219,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (po.v == 0 && matches!(po.i % 100, 3..=4)) || (po.v != 0) {
+        if (po.v == 0 && (3..=4).contains(&(po.i % 100))) || (po.v != 0) {
             PluralCategory::FEW
         } else if (po.v == 0 && po.i % 100 == 1) {
             PluralCategory::ONE
@@ -1297,8 +1296,8 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (po.v == 0 && matches!(po.i % 10, 2..=4) && !matches!(po.i % 100, 12..=14))
-            || (matches!(po.f % 10, 2..=4) && !matches!(po.f % 100, 12..=14))
+        if (po.v == 0 && (2..=4).contains(&(po.i % 10)) && !(12..=14).contains(&(po.i % 100)))
+            || ((2..=4).contains(&(po.f % 10)) && !(12..=14).contains(&(po.f % 100)))
         {
             PluralCategory::FEW
         } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11)
@@ -1375,7 +1374,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
     },
     |po| PluralCategory::OTHER,
     |po| {
-        if (matches!(po.i, 0..=1) && po.f == 0) {
+        if ((0..=1).contains(&(po.i)) && po.f == 0) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -1428,7 +1427,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 0..=1) && po.f == 0) || (matches!(po.i, 11..=99) && po.f == 0) {
+        if ((0..=1).contains(&(po.i)) && po.f == 0) || ((11..=99).contains(&(po.i)) && po.f == 0) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -1442,11 +1441,11 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (po.v == 0 && matches!(po.i % 10, 2..=4) && !matches!(po.i % 100, 12..=14)) {
+        if (po.v == 0 && (2..=4).contains(&(po.i % 10)) && !(12..=14).contains(&(po.i % 100))) {
             PluralCategory::FEW
         } else if (po.v == 0 && po.i % 10 == 0)
-            || (po.v == 0 && matches!(po.i % 10, 5..=9))
-            || (po.v == 0 && matches!(po.i % 100, 11..=14))
+            || (po.v == 0 && (5..=9).contains(&(po.i % 10)))
+            || (po.v == 0 && (11..=14).contains(&(po.i % 100)))
         {
             PluralCategory::MANY
         } else if (po.v == 0 && po.i % 10 == 1 && po.i % 100 != 11) {
@@ -1492,7 +1491,7 @@ pub const PRS_CARDINAL: &[PluralRule] = &[
         }
     },
     |po| {
-        if (matches!(po.i, 0..=1) && po.f == 0) {
+        if ((0..=1).contains(&(po.i)) && po.f == 0) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -1764,7 +1763,7 @@ pub const PRS_ORDINAL: &[PluralRule] = &[
             || (po.i % 100 == 40
                 || po.i % 100 == 60
                 || po.i % 100 == 80
-                || matches!(po.i % 100, 2..=20))
+                || (2..=20).contains(&(po.i % 100)))
         {
             PluralCategory::MANY
         } else if (po.i == 1) {
@@ -1786,12 +1785,12 @@ pub const PRS_ORDINAL: &[PluralRule] = &[
     |po| {
         if (po.n == 5.0) || (po.i % 100 == 5) {
             PluralCategory::MANY
-        } else if (matches!(po.i, 1..=4) && po.f == 0)
-            || (matches!(po.i, 1..=4)
-                || matches!(po.i, 21..=24)
-                || matches!(po.i, 41..=44)
-                || matches!(po.i, 61..=64)
-                || matches!(po.i, 81..=84))
+        } else if ((1..=4).contains(&(po.i)) && po.f == 0)
+            || ((1..=4).contains(&(po.i))
+                || (21..=24).contains(&(po.i))
+                || (41..=44).contains(&(po.i))
+                || (61..=64).contains(&(po.i))
+                || (81..=84).contains(&(po.i)))
         {
             PluralCategory::ONE
         } else {
@@ -1849,7 +1848,7 @@ pub const PRS_ORDINAL: &[PluralRule] = &[
     |po| PluralCategory::OTHER,
     |po| PluralCategory::OTHER,
     |po| {
-        if (matches!(po.i, 1..=4) && po.f == 0) {
+        if ((1..=4).contains(&(po.i)) && po.f == 0) {
             PluralCategory::ONE
         } else {
             PluralCategory::OTHER
@@ -1861,7 +1860,7 @@ pub const PRS_ORDINAL: &[PluralRule] = &[
             PluralCategory::FEW
         } else if (po.n == 6.0) {
             PluralCategory::MANY
-        } else if (po.n == 1.0 || po.n == 5.0 || matches!(po.i, 7..=9) && po.f == 0) {
+        } else if (po.n == 1.0 || po.n == 5.0 || (7..=9).contains(&(po.i)) && po.f == 0) {
             PluralCategory::ONE
         } else if (po.n == 2.0 || po.n == 3.0) {
             PluralCategory::TWO

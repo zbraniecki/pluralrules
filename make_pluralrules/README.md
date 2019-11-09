@@ -27,7 +27,7 @@ Local Development
 
 If you want to update the test fixtures to match your latest changes, please use:
 
-	cargo regenerate-fixtures_within | cargo regenerate-fixtures
+	cargo regenerate_fixtures_within | cargo regenerate_fixtures
 
 When submitting a PR please use  `cargo fmt`.
 

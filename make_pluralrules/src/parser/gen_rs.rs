@@ -18,7 +18,6 @@ pub fn gen_fn(
         #![cfg_attr(feature = "cargo-clippy", allow(clippy::nonminimal_bool))]
     };
     let use_statements = quote! {
-        use matches::matches;
         use super::operands::PluralOperands;
         use super::PluralCategory;
     };
