@@ -1,6 +1,6 @@
 //! This reference parser uses serde_json to produce the plural rules from a CLDR data JSON file.
 
-use serde_json;
+use serde::{Serialize, Deserialize};
 
 use std::collections::BTreeMap;
 use std::error::Error;

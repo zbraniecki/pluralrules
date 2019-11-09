@@ -6,8 +6,6 @@
 //! ```text
 //! cargo run -- -i <./path/to/cldr.json>... -o <./path/to/output.rs>
 //! ```
-#[macro_use]
-extern crate serde_derive;
 
 mod parser;
 
