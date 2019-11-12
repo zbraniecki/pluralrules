@@ -9,14 +9,14 @@
 //! Plural rules example for Polish
 //!
 //! ```
-//! use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
+//! use intl_pluralrules::{PluralRules, PluralRuleType, PluralCategory};
 //! use unic_langid::LanguageIdentifier;
 //!
 //! let langid: LanguageIdentifier = "pl".parse().expect("Parsing failed.");
 //!
-//! assert!(IntlPluralRules::get_locales(PluralRuleType::CARDINAL).contains(&langid));
+//! assert!(PluralRules::get_locales(PluralRuleType::CARDINAL).contains(&langid));
 //!
-//! let pr = IntlPluralRules::create(langid.clone(), PluralRuleType::CARDINAL).unwrap();
+//! let pr = PluralRules::create(langid.clone(), PluralRuleType::CARDINAL).unwrap();
 //! assert_eq!(pr.select(1), Ok(PluralCategory::ONE));
 //! assert_eq!(pr.select("3"), Ok(PluralCategory::FEW));
 //! assert_eq!(pr.select(12), Ok(PluralCategory::MANY));
@@ -63,35 +63,35 @@ pub use crate::rules::CLDR_VERSION;
 /// # Examples
 ///
 /// ```
-/// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
+/// use intl_pluralrules::{PluralRules, PluralRuleType, PluralCategory};
 /// use unic_langid::LanguageIdentifier;
 ///
 /// let langid: LanguageIdentifier = "naq".parse().expect("Parsing failed.");
-/// let pr_naq = IntlPluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
+/// let pr_naq = PluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
 /// assert_eq!(pr_naq.select(1), Ok(PluralCategory::ONE));
 /// assert_eq!(pr_naq.select("2"), Ok(PluralCategory::TWO));
 /// assert_eq!(pr_naq.select(5.0), Ok(PluralCategory::OTHER));
 /// ```
 #[derive(Clone)]
-pub struct IntlPluralRules {
+pub struct PluralRules {
     locale: LanguageIdentifier,
     function: PluralRule,
 }
 
-impl IntlPluralRules {
-    /// Returns an instance of IntlPluralRules.
+impl PluralRules {
+    /// Returns an instance of PluralRules.
     ///
     /// # Examples
     /// ```
-    /// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
+    /// use intl_pluralrules::{PluralRules, PluralRuleType, PluralCategory};
     /// use unic_langid::LanguageIdentifier;
     ///
     /// let langid: LanguageIdentifier = "naq".parse().expect("Parsing failed.");
-    /// let pr_naq = IntlPluralRules::create(langid, PluralRuleType::CARDINAL);
+    /// let pr_naq = PluralRules::create(langid, PluralRuleType::CARDINAL);
     /// assert_eq!(pr_naq.is_ok(), !pr_naq.is_err());
     ///
     /// let langid: LanguageIdentifier = "xx".parse().expect("Parsing failed.");
-    /// let pr_broken = IntlPluralRules::create(langid, PluralRuleType::CARDINAL);
+    /// let pr_broken = PluralRules::create(langid, PluralRuleType::CARDINAL);
     /// assert_eq!(pr_broken.is_err(), !pr_broken.is_ok());
     /// ```
     pub fn create<L: Into<LanguageIdentifier>>(
@@ -125,11 +125,11 @@ impl IntlPluralRules {
     ///
     /// # Examples
     /// ```
-    /// use intl_pluralrules::{IntlPluralRules, PluralRuleType, PluralCategory};
+    /// use intl_pluralrules::{PluralRules, PluralRuleType, PluralCategory};
     /// use unic_langid::LanguageIdentifier;
     ///
     /// let langid: LanguageIdentifier = "naq".parse().expect("Parsing failed.");
-    /// let pr_naq = IntlPluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
+    /// let pr_naq = PluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
     /// assert_eq!(pr_naq.select(1), Ok(PluralCategory::ONE));
     /// assert_eq!(pr_naq.select(2), Ok(PluralCategory::TWO));
     /// assert_eq!(pr_naq.select(5), Ok(PluralCategory::OTHER));
@@ -150,10 +150,10 @@ impl IntlPluralRules {
     ///
     /// # Examples
     /// ```
-    /// use intl_pluralrules::{IntlPluralRules, PluralRuleType};
+    /// use intl_pluralrules::{PluralRules, PluralRuleType};
     ///
     /// assert_eq!(
-    ///     IntlPluralRules::get_locales(PluralRuleType::CARDINAL).is_empty(),
+    ///     PluralRules::get_locales(PluralRuleType::CARDINAL).is_empty(),
     ///     false
     /// );
     /// ```
@@ -175,11 +175,11 @@ impl IntlPluralRules {
     ///
     /// # Examples
     /// ```
-    /// use intl_pluralrules::{IntlPluralRules, PluralRuleType};
+    /// use intl_pluralrules::{PluralRules, PluralRuleType};
     /// use unic_langid::LanguageIdentifier;
     ///
     /// let langid: LanguageIdentifier = "naq".parse().expect("Parsing failed.");
-    /// let pr_naq = IntlPluralRules::create(langid.clone(), PluralRuleType::CARDINAL).unwrap();
+    /// let pr_naq = PluralRules::create(langid.clone(), PluralRuleType::CARDINAL).unwrap();
     /// assert_eq!(pr_naq.get_locale(), &langid);
     /// ```
     pub fn get_locale(&self) -> &LanguageIdentifier {
@@ -189,26 +189,26 @@ impl IntlPluralRules {
 
 #[cfg(test)]
 mod tests {
-    use super::{IntlPluralRules, PluralCategory, PluralRuleType, CLDR_VERSION};
+    use super::{PluralRules, PluralCategory, PluralRuleType, CLDR_VERSION};
     use unic_langid::LanguageIdentifier;
 
     #[test]
     fn cardinals_test() {
         let langid: LanguageIdentifier = "naq".parse().expect("Parsing failed.");
-        let pr_naq = IntlPluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
+        let pr_naq = PluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
         assert_eq!(pr_naq.select(1), Ok(PluralCategory::ONE));
         assert_eq!(pr_naq.select(2), Ok(PluralCategory::TWO));
         assert_eq!(pr_naq.select(5), Ok(PluralCategory::OTHER));
 
         let langid: LanguageIdentifier = "xx".parse().expect("Parsing failed.");
-        let pr_broken = IntlPluralRules::create(langid, PluralRuleType::CARDINAL);
+        let pr_broken = PluralRules::create(langid, PluralRuleType::CARDINAL);
         assert_eq!(pr_broken.is_err(), !pr_broken.is_ok());
     }
 
     #[test]
     fn ordinals_rules() {
         let langid: LanguageIdentifier = "uk".parse().expect("Parsing failed.");
-        let pr_naq = IntlPluralRules::create(langid, PluralRuleType::ORDINAL).unwrap();
+        let pr_naq = PluralRules::create(langid, PluralRuleType::ORDINAL).unwrap();
         assert_eq!(pr_naq.select(33), Ok(PluralCategory::FEW));
         assert_eq!(pr_naq.select(113), Ok(PluralCategory::OTHER));
     }
@@ -221,7 +221,7 @@ mod tests {
     #[test]
     fn locale_test() {
         assert_eq!(
-            IntlPluralRules::get_locales(PluralRuleType::CARDINAL).is_empty(),
+            PluralRules::get_locales(PluralRuleType::CARDINAL).is_empty(),
             false
         );
     }

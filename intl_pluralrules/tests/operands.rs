@@ -2,7 +2,7 @@
 // Non-numeric input
 // Empty Input
 
-use intl_pluralrules::{operands::*, IntlPluralRules, PluralRuleType};
+use intl_pluralrules::{operands::*, PluralRules, PluralRuleType};
 use unic_langid::LanguageIdentifier;
 
 #[test]
@@ -98,13 +98,13 @@ fn test_incorrect_operand() {
 #[test]
 fn test_get_locale() {
     let langid: LanguageIdentifier = "naq".parse().expect("Parsing failed.");
-    let pr_naq = IntlPluralRules::create(langid.clone(), PluralRuleType::CARDINAL).unwrap();
+    let pr_naq = PluralRules::create(langid.clone(), PluralRuleType::CARDINAL).unwrap();
     assert_eq!(pr_naq.get_locale(), &langid);
 }
 
 #[test]
 fn custom_type() {
-    use intl_pluralrules::{IntlPluralRules, PluralCategory, PluralRuleType};
+    use intl_pluralrules::{PluralRules, PluralCategory, PluralRuleType};
     struct MyType {
         value: isize,
     }
@@ -123,7 +123,7 @@ fn custom_type() {
     }
 
     let langid: LanguageIdentifier = "en".parse().expect("Parsing failed.");
-    let pr = IntlPluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
+    let pr = PluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
     let v = MyType { value: 5 };
 
     assert_eq!(pr.select(v), Ok(PluralCategory::OTHER));

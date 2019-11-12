@@ -3,7 +3,7 @@ use criterion::criterion_main;
 use criterion::BenchmarkId;
 use criterion::Criterion;
 
-use intl_pluralrules::{IntlPluralRules, PluralRuleType};
+use intl_pluralrules::{PluralRules, PluralRuleType};
 use unic_langid::{langid, LanguageIdentifier};
 
 fn plural_rules(c: &mut Criterion) {
@@ -19,8 +19,8 @@ fn plural_rules(c: &mut Criterion) {
         |b, langs| {
             b.iter(|| {
                 for lang in langs {
-                    IntlPluralRules::create(lang.clone(), PluralRuleType::ORDINAL).unwrap();
-                    IntlPluralRules::create(lang.clone(), PluralRuleType::CARDINAL).unwrap();
+                    PluralRules::create(lang.clone(), PluralRuleType::ORDINAL).unwrap();
+                    PluralRules::create(lang.clone(), PluralRuleType::CARDINAL).unwrap();
                 }
             });
         },
@@ -32,7 +32,7 @@ fn plural_rules(c: &mut Criterion) {
     ];
 
     let langid_pl = langid!("pl");
-    let ipr = IntlPluralRules::create(langid_pl.clone(), PluralRuleType::CARDINAL).unwrap();
+    let ipr = PluralRules::create(langid_pl.clone(), PluralRuleType::CARDINAL).unwrap();
 
     c.bench_with_input(
         BenchmarkId::new("select", samples.len()),
@@ -48,7 +48,7 @@ fn plural_rules(c: &mut Criterion) {
 
     c.bench_function("total", |b| {
         b.iter(|| {
-            let ipr = IntlPluralRules::create(langid_pl.clone(), PluralRuleType::CARDINAL).unwrap();
+            let ipr = PluralRules::create(langid_pl.clone(), PluralRuleType::CARDINAL).unwrap();
             ipr.select(1).unwrap();
             ipr.select(2).unwrap();
             ipr.select(3).unwrap();
