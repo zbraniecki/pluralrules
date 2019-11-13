@@ -2,7 +2,7 @@
 // Non-numeric input
 // Empty Input
 
-use intl_pluralrules::{operands::*, PluralRules, PluralRuleType};
+use intl_pluralrules::{operands::*, PluralRuleType, PluralRules};
 use unic_langid::LanguageIdentifier;
 
 #[test]
@@ -104,7 +104,7 @@ fn test_get_locale() {
 
 #[test]
 fn custom_type() {
-    use intl_pluralrules::{PluralRules, PluralCategory, PluralRuleType};
+    use intl_pluralrules::{PluralCategory, PluralRuleType, PluralRules};
     struct MyType {
         value: isize,
     }

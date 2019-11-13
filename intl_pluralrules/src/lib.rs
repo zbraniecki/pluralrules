@@ -99,15 +99,14 @@ impl PluralRules {
         prt: PluralRuleType,
     ) -> Result<Self, &'static str> {
         let langid = langid.into();
-        //let returned_rule = rules::get_pr(&langid.to_string(), prt);
         let returned_rule = match prt {
             PluralRuleType::CARDINAL => {
-                let idx = rules::LOCALES_CARDINAL.binary_search(&langid.to_string().as_str());
-                idx.map(|idx| rules::PRS_CARDINAL[idx])
+                let idx = rules::PRS_CARDINAL.binary_search_by_key(&&langid, |(l, _)| l);
+                idx.map(|idx| rules::PRS_CARDINAL[idx].1)
             }
             PluralRuleType::ORDINAL => {
-                let idx = rules::LOCALES_ORDINAL.binary_search(&langid.to_string().as_str());
-                idx.map(|idx| rules::PRS_ORDINAL[idx])
+                let idx = rules::PRS_ORDINAL.binary_search_by_key(&&langid, |(l, _)| l);
+                idx.map(|idx| rules::PRS_ORDINAL[idx].1)
             }
         };
         match returned_rule {
@@ -158,17 +157,11 @@ impl PluralRules {
     /// );
     /// ```
     pub fn get_locales(prt: PluralRuleType) -> Vec<LanguageIdentifier> {
-        let locs = match prt {
-            PluralRuleType::CARDINAL => rules::LOCALES_CARDINAL.to_vec(),
-            PluralRuleType::ORDINAL => rules::LOCALES_ORDINAL.to_vec(),
+        let prs = match prt {
+            PluralRuleType::CARDINAL => rules::PRS_CARDINAL,
+            PluralRuleType::ORDINAL => rules::PRS_ORDINAL,
         };
-        locs.iter()
-            .filter(|s| *s != &"root")
-            .map(|s| {
-                s.parse()
-                    .unwrap_or_else(|_| panic!("Parsing failed: {}.", s))
-            })
-            .collect()
+        prs.iter().map(|(l, _)| l.clone()).collect()
     }
 
     /// Returns the locale name for this PluralRule instance.
@@ -189,7 +182,7 @@ impl PluralRules {
 
 #[cfg(test)]
 mod tests {
-    use super::{PluralRules, PluralCategory, PluralRuleType, CLDR_VERSION};
+    use super::{PluralCategory, PluralRuleType, PluralRules, CLDR_VERSION};
     use unic_langid::LanguageIdentifier;
 
     #[test]

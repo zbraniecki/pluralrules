@@ -3,7 +3,7 @@ use criterion::criterion_main;
 use criterion::BenchmarkId;
 use criterion::Criterion;
 
-use intl_pluralrules::{PluralRules, PluralRuleType};
+use intl_pluralrules::{PluralRuleType, PluralRules};
 use unic_langid::{langid, LanguageIdentifier};
 
 fn plural_rules(c: &mut Criterion) {
