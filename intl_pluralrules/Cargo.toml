@@ -17,7 +17,8 @@ coveralls = { repository = "zbraniecki/pluralrules", branch = "master", service 
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-unic-langid = "0.7"
+unic-langid = "0.7.1"
+tinystr = "0.3.2"
 
 [dev-dependencies]
 criterion = "0.3"

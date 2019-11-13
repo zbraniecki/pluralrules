@@ -13,6 +13,7 @@ use crate::parser::plural_category::PluralCategory;
 use crate::parser::resource::*;
 use proc_macro2::TokenStream;
 use std::collections::BTreeMap;
+use unic_langid::LanguageIdentifier;
 
 /// Takes a string representation of a CLDR JSON file and produces a string representation of the generated Rust code for the plural rules.
 ///
@@ -20,7 +21,6 @@ use std::collections::BTreeMap;
 pub fn generate_rs(cldr_jsons: &[String]) -> String {
     let mut cldr_version = None;
     let mut tokens = BTreeMap::new();
-    let mut locales = BTreeMap::new();
 
     for cldr_json in cldr_jsons {
         // resource_items is a struct representation of the raw CLDR rules.
@@ -35,21 +35,19 @@ pub fn generate_rs(cldr_jsons: &[String]) -> String {
         }
 
         if let Some(data) = resource_items.supplemental.plurals_type_cardinal {
-            let (res_locales, rule_tokens) = gen_type_rs(data);
+            let rule_tokens = gen_type_rs(data);
             if tokens.contains_key("cardinal") {
                 panic!("Cannot provide two inputs with the same data!");
             }
             tokens.insert("cardinal".to_owned(), rule_tokens);
-            locales.insert("cardinal".to_owned(), res_locales);
         }
 
         if let Some(data) = resource_items.supplemental.plurals_type_ordinal {
-            let (res_locales, rule_tokens) = gen_type_rs(data);
+            let rule_tokens = gen_type_rs(data);
             if tokens.contains_key("ordinal") {
                 panic!("Cannot provide two inputs with the same data!");
             }
             tokens.insert("ordinal".to_owned(), rule_tokens);
-            locales.insert("ordinal".to_owned(), res_locales);
         }
     }
 
@@ -58,15 +56,27 @@ pub fn generate_rs(cldr_jsons: &[String]) -> String {
     }
 
     // Call gen_rs to get Rust code. Convert TokenStream to string for file out.
-    parser::gen_rs::gen_fn(tokens, locales, &cldr_version.unwrap()).to_string()
+    parser::gen_rs::gen_fn(tokens, &cldr_version.unwrap()).to_string()
 }
 
-fn gen_type_rs(
-    rules: BTreeMap<String, BTreeMap<String, String>>,
-) -> (Vec<String>, Vec<(String, TokenStream)>) {
+fn gen_type_rs(rules: BTreeMap<String, BTreeMap<String, String>>) -> (Vec<TokenStream>) {
     // rule_tokens is a vector of TokenStreams that represent the CLDR plural rules as Rust expressions.
-    let mut rule_tokens = Vec::<(String, TokenStream)>::new();
-    let mut langnames = Vec::<String>::new();
+    let mut rule_tokens = Vec::<TokenStream>::new();
+
+    let mut rules: Vec<(LanguageIdentifier, BTreeMap<String, String>)> = rules
+        .into_iter()
+        .filter_map(|(key, value)| {
+            if key == "root" {
+                None
+            } else {
+                let langid = key.parse().unwrap();
+                Some((langid, value))
+            }
+        })
+        .collect();
+
+    // We rely on sorted list for binary search in the consumer.
+    rules.sort_unstable_by(|(langid1, _), (langid2, _)| langid1.cmp(langid2));
 
     for (lang, r) in rules {
         // this_lang_rules is a vector of plural rules saved as a PluralCategory and a TokenStream
@@ -100,11 +110,7 @@ fn gen_type_rs(
             }
         }
         // convert language rules to TokenStream and add them to all the rules
-        rule_tokens.push((
-            lang.clone(),
-            parser::gen_rs::gen_mid(&lang, &this_lang_rules),
-        ));
-        langnames.push(lang);
+        rule_tokens.push(parser::gen_rs::gen_mid(&lang, &this_lang_rules));
     }
-    (langnames, rule_tokens)
+    rule_tokens
 }
