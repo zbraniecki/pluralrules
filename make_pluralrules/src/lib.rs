@@ -69,7 +69,7 @@ fn gen_type_rs(rules: BTreeMap<String, BTreeMap<String, String>>) -> (Vec<TokenS
             if key == "root" {
                 None
             } else {
-                let langid = key.parse().unwrap();
+                let langid = key.parse().expect(&format!("Parsing {} failed", key));
                 Some((langid, value))
             }
         })
