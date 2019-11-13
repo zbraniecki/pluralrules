@@ -4,6 +4,15 @@
 
   - …
 
+## intl_pluralrules 5.0.0 (November 13, 2019)
+
+  - Renamed `IntlPluralRules` to `PluralRules` in line with
+    other internationalization naming conventions.
+  - Use updated generated tables which operate on sorted
+    vectors of `(LanguageIdentifier, PluralRule)` tuples.
+  - Improved performance of construction of `PluralRules` by 66%.
+  - Removed dependency on `phf`.
+
 ## intl_pluralrules 4.0.1 (October 15, 2019)
 
   - Update CLDR to 36.

@@ -4,6 +4,14 @@
 
   - …
 
+## make_pluralrules 0.5.0 (November 13, 2019)
+
+  - Update to `quote` and `proc-macro2` to 1.0.
+  - Remove `phf_codegen` use.
+  - Move the codegen to generate a sorted vector of tuples of
+    (`LanguageIdentifier`, PluralRule).
+  - Update CLDR PluralRules Parser 2.0.
+
 ## make_pluralrules 0.4.2 (January 7, 2019)
 
   - Update to Rust 2018.

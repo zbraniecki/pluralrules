@@ -24,7 +24,6 @@ fn main() -> std::io::Result<()> {
         .collect::<Vec<_>>();
     let complete_rs_code = generate_rs(&input_jsons);
 
-    //println!("{:#?}", complete_rs_code);
     let output_path = matches.value_of("output-file").unwrap();
     let mut file = fs::File::create(output_path)?;
     file.write_all(complete_rs_code.as_bytes())?;
