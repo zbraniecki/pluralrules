@@ -20,11 +20,27 @@ pub fn gen_fn(streams: BTreeMap<String, Vec<TokenStream>>, vr: &str) -> TokenStr
         use unic_langid::LanguageIdentifier;
         use tinystr::{TinyStr4, TinyStr8};
     };
+    let langid_macro = quote! {
+        macro_rules! langid {
+            ($lang:expr, $script:expr, $region:expr) => {
+                {
+                    unsafe {
+                        LanguageIdentifier::from_raw_parts_unchecked(
+                            $lang,
+                            $script,
+                            $region,
+                            None,
+                        )
+                    }
+                }
+            };
+        }
+    };
     let plural_function = quote! { pub type PluralRule = fn(&PluralOperands) -> PluralCategory; };
     let num: isize = vr.parse().unwrap();
     let ver = Literal::u64_unsuffixed(num as u64);
     let version = quote! { pub static CLDR_VERSION: usize = #ver; };
-    let head = quote! { #ignore_noncritical_errors #use_statements #plural_function #version };
+    let head = quote! { #ignore_noncritical_errors #use_statements #plural_function #version #langid_macro };
     let mut tokens = Vec::<TokenStream>::new();
     for (pr_type, stream) in streams {
         tokens.push(create_pr_type(&pr_type, stream));
@@ -63,7 +79,7 @@ fn create_return(cat: PluralCategory, exp: &TokenStream) -> TokenStream {
 }
 
 pub fn gen_langid(id: &LanguageIdentifier) -> TokenStream {
-    let (lang, script, region, variants) = id.clone().into_raw_parts();
+    let (lang, script, region, _) = id.clone().into_raw_parts();
     let lang = if let Some(lang) = lang {
         quote!(Some(TinyStr8::new_unchecked(#lang)))
     } else {
@@ -79,23 +95,15 @@ pub fn gen_langid(id: &LanguageIdentifier) -> TokenStream {
     } else {
         quote!(None)
     };
-    let variants = if let Some(variants) = variants {
-        let v: Vec<_> = variants
-            .iter()
-            .map(|v| quote!(TinyStr8::new_unchecked(#v)))
-            .collect();
-        quote!(Some(Box::new([#(#v,)*])))
-    } else {
-        quote!(None)
-    };
+
+    // No support for variants yet
 
     quote! {
-        unsafe { LanguageIdentifier::from_raw_parts_unchecked(
+        langid!(
             #lang,
             #script,
-            #region,
-            #variants,
-        ) }
+            #region
+        )
     }
 }
 
