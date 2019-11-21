@@ -4,6 +4,10 @@
 
   - …
 
+## intl_pluralrules 5.0.1 (November 20, 2019)
+
+  - The `rules.rs` grew too big, so use macro to shrink it.
+
 ## intl_pluralrules 5.0.0 (November 13, 2019)
 
   - Renamed `IntlPluralRules` to `PluralRules` in line with
