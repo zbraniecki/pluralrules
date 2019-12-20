@@ -4,6 +4,10 @@
 
   - …
 
+## intl_pluralrules 5.0.2 (December 19, 2019)
+
+  - Make `PluralRuleType` derive `Hash` and `Eq`.
+
 ## intl_pluralrules 5.0.1 (November 20, 2019)
 
   - The `rules.rs` grew too big, so use macro to shrink it.
