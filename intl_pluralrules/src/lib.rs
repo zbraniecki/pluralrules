@@ -46,7 +46,7 @@ pub enum PluralCategory {
 }
 
 /// A public enum for handling plural type.
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Hash, PartialEq, Eq)]
 pub enum PluralRuleType {
     /// Ordinal numbers express position or rank in a sequence. [More about oridinal numbers](https://en.wikipedia.org/wiki/Ordinal_number_(linguistics))
     ORDINAL,
