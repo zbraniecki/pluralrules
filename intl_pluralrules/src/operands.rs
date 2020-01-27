@@ -123,18 +123,17 @@ impl<'a> TryFrom<&'a str> for PluralOperands {
 
 macro_rules! impl_integer_type {
     ($ty:ident) => {
-        impl TryFrom<$ty> for PluralOperands {
-            type Error = &'static str;
-            fn try_from(input: $ty) -> Result<Self, Self::Error> {
+        impl From<$ty> for PluralOperands {
+            fn from(input: $ty) -> Self {
                 // XXXManishearth converting from u32 or u64 to isize may wrap
-                Ok(PluralOperands {
+                PluralOperands {
                     n: input as f64,
                     i: input as isize,
                     v: 0,
                     w: 0,
                     f: 0,
                     t: 0,
-                })
+                }
             }
         }
     };
