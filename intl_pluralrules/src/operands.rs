@@ -7,6 +7,7 @@
 //! From int
 //!
 //! ```
+//! use std::convert::TryFrom;
 //! use intl_pluralrules::operands::*;
 //! assert_eq!(Ok(PluralOperands {
 //!    n: 2_f64,
@@ -15,12 +16,13 @@
 //!    w: 0,
 //!    f: 0,
 //!    t: 0,
-//! }), PluralOperands::from(2))
+//! }), PluralOperands::try_from(2))
 //! ```
 //!
 //! From float
 //!
 //! ```
+//! use std::convert::TryFrom;
 //! use intl_pluralrules::operands::*;
 //! assert_eq!(Ok(PluralOperands {
 //!    n: 1234.567_f64,
@@ -29,12 +31,13 @@
 //!    w: 3,
 //!    f: 567,
 //!    t: 567,
-//! }), PluralOperands::from("-1234.567"))
+//! }), PluralOperands::try_from("-1234.567"))
 //! ```
 //!
 //! From &str
 //!
 //! ```
+//! use std::convert::TryFrom;
 //! use intl_pluralrules::operands::*;
 //! assert_eq!(Ok(PluralOperands {
 //!    n: 123.45_f64,
@@ -43,9 +46,10 @@
 //!    w: 2,
 //!    f: 45,
 //!    t: 45,
-//! }), PluralOperands::from(123.45))
+//! }), PluralOperands::try_from(123.45))
 //! ```
 #![cfg_attr(feature = "cargo-clippy", allow(clippy::cast_lossless))]
+use std::convert::TryFrom;
 use std::isize;
 use std::str::FromStr;
 
@@ -66,71 +70,14 @@ pub struct PluralOperands {
     pub t: isize,
 }
 
-impl PluralOperands {
-    /// Given numerical input (as numeric type or reference), returns the PluralOperands representation of the input.
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// use intl_pluralrules::operands::*;
-    /// assert_eq!(Ok(PluralOperands {
-    ///    n: 123.45_f64,
-    ///    i: 123,
-    ///    v: 2,
-    ///    w: 2,
-    ///    f: 45,
-    ///    t: 45,
-    /// }), PluralOperands::from(123.45))
-    /// ```
-    pub fn from<S: IntoPluralOperands>(num: S) -> Result<Self, &'static str> {
-        num.into_plural()
-    }
-}
+impl<'a> TryFrom<&'a str> for PluralOperands {
+    type Error = &'static str;
 
-// once TryFrom stabilizes we can use that instead
-/// A trait that can be implemented on any type to allow it for passing to [`select`](../struct.PluralRules.html#method.select). This trait is made public for implementations of custom types. If you are using generic types, you should use [`from`](struct.PluralOperands.html#method.from).
-///
-/// # Example
-///
-/// ```
-/// use intl_pluralrules::operands::*;
-/// use intl_pluralrules::{PluralRules, PluralRuleType, PluralCategory};
-/// use unic_langid::LanguageIdentifier;
-///
-/// struct MyType {
-///     value: isize
-/// }
-///
-/// impl IntoPluralOperands for MyType {
-///     fn into_plural(self) -> Result<PluralOperands, &'static str> {
-///         Ok(PluralOperands {
-///             n: self.value as f64,
-///             i: self.value as isize,
-///             v: 0,
-///             w: 0,
-///             f: 0,
-///             t: 0,
-///         })
-///     }
-/// }
-///
-/// let langid: LanguageIdentifier = "en".parse().expect("Parsing failed.");
-/// let pr = PluralRules::create(langid, PluralRuleType::CARDINAL).unwrap();
-/// let v = MyType { value: 5 };
-///
-/// assert_eq!(pr.select(v), Ok(PluralCategory::OTHER));
-///
-/// ```
-pub trait IntoPluralOperands {
-    fn into_plural(self) -> Result<PluralOperands, &'static str>;
-}
-
-impl<'a> IntoPluralOperands for &'a str {
-    fn into_plural(self) -> Result<PluralOperands, &'static str> {
-        let abs_str = if self.starts_with('-') {
-            &self[1..]
+    fn try_from(input: &'a str) -> Result<Self, Self::Error> {
+        let abs_str = if input.starts_with('-') {
+            &input[1..]
         } else {
-            &self
+            &input
         };
 
         let absolute_value = f64::from_str(&abs_str).map_err(|_| "Incorrect number passed!")?;
@@ -176,12 +123,13 @@ impl<'a> IntoPluralOperands for &'a str {
 
 macro_rules! impl_integer_type {
     ($ty:ident) => {
-        impl IntoPluralOperands for $ty {
-            fn into_plural(self) -> Result<PluralOperands, &'static str> {
+        impl TryFrom<$ty> for PluralOperands {
+            type Error = &'static str;
+            fn try_from(input: $ty) -> Result<Self, Self::Error> {
                 // XXXManishearth converting from u32 or u64 to isize may wrap
                 Ok(PluralOperands {
-                    n: self as f64,
-                    i: self as isize,
+                    n: input as f64,
+                    i: input as isize,
                     v: 0,
                     w: 0,
                     f: 0,
@@ -197,10 +145,11 @@ macro_rules! impl_integer_type {
 
 macro_rules! impl_signed_integer_type {
     ($ty:ident) => {
-        impl IntoPluralOperands for $ty {
-            fn into_plural(self) -> Result<PluralOperands, &'static str> {
+        impl TryFrom<$ty> for PluralOperands {
+            type Error = &'static str;
+            fn try_from(input: $ty) -> Result<Self, Self::Error> {
                 // XXXManishearth converting from i64 to isize may wrap
-                let x = (self as isize).checked_abs().ok_or("Number too big")?;
+                let x = (input as isize).checked_abs().ok_or("Number too big")?;
                 Ok(PluralOperands {
                     n: x as f64,
                     i: x as isize,
@@ -219,9 +168,11 @@ macro_rules! impl_signed_integer_type {
 
 macro_rules! impl_convert_type {
     ($ty:ident) => {
-        impl IntoPluralOperands for $ty {
-            fn into_plural(self) -> Result<PluralOperands, &'static str> {
-                <&str>::into_plural(&*self.to_string())
+        impl TryFrom<$ty> for PluralOperands {
+            type Error = &'static str;
+            fn try_from(input: $ty) -> Result<Self, Self::Error> {
+                let as_str: &str = &input.to_string();
+                PluralOperands::try_from(as_str)
             }
         }
     };

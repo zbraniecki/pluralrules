@@ -29,8 +29,11 @@
 pub mod operands;
 mod rules;
 
+use std::convert::TryInto;
+
 use unic_langid::LanguageIdentifier;
 
+use crate::operands::PluralOperands;
 use crate::rules::*;
 
 /// A public enum for handling the plural category.
@@ -133,11 +136,11 @@ impl PluralRules {
     /// assert_eq!(pr_naq.select(2), Ok(PluralCategory::TWO));
     /// assert_eq!(pr_naq.select(5), Ok(PluralCategory::OTHER));
     /// ```
-    pub fn select<N: operands::IntoPluralOperands>(
+    pub fn select<N: TryInto<PluralOperands>>(
         &self,
         number: N,
     ) -> Result<PluralCategory, &'static str> {
-        let ops = operands::PluralOperands::from(number);
+        let ops = number.try_into();
         let pr = self.function;
         match ops {
             Ok(ops) => Ok(pr(&ops)),

@@ -2,6 +2,8 @@
 // Non-numeric input
 // Empty Input
 
+use std::convert::{TryFrom, TryInto};
+
 use intl_pluralrules::{operands::*, PluralRuleType, PluralRules};
 use unic_langid::LanguageIdentifier;
 
@@ -33,7 +35,7 @@ fn test_operands_from_str() {
                 f: (test.0).4,
                 t: (test.0).5,
             }),
-            PluralOperands::from(test.1)
+            PluralOperands::try_from(test.1)
         );
     }
 }
@@ -60,7 +62,7 @@ fn test_operands_from_int() {
                 f: (test.0).4,
                 t: (test.0).5,
             }),
-            PluralOperands::from(test.1)
+            PluralOperands::try_from(test.1)
         );
     }
 }
@@ -85,14 +87,14 @@ fn test_operands_from_float() {
                 f: (test.0).4,
                 t: (test.0).5,
             }),
-            PluralOperands::from(test.1)
+            PluralOperands::try_from(test.1)
         );
     }
 }
 
 #[test]
 fn test_incorrect_operand() {
-    assert_eq!(PluralOperands::from("foo").is_err(), true);
+    assert_eq!(PluralOperands::try_from("foo").is_err(), true);
 }
 
 #[test]
@@ -109,8 +111,9 @@ fn custom_type() {
         value: isize,
     }
 
-    impl IntoPluralOperands for MyType {
-        fn into_plural(self) -> Result<PluralOperands, &'static str> {
+    impl TryInto<PluralOperands> for MyType {
+        type Error = &'static str;
+        fn try_into(self) -> Result<PluralOperands, Self::Error> {
             Ok(PluralOperands {
                 n: self.value as f64,
                 i: self.value as isize,
