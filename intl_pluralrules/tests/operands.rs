@@ -116,7 +116,7 @@ fn custom_type() {
         fn try_into(self) -> Result<PluralOperands, Self::Error> {
             Ok(PluralOperands {
                 n: self.value as f64,
-                i: self.value as isize,
+                i: self.value as usize,
                 v: 0,
                 w: 0,
                 f: 0,
