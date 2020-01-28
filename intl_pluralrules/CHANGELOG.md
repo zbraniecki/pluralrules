@@ -4,6 +4,12 @@
 
   - …
 
+## intl_pluralrules 6.0.0 (January 28, 2020)
+
+  - Switch to use `TryFrom`/`TryInto` for `PluralOperands`.
+  - Update `unic-langid` to 0.8.
+  - Optimize `PluralOperands` struct memory layout.
+
 ## intl_pluralrules 5.0.2 (December 19, 2019)
 
   - Make `PluralRuleType` derive `Hash` and `Eq`.

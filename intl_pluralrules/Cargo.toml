@@ -1,11 +1,11 @@
 [package]
 name = "intl_pluralrules"
-version = "5.0.2"
+version = "6.0.0"
 edition = "2018"
 authors = ["Kekoa Riggin <kekoariggin@gmail.com>", "Zibi Braniecki <zbraniecki@mozilla.com>"]
-description = "A plural rule categorizer for numeric input."
+description = "Unicode Plural Rules categorizer for numeric input."
 license = "Apache-2.0/MIT"
-repository = "https://github.com/unclenachoduh/pluralrules"
+repository = "https://github.com/zbraniecki/pluralrules"
 readme = "README.md"
 keywords = ["localization", "l10n", "i18n", "intl", "internationalization"]
 categories = ["localization", "internationalization"]
