@@ -27,6 +27,7 @@
 
 /// A public AST module for plural rule representations.
 pub mod operands;
+#[cfg_attr(tarpaulin, skip)]
 mod rules;
 
 use std::convert::TryInto;

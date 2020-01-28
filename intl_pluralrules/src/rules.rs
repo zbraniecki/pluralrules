@@ -13,7 +13,6 @@ macro_rules! langid {
         unsafe { LanguageIdentifier::from_raw_parts_unchecked($lang, $script, $region, None) }
     }};
 }
-#[cfg_attr(tarpaulin, skip)]
 pub const PRS_CARDINAL: &[(LanguageIdentifier, PluralRule)] = &[
     (
         langid!(Some(TinyStr8::new_unchecked(26209u64)), None, None),
