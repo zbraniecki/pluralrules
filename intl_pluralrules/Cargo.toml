@@ -17,12 +17,12 @@ coveralls = { repository = "zbraniecki/pluralrules", branch = "master", service 
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-unic-langid = "0.7.1"
+unic-langid = "0.8"
 tinystr = "0.3.2"
 
 [dev-dependencies]
 criterion = "0.3"
-unic-langid = { version = "0.7", features = ["macros"] }
+unic-langid = { version = "0.8", features = ["macros"] }
 
 [[bench]]
 name = "pluralrules"

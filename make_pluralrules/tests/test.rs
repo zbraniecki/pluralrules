@@ -41,7 +41,7 @@ fn within_test() {
 #[should_panic]
 fn bad_type_test() {
     let text = String::from(
-r#"{
+        r#"{
   "supplemental": {
     "version": {
       "_number": "$Revision: 13898 $",
@@ -55,7 +55,8 @@ r#"{
       }
     }
   }
-}"#);
+}"#,
+    );
 
     generate_rs(&[text]);
 }
@@ -86,7 +87,7 @@ fn same_data_ordinal_test() {
 #[should_panic]
 fn different_version_test() {
     let cardinal_json = String::from(
-r#"{
+        r#"{
   "supplemental": {
     "version": {
       "_number": "$Revision: 13898 $",
@@ -100,9 +101,10 @@ r#"{
       }
     }
   }
-}"#);
+}"#,
+    );
     let ordinal_json = String::from(
-r#"{
+        r#"{
   "supplemental": {
     "version": {
       "_number": "$Revision: 13898 $",
@@ -116,7 +118,8 @@ r#"{
       }
     }
   }
-}"#);
+}"#,
+    );
 
     generate_rs(&[cardinal_json, ordinal_json]);
 }
