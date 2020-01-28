@@ -59,7 +59,7 @@ pub fn generate_rs(cldr_jsons: &[String]) -> String {
     parser::gen_rs::gen_fn(tokens, &cldr_version.unwrap()).to_string()
 }
 
-fn gen_type_rs(rules: BTreeMap<String, BTreeMap<String, String>>) -> (Vec<TokenStream>) {
+fn gen_type_rs(rules: BTreeMap<String, BTreeMap<String, String>>) -> Vec<TokenStream> {
     // rule_tokens is a vector of TokenStreams that represent the CLDR plural rules as Rust expressions.
     let mut rule_tokens = Vec::<TokenStream>::new();
 
@@ -69,7 +69,9 @@ fn gen_type_rs(rules: BTreeMap<String, BTreeMap<String, String>>) -> (Vec<TokenS
             if key == "root" {
                 None
             } else {
-                let langid = key.parse().expect(&format!("Parsing {} failed", key));
+                let langid = key
+                    .parse()
+                    .unwrap_or_else(|_| panic!("Parsing {} failed", key));
                 Some((langid, value))
             }
         })

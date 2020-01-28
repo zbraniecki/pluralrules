@@ -45,8 +45,7 @@ pub fn gen_fn(streams: BTreeMap<String, Vec<TokenStream>>, vr: &str) -> TokenStr
     for (pr_type, stream) in streams {
         tokens.push(create_pr_type(&pr_type, stream));
     }
-    let filling = quote! { #(#tokens)* };
-    let prs = quote! { #[cfg_attr(tarpaulin, skip)] #filling };
+    let prs = quote! { #(#tokens)* };
     quote! { #head #prs }
 }
 
