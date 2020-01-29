@@ -3,7 +3,7 @@ use criterion::criterion_main;
 use criterion::BenchmarkId;
 use criterion::Criterion;
 
-use intl_pluralrules::{PluralRuleType, PluralRules};
+use intl_pluralrules::{operands::PluralOperands, PluralRuleType, PluralRules};
 use unic_langid::{langid, LanguageIdentifier};
 
 fn plural_rules(c: &mut Criterion) {
@@ -65,5 +65,26 @@ fn plural_rules(c: &mut Criterion) {
     });
 }
 
-criterion_group!(benches, plural_rules,);
+fn float_operands(c: &mut Criterion) {
+    let samples = &[
+        0.23_f64,
+        2.202_f64,
+        0.015_f64,
+        91.212_f64,
+        5.5_f64,
+        5.05_f64,
+        212.0212_f64,
+        5.0_f64,
+    ];
+
+    c.bench_function("parse_float_operands", move |b| {
+        b.iter(|| {
+            for sample in samples {
+                let _ = PluralOperands::from(*sample);
+            }
+        })
+    });
+}
+
+criterion_group!(benches, plural_rules, float_operands);
 criterion_main!(benches);
