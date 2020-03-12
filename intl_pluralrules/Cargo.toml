@@ -9,6 +9,12 @@ repository = "https://github.com/zbraniecki/pluralrules"
 readme = "README.md"
 keywords = ["localization", "l10n", "i18n", "intl", "internationalization"]
 categories = ["localization", "internationalization"]
+include = [
+	"src/**/*",
+	"benches/*.rs",
+	"Cargo.toml",
+	"README.md"
+]
 
 [badges]
 travis-ci = { repository = "zbraniecki/pluralrules", branch = "master" }
