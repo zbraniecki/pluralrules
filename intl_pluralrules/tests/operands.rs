@@ -116,7 +116,7 @@ fn custom_type() {
         fn try_into(self) -> Result<PluralOperands, Self::Error> {
             Ok(PluralOperands {
                 n: self.value as f64,
-                i: self.value as usize,
+                i: self.value as u64,
                 v: 0,
                 w: 0,
                 f: 0,
@@ -130,4 +130,11 @@ fn custom_type() {
     let v = MyType { value: 5 };
 
     assert_eq!(pr.select(v), Ok(PluralCategory::OTHER));
+}
+
+#[test]
+fn many_decimal_places() {
+    // this should not panic on an i32 system
+    let num: f64 = 2.813829837982735;
+    assert_eq!(dbg!(PluralOperands::try_from(num)).is_ok(), true);
 }
