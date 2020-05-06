@@ -7,7 +7,7 @@ use super::PluralCategory;
 use tinystr::{TinyStr4, TinyStr8};
 use unic_langid::LanguageIdentifier;
 pub type PluralRule = fn(&PluralOperands) -> PluralCategory;
-pub static CLDR_VERSION: usize = 36;
+pub static CLDR_VERSION: usize = 37;
 macro_rules! langid {
     ( $ lang : expr , $ script : expr , $ region : expr ) => {{
         unsafe { LanguageIdentifier::from_raw_parts_unchecked($lang, $script, $region, None) }
@@ -1429,6 +1429,16 @@ pub const PRS_CARDINAL: &[(LanguageIdentifier, PluralRule)] = &[
         },
     ),
     (
+        langid!(Some(TinyStr8::new_unchecked(7168880u64)), None, None),
+        |po| {
+            if (po.i == 0) || (po.n == 1.0) {
+                PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+    ),
+    (
         langid!(Some(TinyStr8::new_unchecked(27760u64)), None, None),
         |po| {
             if (po.v == 0 && (2..=4).contains(&(po.i % 10)) && !(12..=14).contains(&(po.i % 100))) {
@@ -1565,6 +1575,18 @@ pub const PRS_CARDINAL: &[(LanguageIdentifier, PluralRule)] = &[
         |po| {
             if (po.n == 1.0) {
                 PluralCategory::ONE
+            } else {
+                PluralCategory::OTHER
+            }
+        },
+    ),
+    (
+        langid!(Some(TinyStr8::new_unchecked(7627123u64)), None, None),
+        |po| {
+            if (po.n == 1.0) {
+                PluralCategory::ONE
+            } else if (po.n == 2.0) {
+                PluralCategory::TWO
             } else {
                 PluralCategory::OTHER
             }
