@@ -18,7 +18,7 @@ pub fn gen_fn(streams: BTreeMap<String, Vec<TokenStream>>, vr: &str) -> TokenStr
         use super::operands::PluralOperands;
         use super::PluralCategory;
         use unic_langid::LanguageIdentifier;
-        use tinystr::{TinyStr4, TinyStr8};
+        use unic_langid::subtags;
     };
     let langid_macro = quote! {
         macro_rules! langid {
@@ -80,17 +80,17 @@ fn create_return(cat: PluralCategory, exp: &TokenStream) -> TokenStream {
 pub fn gen_langid(id: &LanguageIdentifier) -> TokenStream {
     let (lang, script, region, _) = id.clone().into_raw_parts();
     let lang = if let Some(lang) = lang {
-        quote!(Some(TinyStr8::new_unchecked(#lang)))
+        quote!(subtags::Language::from_raw_unchecked(#lang))
     } else {
         quote!(None)
     };
     let script = if let Some(script) = script {
-        quote!(Some(TinyStr4::new_unchecked(#script)))
+        quote!(Some(subtags::Script::from_raw_unchecked(#script)))
     } else {
         quote!(None)
     };
     let region = if let Some(region) = region {
-        quote!(Some(TinyStr4::new_unchecked(#region)))
+        quote!(Some(subtags::Region::from_raw_unchecked(#region)))
     } else {
         quote!(None)
     };
