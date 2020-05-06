@@ -4,6 +4,11 @@
 
   - …
 
+## intl_pluralrules 7.0.0 (May 6, 2020)
+
+  - Update `unic-langid` to 0.9.
+  - Make sure not to panic when f64 numbers are passed on 32bit systems.
+
 ## intl_pluralrules 6.0.0 (January 28, 2020)
 
   - Switch to use `TryFrom`/`TryInto` for `PluralOperands`.
