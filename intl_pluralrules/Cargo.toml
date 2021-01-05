@@ -1,6 +1,6 @@
 [package]
 name = "intl_pluralrules"
-version = "7.0.0"
+version = "7.0.1"
 edition = "2018"
 authors = ["Kekoa Riggin <kekoariggin@gmail.com>", "Zibi Braniecki <zbraniecki@mozilla.com>"]
 description = "Unicode Plural Rules categorizer for numeric input."

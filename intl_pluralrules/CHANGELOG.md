@@ -4,6 +4,9 @@
 
   - …
 
+## intl_pluralrules 7.0.1 (January 5, 2021)
+  - Fix for tarpaulin. (#36)
+
 ## intl_pluralrules 7.0.0 (May 6, 2020)
 
   - Update `unic-langid` to 0.9.
