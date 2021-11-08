@@ -1,8 +1,8 @@
 # Make Plural Rules
 
-`make_pluralrules` is a code generator application that turns a [Unicode CLDR plural rules](http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules) AST into Rust code.
+`make_pluralrules` is a code generator application that turns a [Unicode CLDR plural rules](https://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules) AST into Rust code.
 
-[![crates.io](http://meritbadge.herokuapp.com/make_pluralrules)](https://crates.io/crates/make_pluralrules)
+[![crates.io](https://img.shields.io/crates/v/make_pluralrules.svg)](https://crates.io/crates/make_pluralrules)
 [![Build Status](https://travis-ci.org/zbraniecki/pluralrules.svg?branch=master)](https://travis-ci.org/zbraniecki/pluralrules)
 [![Coverage Status](https://coveralls.io/repos/github/zbraniecki/pluralrules/badge.svg?branch=master)](https://coveralls.io/github/zbraniecki/pluralrules?branch=master)
 
@@ -38,6 +38,6 @@ Contributors
 
 Thank you to all contributors!
 
-[CLDR]: http://cldr.unicode.org/
-[PluralRules]: http://cldr.unicode.org/index/cldr-spec/plural-rules
-[LDML Language Plural Rules Syntax]: http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules
+[CLDR]: https://cldr.unicode.org/
+[PluralRules]: https://cldr.unicode.org/index/cldr-spec/plural-rules
+[LDML Language Plural Rules Syntax]: https://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules

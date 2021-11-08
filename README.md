@@ -4,17 +4,17 @@
 
 The crates perform the following functions:
 
-## intl_pluralrules [![crates.io](http://meritbadge.herokuapp.com/intl_pluralrules)](https://crates.io/crates/intl_pluralrules)
+## intl_pluralrules [![crates.io](https://img.shields.io/crates/v/intl_pluralrules.svg)](https://crates.io/crates/intl_pluralrules)
 
 
 This library returns the plural rule given numeric input.
 
-## cldr_pluralrules_parser [![crates.io](http://meritbadge.herokuapp.com/cldr_pluralrules_parser)](https://crates.io/crates/cldr_pluralrules_parser)
+## cldr_pluralrules_parser [![crates.io](https://img.shields.io/crates/v/cldr_pluralrules_parser.svg)](https://crates.io/crates/cldr_pluralrules_parser)
 
 
-This library creates an AST from plural rules, according to [CLDR plural rule syntax](http://unicode.org/reports/tr35/tr35-numbers.html#Plural_rules_syntax).
+This library creates an AST from plural rules, according to [CLDR plural rule syntax](https://unicode.org/reports/tr35/tr35-numbers.html#Plural_rules_syntax).
 
-## make_pluralrules [![crates.io](http://meritbadge.herokuapp.com/make_pluralrules)](https://crates.io/crates/make_pluralrules)
+## make_pluralrules [![crates.io](https://img.shields.io/crates/v/make_pluralrules.svg)](https://crates.io/crates/make_pluralrules)
 
 
 This executable generates a Rust file with a public function representation of CLDR plural rules from a specified source.
