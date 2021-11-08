@@ -1,4 +1,4 @@
-//! make_pluralrules generates a Rust code representation of CLDR plural rules in compliance with [Unicode](http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules).
+//! make_pluralrules generates a Rust code representation of CLDR plural rules in compliance with [Unicode](https://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules).
 //!
 //! Representations of plural rules are generated from [Unicode's plural rules](https://github.com/unicode-cldr/cldr-core/blob/master/supplemental/plurals.json) and uses the intl_pluralrules_parser AST to build the representation.
 //!

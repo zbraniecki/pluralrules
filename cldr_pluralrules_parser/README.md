@@ -2,7 +2,7 @@
 
 `cldr_pluralrules_parser` is a parser library for [CLDR][] [PluralRules][].
 
-[![crates.io](http://meritbadge.herokuapp.com/cldr_pluralrules_parser)](https://crates.io/crates/cldr_pluralrules_parser)
+[![crates.io](https://img.shields.io/crates/v/cldr_pluralrules_parser.svg)](https://crates.io/crates/cldr_pluralrules_parser)
 [![Build Status](https://travis-ci.org/zbraniecki/pluralrules.svg?branch=master)](https://travis-ci.org/zbraniecki/pluralrules)
 [![Coverage Status](https://coveralls.io/repos/github/zbraniecki/pluralrules/badge.svg?branch=master)](https://coveralls.io/github/zbraniecki/pluralrules?branch=master)
 
@@ -26,6 +26,6 @@ Local Development
 
 When submitting a PR please use  `cargo fmt`.
 
-[CLDR]: http://cldr.unicode.org/
-[PluralRules]: http://cldr.unicode.org/index/cldr-spec/plural-rules
-[LDML Language Plural Rules Syntax]: http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules
+[CLDR]: https://cldr.unicode.org/
+[PluralRules]: https://cldr.unicode.org/index/cldr-spec/plural-rules
+[LDML Language Plural Rules Syntax]: https://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules
