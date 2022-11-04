@@ -13,7 +13,8 @@ include = [
 	"src/**/*",
 	"benches/*.rs",
 	"Cargo.toml",
-	"README.md"
+	"README.md",
+	"LICENSE-*",
 ]
 
 [badges]
