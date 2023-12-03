@@ -37,16 +37,15 @@
 //! From &str
 //!
 //! ```
-//! use std::convert::TryFrom;
 //! use intl_pluralrules::operands::*;
-//! assert_eq!(Ok(PluralOperands {
+//! assert_eq!(PluralOperands {
 //!    n: 123.45_f64,
 //!    i: 123,
 //!    v: 2,
 //!    w: 2,
 //!    f: 45,
 //!    t: 45,
-//! }), PluralOperands::try_from(123.45))
+//! }, PluralOperands::from(123.45))
 //! ```
 #![cfg_attr(feature = "cargo-clippy", allow(clippy::cast_lossless))]
 use std::convert::TryFrom;
@@ -167,11 +166,32 @@ macro_rules! impl_signed_integer_type {
 
 macro_rules! impl_convert_type {
     ($ty:ident) => {
-        impl TryFrom<$ty> for PluralOperands {
-            type Error = &'static str;
-            fn try_from(input: $ty) -> Result<Self, Self::Error> {
-                let as_str: &str = &input.to_string();
-                PluralOperands::try_from(as_str)
+        impl From<$ty> for PluralOperands {
+            fn from(input: $ty) -> Self {
+                let eps = 1e-4;
+                let abs = input.abs();
+                let mut f = abs.fract();
+                let (len, fraction) = if f == 0.0 {
+                    (0, 0)
+                } else {
+                    let mut len = 0;
+                    while (f.round() - f).abs() <= eps {
+                        f *= 10.0;
+                    }
+                    while (f.round() - f).abs() > eps {
+                        f *= 10.0;
+                        len += 1;
+                    }
+                    (len, f.round() as usize)
+                };
+                PluralOperands {
+                    n: abs as f64,
+                    i: abs as usize,
+                    v: len,
+                    w: len,
+                    f: fraction,
+                    t: fraction,
+                }
             }
         }
     };
@@ -182,5 +202,4 @@ macro_rules! impl_convert_type {
 
 impl_integer_type!(u8 u16 u32 u64 usize);
 impl_signed_integer_type!(i8 i16 i32 i64 isize);
-// XXXManishearth we can likely have dedicated float impls here
-impl_convert_type!(f32 f64 String);
+impl_convert_type!(f32 f64);
