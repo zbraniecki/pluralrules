@@ -50,6 +50,7 @@
 //! ```
 #![cfg_attr(feature = "cargo-clippy", allow(clippy::cast_lossless))]
 use std::convert::TryFrom;
+use std::io::Write;
 use std::isize;
 use std::str::FromStr;
 
@@ -144,19 +145,18 @@ macro_rules! impl_integer_type {
 
 macro_rules! impl_signed_integer_type {
     ($ty:ident) => {
-        impl TryFrom<$ty> for PluralOperands {
-            type Error = &'static str;
-            fn try_from(input: $ty) -> Result<Self, Self::Error> {
+        impl From<$ty> for PluralOperands {
+            fn from(input: $ty) -> Self {
                 // XXXManishearth converting from i64 to isize may wrap
-                let x = (input as isize).checked_abs().ok_or("Number too big")?;
-                Ok(PluralOperands {
+                let x = (input as isize).abs();
+                PluralOperands {
                     n: x as f64,
                     i: x as u64,
                     v: 0,
                     w: 0,
                     f: 0,
                     t: 0,
-                })
+                }
             }
         }
     };
@@ -167,11 +167,36 @@ macro_rules! impl_signed_integer_type {
 
 macro_rules! impl_convert_type {
     ($ty:ident) => {
-        impl TryFrom<$ty> for PluralOperands {
-            type Error = &'static str;
-            fn try_from(input: $ty) -> Result<Self, Self::Error> {
-                let as_str: &str = &input.to_string();
-                PluralOperands::try_from(as_str)
+        impl From<$ty> for PluralOperands {
+            fn from(input: $ty) -> Self {
+                let abs = input.abs();
+                let mut array = [0u8; 10];
+                let mut slice = &mut array[..];
+
+                write!(slice, "{}", abs).unwrap();
+                let remaining_len = slice.len();
+                let written = array.len()-remaining_len;
+
+                let digits = &array[0..written];
+
+                let (len, fraction) = if let Some(pos) = digits.iter().position(|b| b == &b'.') {
+                    let s = std::str::from_utf8(&digits[pos+1..]).unwrap();
+                    (
+                        digits.len() - pos - 1,
+                        usize::from_str(&s).unwrap()
+                    )
+                } else {
+                    (0, 0)
+                };
+
+                PluralOperands {
+                    n: abs as f64,
+                    i: abs as usize,
+                    v: len,
+                    w: len,
+                    f: fraction,
+                    t: fraction,
+                }
             }
         }
     };
@@ -182,5 +207,4 @@ macro_rules! impl_convert_type {
 
 impl_integer_type!(u8 u16 u32 u64 usize);
 impl_signed_integer_type!(i8 i16 i32 i64 isize);
-// XXXManishearth we can likely have dedicated float impls here
-impl_convert_type!(f32 f64 String);
+impl_convert_type!(f32 f64);
